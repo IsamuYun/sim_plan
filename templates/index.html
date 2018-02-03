@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>ZS-Fab 平台</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="static/img/icon/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="renderer" content="webkit">
+    
+    <!--<link type="text/css" rel="stylesheet" href="css/meshify.css" />-->
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/zs-normal.css" />
+    <link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
+    <script type="text/javascript" src="static/js/jquery-3.2.1.js" ></script>
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+    <script type="text/javascript" src="static/js/screenfull.js"></script>
+</head>
+<body>
+    <div class="zs-viewer-main" id="zs-viewer-main">
+        <div class="zs-splitpane-left" id="zs-splitpane-left">
+            
+                <nav class="navbar navbar-default" style="height:100px; width:100%;">
+                    <div class="clearfix float-md-left">
+                        <a class="navbar-brand ml-1" href="http://www.zsfab.com/products.html">
+                            <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav float-sm-right" style="clear: both; float: right; "> 
+                        <li class="nav-item">
+                            <a href="http://www.zsfab.com/products.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./pricing">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./projects">Projects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
+                                "dropdown" data-toggle="dropdown" href="#">{{ user_name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item">
+                                    <a href="./account">Account</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./password">Password</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./projects">New Project</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./logout">Log out</a>
+                                </li>
+                              </ul>
+                        </li>
+                    </ul>
+                </nav>  <!--菜单导航栏结束-->
+
+                
+                <!--X - Y - Z -->
+                <div id="zs-image-pane" class="zs-image-pane">
+                        <div id="zs-image-box-x" class="zs-image-box cornerstone-enabled-image" oncontextmenu="return false"
+                        unselectable="on" onselectstart="return false" onmousedown="return false"> 
+                        <div id="dicom-image-x" style="width: 256px; height: 256px; position: absolute;"></div>
+                        <div id="mr-bottom-right-x" style="position: absolute; bottom: 3px; right: 3px;">
+                            <div id="zoom-text-x">Zoom:</div> <!--暂时不需要-->
+                            <div id="slice-text-x">Image:</div>
+                        </div>
+                        
+                    
+                    <p style="position: absolute; bottom: 0; padding: 3px; width: 500px;">
+                            <label>X</label>
+                        <input type="text" class="span2" value="" data-slider-min="0" 
+                            data-slider-max="512" data-slider-step="1" data-slider-value="256" data-slider-id="RC" 
+                            id="slice-range-x" data-slider-tooltip="hide" data-slider-handle="square"  />
+                    </p>
+                    </div>
+                    
+                    <!--X轴结束-->
+                    <div id="zs-image-box-y" class="zs-image-box cornerstone-enabled-image" oncontextmenu="return false;"
+                        unselectable="on" onselectstart="return false;" onmousedown="return false;"> 
+                        <div id="dicom-image-y" style="width: 256px; height: 256px; position: absolute;"></div>
+                        <div id="mr-bottom-right-y" style="position: absolute; bottom: 3px; right: 3px;">
+                            <div id="zoom-text-y">Zoom: </div><!--暂时不需要-->
+                            <div id="slice-text-y">Image:</div>
+                        </div>
+                        
+                    <p style="position: absolute; bottom: 0; padding: 3px;">
+                            <label>Y</label>
+                        <input type="text" class="span2" value="" data-slider-min="0" 
+                            data-slider-max="512" data-slider-step="1" data-slider-value="256" data-slider-id="RC" 
+                            id="slice-range-y" data-slider-tooltip="hide" data-slider-handle="square"  />
+                    </p>
+                    </div>
+                    
+                    <!--Y轴结束-->
+                    <div id="zs-image-box-z" class="zs-image-box cornerstone-enabled-image" oncontextmenu="return false;"
+                        unselectable="on" onselectstart="return false;" onmousedown="return false;"> 
+                        <div id="dicom-image-z" style="width: 256px; height: 256px; position: absolute; "></div>
+                        <div id="mr-bottom-right-z" style="position: absolute; bottom: 3px; right: 3px;">
+                            <div id="zoom-text-z">Zoom: </div><!--暂时不需要-->
+                            <div id="slice-text-z">Image:</div>
+                        </div>
+
+                        
+                        <p style="position: absolute; bottom: 0; padding: 3px;">
+                                <label>Z</label>
+                            <input type="text" class="span2" value="" data-slider-min="0" 
+                                data-slider-max="400" data-slider-step="1" data-slider-value="200" data-slider-id="RC" 
+                                id="slice-range-z" data-slider-tooltip="hide" data-slider-handle="square"  />
+                        </p>
+                    </div>
+
+                    <div id="zs-image-box-3d" class="zs-image-box-renderer" oncontextmenu="return false;"
+                        unselectable="on" onselectstart="return false;"> 
+                        
+
+                        
+                        <p style="position: absolute; top: 0; padding: 3px; color: #000000;">
+                            <label>3D 模型窗口</label>
+                            
+                        </p>
+                    </div>
+
+                    
+                </div>
+
+
+        </div>
+        <div class="zs-splitpane-right" id="zs-splitpane-right">
+                <div id="controlDialog">
+                    <!-- The tabs -->
+                    <ul id="tablist" class="nav nav-tabs zs-nav-tabs">
+                        <li class="nav-item active zs-nav-item">
+                            <a class="nav-link zs-nav-item" href="#" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                <p style="font-size: 12px; display: block;">三维重构</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link zs-nav-item" href="./sim-plan" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                手术规划
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link zs-nav-item" href="#computeTab"  style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                              <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                              假体生成
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                                <a class="nav-link zs-nav-item" href="#computeTab" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                  <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                  3D打印
+                                </a>
+                            </li>
+
+                        </ul>
+                        
+                    </div>
+                    
+                    <div class="zs-panel-toolbar">
+                            <label class="zs-panel-label">操作功能</label><br />
+                        <div class="btn-group" style="padding-left: 10px;">
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-wwwc-btn"><span class="fas fa-adjust fa-2x"></span><br />对比度</button>
+                            <!--<button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-zoom-btn"><span class="fab fa-sistrix fa-2x"></span><br />缩放</button>
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-pan-btn"><span class="fas fa-arrows-alt fa-2x"></span><br />平移</button>-->
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-annotation-btn"><span class="far fa-clipboard fa-2x"></span><br />批注</button>
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-length-btn"><span class="fas fa-pencil-alt fa-2x"></span><br />长度</button>
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-probe-btn"><span class="fas fa-crosshairs fa-2x"></span><br />探针</button>
+                            <button type="button" class="btn btn-default zs-panel-btn" id="zs-toolbar-info-btn"><span class="fas fa-info fa-2x"></span><br />信息</button>
+                        </div>
+                        
+                    </div>
+                    <div class="zs-panel-fileupload">
+                        <label class="zs-panel-label">文件上传</label><br />
+                        <div style="padding-left: 10px; padding-right: 10px;">
+                        <button type="button" class="btn btn-default zs-fileupload-btn" style="width: 100%; height: 80px;">上传DICOM文件</button>
+                        </div>
+                            
+                    </div>
+                    
+                    
+        </div>
+        <div class="zs-splitpane-center" id="zs-splitpane-center"></div> <!--滑动条暂时隐藏不显示-->
+        
+
+    </div>
+
+    
+</body>
+
+
+<link type="text/css" rel="stylesheet" href="static/css/bootstrap-slider.css" />
+<script type="text/javascript" src="static/js/bootstrap-slider.js"></script>
+
+<script type="text/javascript" src="static/js/cornerstone.min.js" ></script>
+<script type="text/javascript" src="static/js/cornerstoneMath.js"></script>
+<script type="text/javascript" src="static/js/cornerstoneTools.js"></script>
+<script type="text/javascript" src="static/js/cornerstoneWebImageLoader.js"></script>
+
+<!--threejs 库部分-->
+<script type="text/javascript" src="static/js/three.js"></script>
+<script type="text/javascript" src="static/js/loaders/STLLoader.js"></script>
+<script type="text/javascript" src="static/js/Detector.js"></script>
+<script type="text/javascript" src="static/js/libs/stats.min.js"></script>
+<script type="text/javascript" src="static/js/libs/dat.gui.min.js"></script>
+
+<script type="text/javascript" src="static/js/zs-viewer.js"></script>
+<script type="text/javascript" src="static/js/zs-3d.js"></script>
+
+
+</html>

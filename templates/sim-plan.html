@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <title>ZS-Fab 平台</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="static/img/icon/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/zs-normal.css" />
+    <script type="text/javascript" src="static/js/jquery-3.2.1.js" ></script>
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="zs-viewer-main" id="zs-viewer-main">
+        <div class="zs-splitpane-left" id="zs-splitpane-left">
+            <!--<div class="zs-toolbar">
+                
+            -->
+                <nav class="navbar navbar-default" style="height:100px; width:100%;">
+                    <div class="clearfix float-md-left">
+                        <a class="navbar-brand ml-1" href="http://www.zsfab.com/products.html">
+                            <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+                        </a>
+                    </div>
+                    <!--<div class="navbar-toggleable-md float-md-right" id="navbarResponsive" style="padding-left: 2rem; border-bottom: solid 2px"></div>-->
+                    <ul class="nav navbar-nav float-sm-right" style="clear: both; float: right; "> 
+                        <li class="nav-item">
+                            <a href="http://www.zsfab.com/products.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./pricing">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./projects">Projects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
+                                "dropdown" data-toggle="dropdown" href="#">{{user_name}}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item">
+                                    <a href="./account">Account</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./password">Password</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./projects">New Project</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./logout">Log out</a>
+                                </li>
+                              </ul>
+                        </li>
+                    </ul>
+                </nav>  <!--菜单导航栏结束-->
+                <!--X - Y - Z -->
+                <div class="zs-image-pane" style="height: 100%; background-color: #FFFFFF;">
+                     <div style="position: absolute;  width: 100%; height: 100%; margin: 5px; background-color: #FFFFFF;">
+
+                     </div>
+                </div>
+
+
+        </div>
+        <div class="zs-splitpane-right" id="zs-splitpane-right">
+                <div id="controlDialog">
+                        <!-- The tabs -->
+                        <ul id="tablist" class="nav nav-tabs zs-nav-tabs">
+                          <li class="nav-item zs-nav-item">
+                              <a class="nav-link zs-nav-item" href="./" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                  <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                  <p style="font-size: 12px; display: block;">三维重构</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link active zs-nav-item" href="#" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                  <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                  手术规划
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link zs-nav-item" href="#"  style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                假体生成
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                                  <a class="nav-link zs-nav-item" href="#" style="width: 64px; height: 100px; color: #FFFFFF; font-size: 14px; display: inline-block;">
+                                    <img alt="" src="static/img/logo/logoMeshifyTet-white.png" width="32" height="32" class="icon"/>
+                                    3D打印
+                                  </a>
+                              </li>
+  
+                          </ul>
+                        <!--
+                        <div id="projectselector">
+                          <div class="form-group row mx-1">
+                            <div class="col-xs-4">
+                              <label for="projectname" class="col-form-label">
+                                Project:
+                              </label>
+                            </div>
+                            <div class="col-xs-8">
+                              <div class="input-group">
+                                <div class="dropdown">
+                                  <button class="input-group-addon dropdown-toggle" type="button" id="projectlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="projectlist">
+                                    
+                                    <a class="dropdown-item" href="../set_active_project/6700/">
+                                      2102199502
+                                    </a>
+                                    
+                                  </div>
+                                </div>
+                                <input type='text' id='projectname' value=2102199502 class="form-control" aria-describedby="projectlist">
+                              </div>
+                            </div>
+                          </div>
+                        </div>-->
+                      
+                        </div>
+        </div>
+        <div class="zs-splitpane-center" id="zs-splitpane-center"></div> <!--滑动条暂时隐藏不显示-->
+        
+
+    </div>
+
+    
+</body>
+
+
+<link type="text/css" rel="stylesheet" href="static/css/bootstrap-slider.css" />
+<script type="text/javascript" src="static/js/bootstrap-slider.js"></script>
+
+<script type="text/javascript" src="static/js/zs-sim-plan.js"></script>
+
+
+</html>

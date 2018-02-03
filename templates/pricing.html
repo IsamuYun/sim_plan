@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <title>ZS-Fab 报价</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="static/img/icon/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta name="theme-color" content="#ffffff">
+    <link type="text/css" rel="stylesheet" href="static/css/meshify.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap-flex.css" />
+    <!--<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />-->
+    <link href="static/font/font-awesome/fontawesome-all.css" rel="stylesheet">
+    <script type="text/javascript" src="static/js/jquery-3.2.1.js" ></script>
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <!--header start-->
+    <div class="container-fluid px-0" >
+        <header class="head-section row" style="height:100px; width:100%;">
+            <nav class="navbar navbar-default" style="height:100px; width:100%;">
+                <div class="clearfix float-md-left">
+                    <a class="navbar-brand ml-1" href="http://www.zsfab.com/products.html">
+                        <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+                    </a>
+                </div>
+            
+                <div class="collapse navbar-toggleable-sm float-sm-right" id="navbarResponsive" style="padding-left: 2rem; border-bottom: solid 2px">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a href="http://www.zsfab.com/products.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./projects">Projects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
+                                "dropdown" data-toggle="dropdown" href="#">{{user_name}}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-item">
+                                    <a href="./account">Account</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./password">Password</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="./projects">New Project</a>
+                                </li>
+                                <li class="dropdown-item">
+                                  <a href="./logout">Log out</a>
+                              </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+              </nav>
+            </header>
+            <!--header end-->
+            
+            <!-- Modal for server update -->
+            <div class="modal fade" id="in-progress">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Server Update In-Progress <img class="pull-right" src="/static/img/in-progress.gif" /></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+            
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+            
+            <div class="container">
+              <div class="row ">
+                <div class="col-sm-6 col-lg-3">
+                  <div class="card pricing-table wow fadeInUp">
+                    <div class="card-block">
+                      <h4 class="card-title">
+                        Free <span class="text-danger"> 0 $/mo</span>
+                      </h4>
+                      <div class="desc">
+                        <p class="card-text">
+                          Perfect for those who are getting started with ZS-Fab. Design intricate lattice structures, compare print prices at 3YOURMIND and order your personal design.
+                        </p>
+                      </div>
+                      <ul class="list-unstyled">
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            5 projects
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Order prints
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Download print files
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Structural optimisation
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Customised functionality
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="price-actions">
+                        
+                        
+                        <button href="#" class="btn btn-primary" style="cursor:default" disabled>Your Current Plan</button>
+                        
+                        <p class="card-text" style="text-align:center">
+                          <small>
+                            &nbsp;
+                          </small>
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="col-sm-6 col-lg-3">
+                  <div class="pricing-table card wow fadeInUp">
+                    <div class="card-block">
+                      <h4 class="card-title">
+                        Basic <span class="text-danger"> 119 $/mo</span>
+                      </h4>
+                      <div class="desc">
+                        <p class="card-text">
+                          50 active projects, download of geometry files for printing at your own printer makes Meshify Basic the solution for small companies.
+                        </p>
+                      </div>
+                      <ul class="list-unstyled">
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            50 projects
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Order prints
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Download print files
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Structural optimisation
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Customised functionality
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="price-actions">
+                        
+                        
+                        
+                        <a href="#" class="btn btn-primary">Upgrade</a>
+                        
+                        
+                        <p class="card-text" style="text-align:center">
+                          <small>
+                            119.00 $ including 0% VAT
+                          </small>
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Add the extra clearfix for only the required viewport -->
+                <div class="clearfix visible-sm"></div>
+                <div class="col-sm-6 col-lg-3">
+                  <div class="pricing-table card wow fadeInUp">
+                    <div class="card-block">
+                      <h4 class="card-title">
+                        Pro <span class="text-danger"> 349 $/mo</span>
+                      </h4>
+                      <div class="desc">
+                        <p class="card-text">
+                          Unlimited number of projects and structural optimisation makes Meshify Pro the solution for advanced users.
+                        </p>
+                      </div>
+                      <ul class="list-unstyled">
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Unlimited projects
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Order prints
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Download print files
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Structural optimisation
+                          </div>
+                        </li>
+                        <li>
+                          <div class="icon-holder">
+                            <i class="fa fa-times text-danger "> </i>
+                          </div>
+                          <div class="card-text">
+                            Customised functionality
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="price-actions">
+                        
+                        <a href="#" class="btn btn-primary">Apply for beta access</a>
+                        <!--a href="#" class="btn" style="cursor: default">Coming soon</a--!>
+                        
+                        <p class="card-text" style="text-align:center">
+                          <small>
+                            349.00 $ including 0% VAT
+                          </small>
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="col-sm-6 col-lg-3">
+                  <div class="pricing-table card wow fadeInUp">
+                    <div class="card-block">
+                      <h4 class="card-title">
+                        Custom <span class="text-danger"> Quote </span>
+                      </h4>
+                      <div class="desc">
+                        <p class="card-text">
+                          Need local installation or special functionality like customised workflow, lattice generation from CT
+                          voxel scans, deformed structured lattices or similiar. Please get in touch.
+                        </p>
+                      </div>
+                      <ul class="list-unstyled">
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Unlimited projects
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Order prints
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Download print files
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Structural optimisation
+                          </div>
+                        </li>
+                        <li class="available">
+                          <div class="icon-holder">
+                            <i class="fa fa-check text-success "> </i>
+                          </div>
+                          <div class="card-text">
+                            Customised functionality
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="price-actions">
+                        <a href="#" class="btn btn-primary"> Contact us </a>
+                        
+                        <p class="card-text" style="text-align:center">
+                          <small>
+                            &nbsp;
+                          </small>
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+                  
+                  
+            <footer class="footer">
+              <div class="container" style="max-width:1400px">
+                <div class="row" style="border-bottom: 1px solid white">
+                  <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+                </div>
+                <div class="row my-2">
+                  <div class="col-lg-4 col-sm-6 col-xs-12 address wow fadeInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                    <h4>
+                      CONTACT
+                    </h4>
+                    <address>
+                      <ul class="fa-ul">
+                        <li><i class="fa-li fa fa-location-arrow pr-10"></i>ZSFab, Inc</li>
+                        <li><i class="fa-li fa fa-envelope pr-10"></i> <a href="mailto:info@zs-fab.cn">info@zs-fab.cn</a></li>
+                        <li><i class="fa-li fa fa-mobile pr-10"></i> <a href="mailto:info@zs-fab.cn">+86 8888 8888</a></li>
+                      </ul>
+                    </address>
+                  </div>
+            
+                  <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp footer-div" data-wow-duration="2s" data-wow-delay=".5s">
+                    <h4>
+                      COMPANY
+                    </h4>
+                    <p>
+                      ZSFab, Inc 
+                    </p>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp footer-div" data-wow-duration="2s" data-wow-delay=".5s">
+                    <h4>
+                      LEGAL
+                    </h4>
+                    <p>
+                      <a data-toggle="modal" data-target="#" href="#">
+                        Terms and conditions
+                      </a>
+                      <br>
+                      <a data-toggle="modal" data-target="#" href="#">
+                        Privacy policy
+                      </a>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="px-1 mt-3" style="border-top: 1px solid white;margin:auto;">
+                    <a href="http://www.zsfab.com/">ZSFab, Inc</a> &copy; 2018 &mdash; All Rights Reserved.
+                  </div>
+                </div>
+              </div>
+            </footer>
+            <!-- footer end -->
+            <!--small footer start -->
+            <footer class="footer-small">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <ul class="social-link-footer list-unstyled my-1">
+                      <li class="flipInX"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                      <li class="flipInX"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                      <li class="flipInX"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                      <li class="flipInX"><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                      <li>Follow us on: </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </footer>
+            
+            <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Privacy policy</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Protecting your private information is our priority. This Statement of Privacy applies to www.meshify.dk and Adimant ApS and governs data collection and usage. For the purposes of this Privacy Policy, unless otherwise noted, all references to Adimant ApS include www.meshify.dk and Adimant. By using the Adimant website(s), you consent to the data practices described in this statement. </p>
+                    <h4>1. Collection of your Personal Information </h4>
+                    <p>Adimant may collect personally identifiable information, such as your email. We may gather additional personal or non-personal information in the future. </p>
+                    <p>Information about your computer hardware and software may be automatically collected by Adimant. This information can include: your IP address, browser type, access times and referring website addresses. This information is used for the operation of the service, to maintain quality of the service, and to provide general statistics regarding use of the Adimant website. </p>
+                    <h4>2. Use of your Personal Information </h4>
+                    <p>Adimant collects and uses your personal information to operate its website(s) and deliver the services you have requested. </p>
+                    <p>Adimant does not sell, rent or lease its customer lists to third parties. </p>
+                    <p>Adimant may, from time to time, contact you on behalf of external business partners about a particular offering that may be of interest to you. In those cases, your unique personally identifiable information (e-mail, name, address, telephone number) is not transferred to the third party. Adimant may share data with trusted partners to help perform statistical analysis, send you email or postal mail, provide customer support, or arrange for deliveries. All such third parties are prohibited from using your personal information except to provide these services to Adimant, and they are required to maintain the confidentiality of your information. </p>
+                    <p>Adimant may keep track of the websites and pages our users visit within Adimant. This data is used to deliver customized content and advertising within Adimant to customers whose behavior indicates that they are interested in a particular subject area. </p>
+                    <p>Adimant will disclose your personal information, without notice, only if required to do so by law or in the good faith belief that such action is necessary to: (a) conform to the edicts of the law or comply with legal process served on Adimant or the site; (b) protect and defend the rights or property of Adimant; and, (c) act under exigent circumstances to protect the personal safety of users of Adimant, or the public. </p>
+                    <h4>3. Use of Cookies </h4>
+                    <p>The Adimant website may use "cookies" to help you personalize your online experience. A cookie is a text file that is placed on your hard disk by a web page server. Cookies cannot be used to run programs or deliver viruses to your computer. Cookies are uniquely assigned to you, and can only be read by a web server in the domain that issued the cookie to you. </p>
+                    <p>One of the primary purposes of cookies is to provide a convenience feature to save you time. The purpose of a cookie is to tell the Web server that you have returned to a specific page. For example, if you personalize Adimant pages, or register with Adimant site or services, a cookie helps Adimant to recall your specific information on subsequent visits. This simplifies the process of recording your personal information, such as billing addresses, shipping addresses, and so on. When you return to the same Adimant website, the information you previously provided can be retrieved, so you can easily use the Adimant features that you customized. </p>
+                    <p>You have the ability to accept or decline cookies. Most Web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. If you choose to decline cookies, you may not be able to fully experience the interactive features of the Adimant services or websites you visit. </p>
+                    <h4>4. Security of your Personal Information </h4>
+                    <p>Adimant secures your personal information from unauthorized access, use or disclosure. When personal information (such as a credit card number) is transmitted to other websites, it is protected through the use of encryption, such as the Secure Sockets Layer (SSL) protocol. </p>
+                    <h4>5. Children Under Thirteen </h4>
+                    <p>Adimant does not knowingly collect personally identifiable information from children under the age of thirteen. If you are under the age of thirteen, you must ask your parent or guardian for permission to use this website. </p>
+                    <h4>6. Opt-Out & Unsubscribe </h4>
+                    <p>We respect your privacy and give you an opportunity to opt-out of receiving announcements of certain information. Users may opt-out of receiving any or all communications from Adimant by contacting us here: </p>
+                    <ul>
+                      <li>  Web page: www.adimant.com </li>
+                      <li>  Email: info@adimant.com </li>
+                      <li>  Phone: +45 61 28 57 53 </li>
+                    </ul>
+                    <h4>7. Changes to this Statement </h4>
+                    <p>Adimant will occasionally update this Statement of Privacy to reflect company and customer feedback. Adimant encourages you to periodically review this Statement to be informed of how Adimant is protecting your information. </p>
+                    <h4>8. Functionality Disclaimer </h4>
+                    <p>Adimant makes no warranties of any type, express or implied, including, but not limited to, the warranties of functionality or fitness of its products for a particular use. </p>
+                    <h4>9. Contact Information </h4>
+                    <p>Adimant welcomes your questions or comments regarding this Statement of Privacy. If you believe that Adimant has not adhered to this Statement, please contact Adimant at: </p>
+                    <p>
+                      Adimant ApS<br />
+                      Valdemar Holmers Gade 40<br />
+                      2100 Copenhagen<br />
+                      Denmark<br />
+                    </p>
+                    <p>Email Address: info@adimant.com </p>
+                    <p>Telephone number: +45 61 28 57 53 </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Terms and Conditions<h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Agreement between user and www.zs-fab.cn</p>
+                    <p>Welcome to www.meshify.dk. The www.meshify.dk website (the "Site") is comprised of various web pages operated by Adimant ApS ("Adimant"). www.meshify.dk is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein (the "Terms"). Your use of www.meshify.dk constitutes your agreement to all such Terms. Please read these terms carefully, and keep a copy of them for your reference. </p>
+            
+                    <h4>1. Privacy </h4>
+                    <p>Your use of www.meshify.dk is subject to Meshify's Privacy Policy. Please review our Privacy Policy, which also governs the Site and informs users of our data collection practices. </p>
+                    <h4>2. Electronic Communications </h4>
+                    <p>Visiting www.meshify.dk or sending emails to Adimant constitutes electronic communications. You consent to receive electronic communications and you agree that all agreements, notices, disclosures and other communications that we provide to you electronically, via email and on the Site, satisfy any legal requirement that such communications be in writing. </p>
+                    <h4>3. Your account </h4>
+                    <p>If you use this site, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. You may not assign or otherwise transfer your account to any other person or entity. You acknowledge that Adimant is not responsible for third party access to your account that results from theft or misappropriation of your account. Adimant and its associates reserve the right to refuse or cancel service, terminate accounts, or remove or edit content in our sole discretion. </p>
+                    <h4>4. Cancellation/Refund Policy </h4>
+                    <p>You may cancel your account at any time through www.meshify.dk. For information on Adimant refunding policy, please contact us at info@adimant.com. </p>
+                    <h4>5. Links to third party sites/Third party services </h4>
+                    <p>Certain services made available via www.meshify.dk are delivered by third party sites and organizations. By using any product, service or functionality originating from the www.meshify.dk domain, you hereby acknowledge and consent that Adimant may share such information and data with any third party with whom Adimant has a contractual relationship to provide the requested product, service or functionality on behalf of www.meshify.dk users and customers. </p>
+                    <h4>6. No unlawful or prohibited use/Intellectual Property </h4>
+                    <p>You are granted a non-exclusive, non-transferable, revocable license to access and use www.meshify.dk strictly in accordance with these terms of use. As a condition of your use of the Site, you warrant to Adimant that you will not use the Site for any purpose that is unlawful or prohibited by these Terms. You may not use the Site in any manner which could damage, disable, overburden, or impair the Site or interfere with any other party's use and enjoyment of the Site. You may not obtain or attempt to obtain any materials or information through any means not intentionally made available or provided for through the Site. </p>
+                    <p>All content included as part of the Service, such as text, graphics, logos, images, as well as the compilation thereof, and any software used on the Site, is the property of Adimant or its suppliers and protected by copyright and other laws that protect intellectual property and proprietary rights. You agree to observe and abide by all copyright and other proprietary notices, legends or other restrictions contained in any such content and will not make any changes thereto. </p>
+                    <p>You will not modify, publish, transmit, reverse engineer, participate in the transfer or sale, create derivative works, or in any way exploit any of the content, in whole or in part, found on the Site. Adimant content is not for resale. We do not grant you any licenses, express or implied, to the intellectual property of Adimant or our licensors except as expressly authorized by these Terms. </p>
+                    <h4>7. International Users </h4>
+                    <p>The Service is controlled, operated and administered by Adimant from our offices within Denmark. If you access the Service from a location outside Denmark, you are responsible for compliance with all local laws. You agree that you will not use the Adimant Content accessed through www.meshify.dk in any country or in any manner prohibited by any applicable laws, restrictions or regulations. </p>
+                    <h4>8. Indemnification </h4>
+                    <p>You agree to indemnify, defend and hold harmless Adimant, its officers, directors, employees, agents and third parties, for any losses, costs, liabilities and expenses (including reasonable attorneys' fees) relating to or arising out of your use of or inability to use the Site or services, any user postings made by you, your violation of any terms of this Agreement or your violation of any rights of a third party, or your violation of any applicable laws, rules or regulations. Adimant reserves the right, at its own cost, to assume the exclusive defense and control of any matter otherwise subject to indemnification by you, in which event you will fully cooperate with Adimant in asserting any available defenses. </p>
+                    <h4>9. Liability disclaimer </h4>
+                    <p>The information, software, products, and services included in or available through the site may include inaccuracies or typographical errors. Changes are periodically added to the information herein. Adimant ApS and/or its suppliers may make improvements and/or changes in the site at any time. </p>
+                    <p>Adimant ApS and/or its suppliers make no representations about the suitability, reliability, availability, timeliness, and accuracy of the information, software, products, services and related graphics contained on the site for any purpose. To the maximum extent permitted by applicable law, all such information, software, products, services and related graphics are provided "as is" without warranty or condition of any kind. Adimant ApS and/or its suppliers hereby disclaim all warranties and conditions with regard to this information, software, products, services and related graphics, including all implied warranties or conditions of merchantability, fitness for a particular purpose, title and non-infringement. </p>
+                    <p>To the maximum extent permitted by applicable law, in no event shall Adimant ApS and/or its suppliers be liable for any direct, indirect, punitive, incidental, special, consequential damages or any damages whatsoever including, without limitation, damages for loss of use, data or profits, arising out of or in any way connected with the use or performance of the site, with the delay or inability to use the site or related services, the provision of or failure to provide services, or for any information, software, products, services and related graphics obtained through the site, or otherwise arising out of the use of the site, whether based on contract, tort, negligence, strict liability or otherwise, even if Adimant ApS or any of its suppliers has been advised of the possibility of damages. Because some states/jurisdictions do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you. </p>
+                    <h4>10. Termination/access restriction </h4>
+                    <p>Adimant reserves the right, in its sole discretion, to terminate your access to the Site and the related services or any portion thereof at any time, with one month notice. Use of the Site is unauthorized in any jurisdiction that does not give effect to all provisions of these Terms, including, without limitation, this section. </p>
+                    <p>Adimant's performance of this agreement is subject to existing laws and legal process, and nothing contained in this agreement is in derogation of Adimant's right to comply with governmental, court and law enforcement requests or requirements relating to your use of the Site or information provided to or gathered by Adimant with respect to such use. If any part of this agreement is determined to be invalid or unenforceable pursuant to applicable law including, but not limited to, the warranty disclaimers and liability limitations set forth above, then the invalid or unenforceable provision will be deemed superseded by a valid, enforceable provision that most closely matches the intent of the original provision and the remainder of the agreement shall continue in effect. </p>
+                    <p>Unless otherwise specified herein, this agreement constitutes the entire agreement between the user and Adimant with respect to the Site and it supersedes all prior or contemporaneous communications and proposals, whether electronic, oral or written, between the user and Adimant with respect to the Site. A printed version of this agreement and of any notice given in electronic form shall be admissible in judicial or administrative proceedings based upon or relating to this agreement to the same extent and subject to the same conditions as other business documents and records originally generated and maintained in printed form. It is the express wish to the parties that this agreement and all related documents be written in English. </p>
+                    <h4>11. Changes to Terms </h4>
+                    <p>Adimant reserves the right, in its sole discretion, to change the Terms under which www.meshify.dk is offered. The most current version of the Terms will supersede all previous versions. Adimant encourages you to periodically review the Terms to stay informed of our updates. </p>
+                    <h4>12. Contact Us </h4>
+                    <p>Adimant welcomes your questions or comments regarding the Terms: </p>
+                    <p>
+                      Adimant ApS<br />
+                      Valdemar Holmers Gade 40<br />
+                      2100 Copenhagen<br />
+                      Denmark<br />
+                    </p>
+                    <p>Email Address: info@adimant.com </p>
+                    <p>Telephone number: +45 61 28 57 53 </p>
+                    <p>Effective as of September 30, 2016. </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+                  
+                </div>
+
+</body>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery(document).on("change", "#id_uploaded_file", function() {
+        jQuery("#upload_file_form").submit()
+    })
+});
+</script>
+
+</html>

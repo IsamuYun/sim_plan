@@ -1,0 +1,421 @@
+@font-face {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../font/Lato-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Lato-Bold";
+    font-style: bold;
+    font-weight: bold;
+    src: url("../font/Lato-Bold.woff") format("woff");
+}
+
+
+/* apply this to image enabled divs */
+.cornerstone-enabled-image
+{
+    /* prevent text selection from occurring when dragging the mouse on the div */
+    /* http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* force the cursor to always be the default arrow. This prevents it from changing to an ibar when it is 
+        over HTML based text overlays (four corners */
+    cursor: default;
+}
+
+body {
+    font-family: "Lato";
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.zs-panel-toolbar 
+{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    left: 0;
+    top: 120px;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.0);
+    color: black;
+
+    overflow: hidden;
+    display: inline-block;
+}
+
+.zs-panel-toolbar-button {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 80px;
+    height: 80px;
+    vertical-align: middle;
+    text-align: center;
+    color: black;
+    background: white;
+    font-size: 14px!important;
+    cursor: pointer;
+    font-weight: normal!important;
+    line-height: 22px!important;
+    display: inline-block;
+}
+
+.zs-toolbar-button {
+    position: relative;
+    left: 0;
+    top: 5px;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    vertical-align: middle;
+    outline: none;
+}
+
+.zs-viewer-main {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    left: 0;
+    top: 0;
+    
+    margin: 0;
+    padding: 0;
+    color: #000;
+    background-color: #FFFFFF; /*AliceBlue*/
+    
+}
+/*
+.zs-viewer-main div
+{
+    font-family: "Lato", "Helvetica Neue", "Helvetica", "Microsoft Yahei", "Arial";
+    font-size: 14px;
+    line-height: 16px;
+    text-rendering: optimizeLegibility;
+    text-shadow:  rgba(0,0,0,0,00392157) 1px 1px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+*/
+
+.zs-splitpane-left {
+    position: absolute;
+    width: 75%;
+    height: 100%;
+    left: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.zs-splitpane-right {
+    position: absolute;
+    width: 300px;
+    min-width: 200px;
+    
+    height: 100%;
+    right: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    /*background: linear-gradient( #F97794, #623AA2);*/
+    background-color: #696969;
+    color: #FFFFFF;
+    
+}
+
+.zs-splitpane-center {
+    position: relative;
+    width: 0px;
+    height: 100%;
+    margin: 0px 480px 0px 700px;
+
+    border: 0;
+    padding: 0;
+    cursor: normal;
+}
+
+.zs-image-container {
+    position: relative;
+    width: 256px;
+    height: 256px;
+    color: white;
+}
+
+.zs-image-box {
+    position: absolute;
+    width: 512px;
+    height: 512px;
+    left: 0;
+    top: 0;
+    color: black;
+}
+
+.zs-viewer-stage {
+    background-color:  #F0F8FF; /*AliceBlue*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 5px;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.zs-image-pane {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    width: 100%;
+    height: 100% - 100px;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.zs-image-box {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    border: 2px solid #ABDCFF;
+    color: #FFF;
+    overflow: hidden;
+}
+
+
+.zs-nav-tabs {
+    background: linear-gradient(60deg, #FCCF31, #F55555);
+}
+
+.upload_form_cont {
+    background: -moz-linear-gradient(#ffffff, #f2f2f2);
+    background: -ms-linear-gradient(#ffffff, #f2f2f2);
+    background: -webkit-linear-gradient(#ffffff, #f2f2f2);
+    background: -o-linear-gradient(#ffffff, #f2f2f2);
+    background: linear-gradient(#ffffff, #f2f2f2);
+    color:#000;
+    overflow:hidden;
+}
+
+#upload_form {
+    float: left;
+    padding:20px;
+    width:700px;
+}
+
+#preview {
+    background-color:#fff;
+    display: block;
+    float: right;
+    width: 200px;
+}
+
+#upload_form > div {
+    margin-bottom: 10px;
+}
+
+#speed, #remaining {
+    float: left;
+    width: 100px;
+}
+
+#b_transfered {
+    float: right;
+    text-align: right;
+}
+
+.clear_both {
+    clear: both;
+}
+
+input {
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -ms-border-radius:10px;
+    -o-border-radius:10px;
+    -webkit-border-radius:10px;
+    border:1px solid #ccc;
+    font-size:14pt;
+    padding:5px 10px;
+}
+
+input[type=button] {
+    background: -moz-linear-gradient(#ffffff, #dfdfdf);
+    background: -ms-linear-gradient(#ffffff, #dfdfdf);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #dfdfdf));
+    background: -webkit-linear-gradient(#ffffff, #dfdfdf);
+    background: -o-linear-gradient(#ffffff, #dfdfdf);
+    background: linear-gradient(#ffffff, #dfdfdf);
+}
+
+#image_file {
+    width:400px;
+}
+
+#progress_info {
+    font-size:10pt;
+}
+
+#fileinfo, #error, #error2, #abort, #warnsize {
+    color:#aaa;
+    display:none;
+    font-size:10pt;
+    font-style:italic;
+    margin-top:10px;
+}
+
+#progress {
+    border:1px solid #ccc;
+    display:none;
+    float:left;
+    height:14px;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -ms-border-radius:10px;
+    -o-border-radius:10px;
+    -webkit-border-radius:10px;
+    background: -moz-linear-gradient(#66cc00, #4b9500);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66cc00), color-stop(100%, #4b9500));
+    background: -webkit-linear-gradient(#66cc00, #4b9500);
+    background: -o-linear-gradient(#66cc00, #4b9500);
+    background: linear-gradient(#66cc00, #4b9500);
+}
+
+#progress_percent {
+    float:right;
+}
+
+#upload_response {
+    margin-top: 10px;
+    padding: 20px;
+    overflow: hidden;
+    display: none;
+    border: 1px solid #ccc;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -ms-border-radius:10px;
+    -o-border-radius:10px;
+    -webkit-border-radius:10px;
+    box-shadow: 0 0 5px #ccc;
+    background: -moz-linear-gradient(#bbb, #eee);
+    background: -ms-linear-gradient(#bbb, #eee);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bbb), color-stop(100%, #eee));
+    background: -webkit-linear-gradient(#bbb, #eee);
+    background: -o-linear-gradient(#bbb, #eee);
+    background: linear-gradient(#bbb, #eee);
+}
+
+#RC .slider-selection {
+	background: #FF8282;
+}
+#RC .slider-handle {
+	background: red;
+}
+#GC .slider-selection {
+	background: #428041;
+}
+#GC .slider-handle {
+	background: green;
+}
+#BC .slider-selection {
+	background: #8283FF;
+}
+#BC .slider-handle {
+	border-bottom-color: blue;
+}
+#slice-range-x, #slice-range-y, #slice-range-z {
+	width: 400px;
+}
+
+.zs-nav-item {
+    background-color: rgba(255, 255, 255, 0)!important;
+}
+
+.zs-panel-label {
+    color: black;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+/* 文件上传部分 */
+.zs-panel-fileupload
+{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    left: 0;
+    top: 320px;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.0);
+    color: black;
+
+    overflow: hidden;
+    display: inline-block;
+}
+
+.zs-fileupload-btn {
+    background: linear-gradient(90deg, #708090, #778899);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.zs-panel-btn {
+    background-color: #778899;
+    color: white;
+    font-size: 14px;
+    font-weight: normal;
+    width: 64px;
+    height: 64px;
+}
+
+.zs-image-box-renderer {
+    position: absolute;
+    color: #000000;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /*z-index: 100;*/
+    display: block;
+    /*border: 2px solid #000000;*/
+}
+
+
+
+
+/* this works */
+#zs-image-box-x:-webkit-full-screen	{ width: 100%; background-color: black; }
+#zs-image-box-x:-moz-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-x:-ms-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-x:-o-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-x:full-screen			{ width: 100%; background-color: black; }
+
+
+#zs-image-box-y:-webkit-full-screen	{ width: 100%; background-color: black; }
+#zs-image-box-y:-moz-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-y:-ms-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-y:-o-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-y:full-screen			{ width: 100%; background-color: black; }
+
+#zs-image-box-z:-webkit-full-screen	{ width: 100%; background-color: black; }
+#zs-image-box-z:-moz-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-z:-ms-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-z:-o-full-screen		{ width: 100%; background-color: black; }
+#zs-image-box-z:full-screen			{ width: 100%; background-color: black; }

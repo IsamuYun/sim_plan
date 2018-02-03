@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - STL</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			a { color: skyblue }
+			.button { background:#999; color:#eee; padding:0.2em 0.5em; cursor:pointer }
+			.highlight { background:orange; color:#fff; }
+			span {
+				display: inline-block;
+				width: 60px;
+				float: left;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+
+		<script src="js/loaders/STLLoader.js"></script>
+
+		<script src="js/Detector.js"></script>
+		<script src="js/libs/stats.min.js"></script>
+
+<script>
+if (!Detector.webgl) {
+	Detector.addGetWebGLMessage();
+}
+			
+var container, stats;
+var camera, cameraTarget, scene, renderer;
+
+init();
+			//animate();
+function init() {
+	//container = document.createElement( 'div' );
+				
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color(0xFFFFFF);
+
+	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+	renderer = new THREE.WebGLRenderer();
+	renderer.setClearColor(new THREE.Color(0x000, 1.0));
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.shadowMap.enabled = true;
+	document.body.appendChild(renderer.domElement);
+
+	camera.position.x = 150;
+    camera.position.y = 150;
+    camera.position.z = 150;
+	camera.lookAt(new THREE.Vector3(0, 40, 0));
+				
+	var spotLight = new THREE.SpotLight(0xABDCFF);
+    spotLight.position.set(150, 150, 150);
+	scene.add(spotLight);
+				
+	var loader = new THREE.STLLoader();
+    var group = new THREE.Object3D();
+    loader.load("./models/femur.stl", function (geometry) {
+    	console.log(geometry);
+    	var mat = new THREE.MeshLambertMaterial({color: 0xAABBFF});
+		group = new THREE.Mesh(geometry, mat);
+    	group.rotation.x = -0.5 * Math.PI;
+    	group.scale.set(0.6, 0.6, 0.6);
+    	scene.add(group);
+	});
+				
+	render();
+
+	function render() {
+		if (group) {
+			group.rotation.z += 0.001;
+			// group.rotation.x+=0.006;
+		}
+    	// render using requestAnimationFrame
+    	requestAnimationFrame(render);
+    	renderer.render(scene, camera);
+	}
+	window.addEventListener( 'resize', onWindowResize, false );
+				
+}
+	
+var selected = 0;
+var selectedObject;
+	var objects = [];
+	
+	raycaster = new THREE.Raycaster();
+	mouse = new THREE.Vector2();
+	document.addEventListener('mousedown', onDocumentMouseDown, false );
+	document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+
+	function onDocumentMouseDown( event ) {
+    	event.preventDefault();
+    	mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+   		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+    	raycaster.setFromCamera( mouse, camera );
+    	var intersects = raycaster.intersectObjects( objects );
+    	if ( intersects.length > 0 ) {
+    		//intersects[ 0 ].object.material.color.set('red');
+    		//intersects[ 0 ].object.geometry.scale(1.1,1.1,1.1);
+			console.log("onDocumentMouseDown is working.");
+			if (selected === 0) {
+            			selected = 1;
+            			selectedObject = intersects[0].object;
+            			selectedObject.material.color.set('red');
+            			console.log(selectedObject.position.x);
+					}
+					else {
+            			selected = 0;
+            			var geometry = new THREE.Geometry();
+            			geometry.vertices.push(intersects[ 0 ].object.position);
+            			geometry.vertices.push(selectedObject.position);
+            			var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0x0000ff }));
+            			scene.add(line);
+
+            			selectedObject.material.color.set('black');
+        			}
+
+   		 }
+}
+
+function onWindowResize() {        
+    camera.left = window.innerWidth / -4;
+    camera.right = window.innerWidth / 4;
+    camera.top = window.innerHeight / 4;
+    camera.bottom = window.innerHeight / - 4;
+    camera.aspect = window.innerWidth / window.innerHeight;        
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+function onDocumentMouseWheel( event ) {
+
+    var fov = camera.fov + event.deltaY * 0.05;
+	camera.fov = THREE.Math.clamp( fov, 10, 75 );
+	camera.updateProjectionMatrix();
+
+
+}
+		</script>
+	</body>
+</html>

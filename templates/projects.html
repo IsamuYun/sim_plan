@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <title>ZS-Fab 项目列表</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="static/img/icon/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta name="theme-color" content="#ffffff">
+    <link type="text/css" rel="stylesheet" href="static/css/meshify.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap-flex.css" />
+    <!--<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />-->
+    <link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" >
+    <script type="text/javascript" src="static/js/jquery-3.2.1.js" ></script>
+    <script type="text/javascript" src="static/js/bootstrap.js"></script>
+</head>
+
+<body>
+<!--header start-->
+<div class="container-fluid px-0" >
+    <header class="head-section row" style="height:100px; width:100%;">
+        <nav class="navbar navbar-default" style="height:100px; width:100%;">
+            <div class="clearfix float-md-left">
+                <a class="navbar-brand ml-1" href="http://www.zsfab.com/products.html">
+                    <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+                </a>
+            </div>
+            
+            <div class="collapse navbar-toggleable-sm float-sm-right" id="navbarResponsive" style="padding-left: 2rem; border-bottom: solid 2px">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a href="http://www.zsfab.com/products.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./projects">Projects</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" data-close-others="false" data-delay="0" data-hover=
+                            "dropdown" data-toggle="dropdown" href="#">{{user_name}}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-item">
+                                <a href="./account">Account</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="./password">Password</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="./projects">New Project</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a href="./logout">Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!--header end-->
+    <div class="container">
+            <div class="row mb-2">
+              <div class="col-sm-12">
+                <h1>
+                  Start a new project
+                </h1>
+                <p>
+                  Upload one of your own CAD files. The file could be in STEP, IGES or STL format. The model should have a bounding box smaller than 600mm x 600mm x 600mm (this should cover the most common printer dimensions).
+                </p>
+              </div>
+              <div class="col-xs-12">
+                <form id="upload_file_form" action="/meshify/upload/" method="post" enctype="multipart/form-data">
+                  <input type='hidden' name='csrfmiddlewaretoken' value='BHKP6yjo0DZcjhFWzf3IgmbuyQig3h9j' />
+                  
+                  <label class="btn btn-primary btn-lg" for="id_uploaded_file"
+                    
+                    >
+                    Upload
+                  </label>
+                  
+                  <input accept=".step, .stp, .iges, .igs, .meshify" id="id_uploaded_file" name="uploaded_file" type="file" />
+                </form>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <h1>
+                  Your projects
+                </h1>
+                <p>
+                  
+                  You have 4 projects left. Delete existing projects to free space or upgrade your account.
+                  
+                </p>
+              </div>
+            </div>
+            <div class="row project-list">
+              
+              <div class="col-sm-4">
+                <div class="card">
+                  <div class="card-block">
+                    <h4 class="card-title">
+                      2102199502
+                    </h4>
+                    <a href="../deleteProject/6700/" class="confirmDelete"><i class="fa fa-2x fa-trash"></i></a>
+                    <a href="./">
+                      <img src="../thumbnail/6700/?v=1516944294.34" alt="2102199502">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>           
+ 
+            
+            
+                  
+                  
+    <footer class="footer">
+        <div class="container" style="max-width:1400px">
+            <div class="row" style="border-bottom: 1px solid white">
+                <img src="static/img/logo/zs-logo.png" class="hidden-sm-down vertical-center" style="height: 80px;" alt="ZS-Fab" />
+            </div>
+            <div class="row my-2">
+                <div class="col-lg-4 col-sm-6 col-xs-12 address wow fadeInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                <h4>CONTACT</h4>
+                <address>
+                <ul class="fa-ul">
+                    <li><i class="fa-li fa fa-location-arrow pr-10"></i>ZSFab, Inc</li>
+                    <li><i class="fa-li fa fa-envelope pr-10"></i> <a href="mailto:info@zs-fab.cn">info@zs-fab.cn</a></li>
+                    <li><i class="fa-li fa fa-mobile pr-10"></i> <a href="mailto:info@zs-fab.cn">+86 8888 8888</a></li>
+                </ul>
+                </address>
+            </div>
+            
+            <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp footer-div" data-wow-duration="2s" data-wow-delay=".5s">
+                <h4>COMPANY</h4>
+                <p>ZSFab, Inc</p>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp footer-div" data-wow-duration="2s" data-wow-delay=".5s">
+                    <h4>LEGAL</h4>
+                    <p>
+                      <a data-toggle="modal" data-target="#" href="#">
+                        Terms and conditions
+                      </a>
+                      <br>
+                      <a data-toggle="modal" data-target="#" href="#">
+                        Privacy policy
+                      </a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="px-1 mt-3" style="border-top: 1px solid white;margin:auto;">
+                    <a href="http://www.zsfab.com/">ZSFab, Inc</a> &copy; 2018 &mdash; All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+    <!--small footer start -->
+    <footer class="footer-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="social-link-footer list-unstyled my-1">
+                        <li class="flipInX"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="flipInX"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li class="flipInX"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li class="flipInX"><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        <li>Follow us on: </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery(document).on("change", "#id_uploaded_file", function() {
+        jQuery("#upload_file_form").submit()
+    })
+});
+</script>
+
+</html>
