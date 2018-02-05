@@ -146,11 +146,12 @@ $(document).ready(function() {
             data:post_data,
             cache:false,
             success:function(data) {
-                alert(data);
+                //alert(data);
                 // window.location.href = "./";
+                alert("登录成功");
             },
-            error:function(){
-                alert("出了点问题");
+            error:function(data){
+                alert(data);
             },
         });
     })
