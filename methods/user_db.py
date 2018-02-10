@@ -18,3 +18,4 @@ def change_password(user_name, password):
     sql = "UPDATE user_info SET password=%s WHERE user_name=%s"
     cur.execute(sql, (password, user_name))
     conn.commit()
+

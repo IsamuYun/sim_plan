@@ -67,6 +67,8 @@ var Sidebar = function ( editor ) {
 			case "三维重构":
 				dicomTab.setClass( "selected" );
 				dicomTab.setDisplay( "" );
+				// 做一点事情
+				window.location.href = "./";
 				break;
 			case '手术模拟':
 				sceneTab.setClass( 'selected' );

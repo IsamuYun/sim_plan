@@ -18,6 +18,10 @@ from handlers.sim_plan import SimPlanHandler
 from handlers.login import LoginHandler
 from handlers.logout import LogoutHandler
 
+from handlers.upload.file_receive import POSTHandler 
+
+from handlers.unit_test import UnitTestHandler
+
 url = [
     (r'/', IndexHandler),
     (r"/login", LoginHandler),
@@ -27,6 +31,8 @@ url = [
     (r"/password", PasswordHandler),
     (r"/projects", ProjectsHandler),
     (r"/sim-plan", SimPlanHandler),
-    (r"/register", AccountRegisterHandler)
+    (r"/register", AccountRegisterHandler),
+    (r"/upload", POSTHandler),
+    (r"/test", UnitTestHandler),
 ]
 

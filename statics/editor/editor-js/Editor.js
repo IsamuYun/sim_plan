@@ -81,7 +81,7 @@ var Editor = function () {
 
 	this.scene = new THREE.Scene();
 	this.scene.name = 'Scene';
-	this.scene.background = new THREE.Color( 0xaaaaaa );
+	this.scene.background = new THREE.Color( 0xAAAAAA );
 
 	this.sceneHelpers = new THREE.Scene();
 
