@@ -199,8 +199,12 @@
 			
 			editor.setTheme( editor.config.getKey( 'theme' ) );
 
+
+			
            
 			editor.storage.init( function () {
+
+
                  editor.storage.get( function ( state ) {
 
 					if ( isLoadingFromHash ) return;
@@ -210,6 +214,8 @@
 						editor.fromJSON( state );
 
 					}
+
+					
 
 					var selected = editor.config.getKey( 'selected' );
 
@@ -268,6 +274,14 @@
 					modal.show( content );
 
 				} );
+
+				var spotLight = new THREE.SpotLight( 0xffffff );
+				spotLight.position.set( 100, 200, 100 );
+				spotLight.name = "SpotLight";
+				//console.log(spotLight);
+	
+				editor.execute(new AddObjectCommand( spotLight ) );
+	
 			} );
             
 			//

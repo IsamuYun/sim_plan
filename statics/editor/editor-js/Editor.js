@@ -72,6 +72,7 @@ var Editor = function () {
 
 	};
 
+	
 	this.config = new Config( 'threejs-editor' );
 	this.history = new History( this );
 	this.storage = new Storage();
@@ -93,6 +94,8 @@ var Editor = function () {
 
 	this.selected = null;
 	this.helpers = {};
+
+	
 
 };
 
@@ -128,8 +131,13 @@ Editor.prototype = {
 
 		}
 
+		
+
 		this.signals.sceneGraphChanged.active = true;
 		this.signals.sceneGraphChanged.dispatch();
+
+		
+
 
 	},
 
@@ -141,15 +149,19 @@ Editor.prototype = {
 
 		object.traverse( function ( child ) {
 
-			if ( child.geometry !== undefined ) scope.addGeometry( child.geometry );
-			if ( child.material !== undefined ) scope.addMaterial( child.material );
-
+			if ( child.geometry !== undefined ) {
+				scope.addGeometry( child.geometry );
+			}
+			if ( child.material !== undefined ) {
+				scope.addMaterial( child.material );
+			}
 			scope.addHelper( child );
 
 		} );
 
 		this.scene.add( object );
 
+		
 		this.signals.objectAdded.dispatch( object );
 		this.signals.sceneGraphChanged.dispatch();
 
@@ -387,6 +399,9 @@ Editor.prototype = {
 		this.config.setKey( 'selected', uuid );
 		this.signals.objectSelected.dispatch( object );
 
+		
+
+		
 	},
 
 	selectById: function ( id ) {

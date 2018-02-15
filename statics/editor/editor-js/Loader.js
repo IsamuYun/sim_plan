@@ -350,15 +350,41 @@ var Loader = function ( editor ) {
 					geometry.sourceType = "stl";
 					geometry.sourceFile = file.name;
 
-					var material = new THREE.MeshStandardMaterial();
+					//var material = new THREE.MeshStandardMaterial();
+
+					// var material = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0x555555, shininess: 30 } );
+
+					var material = new THREE.MeshLambertMaterial({color: 0xABDCFF});
 
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.name = filename;
 
+					geometry.computeBoundingBox();
+					var bb = geometry.boundingBox;
+					// 计算得出的都是毫米为单位的计量
+					var object3DWidth  = bb.max.x - bb.min.x;
+					var object3DHeight = bb.max.y - bb.min.y;
+					var object3DDepth  = bb.max.z - bb.min.z;
+					console.log("width: " + object3DWidth);
+					console.log("height: " + object3DHeight);
+					console.log("depth: " + object3DDepth);
+
+					var scale_num = 0.0;
+					if (object3DWidth > 0 && object3DWidth < 10) {
+						scale_num = 0.5;
+					}
+					else if (object3DWidth < 100 ) {
+						scale_num = 0.1;
+					}
+					else {
+						scale_num = 0.05;
+					}
+
+					mesh.scale.set(scale_num, scale_num, scale_num);
+
 					editor.execute( new AddObjectCommand( mesh ) );
 
 				}, false );
-
 				if ( reader.readAsBinaryString !== undefined ) {
 
 					reader.readAsBinaryString( file );

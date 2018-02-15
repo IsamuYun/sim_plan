@@ -24,35 +24,16 @@ var Viewport = function ( editor ) {
 
 	// helpers
 
-	var grid = new THREE.GridHelper( 80, 80 );
+	var grid = new THREE.GridHelper( 100, 100 );
 	sceneHelpers.add( grid );
 
-	// light
-
-	var light = new THREE.DirectionalLight( 0xFFFFFF, 1 );
-	light.position.set( 100, 100, 50 )
-	sceneHelpers.add( light );
-
-	var redMat = new THREE.MeshPhongMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
-    
-	// Sphere
-    var sphere = new THREE.Mesh(new THREE.SphereGeometry(20, 70, 20), redMat);
-	sphere.position.set(0, 0, -20);
-	sceneHelpers.add(sphere);
-  
-    
-
-
-
-
-	//
-
+	
 	var box = new THREE.Box3();
 
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;
 	selectionBox.material.transparent = true;
-	selectionBox.visible = false;
+	selectionBox.visible = true;
 	sceneHelpers.add( selectionBox );
 
 	var objectPositionOnDown = null;
@@ -77,6 +58,9 @@ var Viewport = function ( editor ) {
 			signals.refreshSidebarObject3D.dispatch( object );
 
 		}
+
+		
+
 
 		render();
 
@@ -556,6 +540,8 @@ var Viewport = function ( editor ) {
 			renderer.render( sceneHelpers, camera );
 
 		}
+
+		
 
 	}
 
