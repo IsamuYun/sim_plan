@@ -25,7 +25,7 @@ var Viewport = function ( editor ) {
 	// helpers
 
 	var grid = new THREE.GridHelper( 100, 100 );
-	sceneHelpers.add( grid );
+	//sceneHelpers.add( grid );
 
 	
 	var box = new THREE.Box3();

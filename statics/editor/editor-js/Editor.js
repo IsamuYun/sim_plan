@@ -82,7 +82,7 @@ var Editor = function () {
 
 	this.scene = new THREE.Scene();
 	this.scene.name = 'Scene';
-	this.scene.background = new THREE.Color( 0xAAAAAA );
+	this.scene.background = new THREE.Color( 0xFFFFFF );
 
 	this.sceneHelpers = new THREE.Scene();
 
@@ -457,7 +457,7 @@ Editor.prototype = {
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
-		this.scene.background.setHex( 0xaaaaaa );
+		this.scene.background.setHex( 0xFFFFFF );
 		this.scene.fog = null;
 
 		var objects = this.scene.children;
@@ -474,6 +474,13 @@ Editor.prototype = {
 		this.scripts = {};
 
 		this.deselect();
+
+		// 添加对象前，需要放在objectAdded前面
+		var spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set( 100, 200, 100 );
+		spotLight.name = "LaLa";
+
+		this.scene.add(spotLight);
 
 		this.signals.editorCleared.dispatch();
 

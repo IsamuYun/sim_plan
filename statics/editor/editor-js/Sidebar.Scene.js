@@ -106,7 +106,7 @@ Sidebar.Scene = function ( editor ) {
 
 	var backgroundRow = new UI.Row();
 
-	var backgroundColor = new UI.Color().setValue( '#aaaaaa' ).onChange( onBackgroundChanged );
+	var backgroundColor = new UI.Color().setValue( '#FFFFFF' ).onChange( onBackgroundChanged );
 
 	backgroundRow.add( new UI.Text( 'Background' ).setWidth( '90px' ) );
 	backgroundRow.add( backgroundColor );
