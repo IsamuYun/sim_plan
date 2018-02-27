@@ -399,9 +399,6 @@ Editor.prototype = {
 		this.config.setKey( 'selected', uuid );
 		this.signals.objectSelected.dispatch( object );
 
-		
-
-		
 	},
 
 	selectById: function ( id ) {
@@ -457,7 +454,7 @@ Editor.prototype = {
 		this.storage.clear();
 
 		this.camera.copy( this.DEFAULT_CAMERA );
-		this.scene.background.setHex( 0xFFFFFF );
+		this.scene.background.setHex( 0xE6E6E6 );
 		this.scene.fog = null;
 
 		var objects = this.scene.children;
@@ -476,11 +473,11 @@ Editor.prototype = {
 		this.deselect();
 
 		// 添加对象前，需要放在objectAdded前面
-		var spotLight = new THREE.SpotLight( 0xffffff );
-		spotLight.position.set( 100, 200, 100 );
-		spotLight.name = "LaLa";
-
-		this.scene.add(spotLight);
+		var light = new THREE.DirectionalLight( 0xFFFFFF, 1, 100 );
+		light.position.set( 100, 200, 100 );
+		light.name = "灯光";
+		// 20180223 注释
+		this.scene.add(light);
 
 		this.signals.editorCleared.dispatch();
 

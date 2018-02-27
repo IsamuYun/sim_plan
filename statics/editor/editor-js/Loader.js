@@ -369,18 +369,54 @@ var Loader = function ( editor ) {
 					console.log("height: " + object3DHeight);
 					console.log("depth: " + object3DDepth);
 
-					var scale_num = 0.0;
+					var scale_x = 0.0;
+					
 					if (object3DWidth > 0 && object3DWidth < 10) {
-						scale_num = 0.5;
+						scale_x = 0.5;
 					}
-					else if (object3DWidth < 100 ) {
-						scale_num = 0.1;
+					else if ( object3DWidth < 100 ) {
+						scale_x = 0.1;
 					}
 					else {
-						scale_num = 0.05;
+						scale_x = 0.05;
 					}
 
-					mesh.scale.set(scale_num, scale_num, scale_num);
+					
+
+					mesh.scale.set( scale_x, scale_x, scale_x );
+
+					
+
+					var plane_y_geometry = new THREE.PlaneGeometry( 4, 4 );
+					var plane_y_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+
+					var plane_y = new THREE.Mesh( plane_y_geometry, plane_y_material );
+					plane_y.position.set( 0.5, 0.5, 0.5 );
+					plane_y.name = "冠状面";
+
+					var plane_x_geometry = new THREE.PlaneGeometry( 4, 4 );
+					var plane_x_material = new THREE.MeshBasicMaterial( {color: 0x01DF74, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+
+					var plane_x = new THREE.Mesh( plane_x_geometry, plane_x_material );
+					plane_x.position.set( 0.5, 0.5, 0.5 );
+					plane_x.rotation.x = Math.PI / 2;
+					plane_x.name = "矢状面";
+
+					var plane_z_geometry = new THREE.PlaneGeometry( 4, 4 );
+					var plane_z_material = new THREE.MeshBasicMaterial( {color: 0xFE2E2E, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+
+					var plane_z = new THREE.Mesh( plane_z_geometry, plane_z_material );
+					plane_z.position.set( 0.5, 0.5, 0.5 );
+					plane_z.rotation.y = Math.PI / 2;
+					plane_z.name = "横截面";
+
+
+					var group = new THREE.Group();
+					group.add( plane_x );
+					group.add( plane_y );
+					group.add( plane_z );
+					group.add( mesh );
+					group.name = "组合";
 
 					editor.execute( new AddObjectCommand( mesh ) );
 

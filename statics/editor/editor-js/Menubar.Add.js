@@ -9,7 +9,7 @@ Menubar.Add = function ( editor ) {
 
 	var title = new UI.Panel();
 	title.setClass( 'title' );
-	title.setTextContent( 'Add' );
+	title.setTextContent( '添加' );
 	container.add( title );
 
 	var options = new UI.Panel();
@@ -53,13 +53,14 @@ Menubar.Add = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( 'Plane' );
+	option.setTextContent( '平面' );
 	option.onClick( function () {
 
-		var geometry = new THREE.PlaneBufferGeometry( 1, 1, 1, 1 );
-		var material = new THREE.MeshStandardMaterial();
+		var geometry = new THREE.PlaneBufferGeometry( 3, 3, 1, 1 );
+		//var material = new THREE.MeshStandardMaterial();
+		var material = new THREE.MeshBasicMaterial( {color: 0x000000, side: THREE.DoubleSide} );
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.name = 'Plane ' + ( ++ meshCount );
+		mesh.name = '平面 ' + ( ++ meshCount );
 
 		editor.execute( new AddObjectCommand( mesh ) );
 
