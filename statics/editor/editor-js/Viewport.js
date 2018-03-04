@@ -33,8 +33,9 @@ var Viewport = function ( editor ) {
 	var selectionBox = new THREE.BoxHelper();
 	selectionBox.material.depthTest = false;
 	selectionBox.material.transparent = true;
+	
 	selectionBox.visible = true;
-	sceneHelpers.add( selectionBox );
+	//sceneHelpers.add( selectionBox );
 
 	var objectPositionOnDown = null;
 	var objectRotationOnDown = null;

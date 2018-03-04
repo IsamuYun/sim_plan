@@ -24,8 +24,8 @@
 
 			if ( highlighted ) {
 
-				this.color.setRGB( 1, 1, 0 );
-				this.opacity = 1;
+				this.color.setRGB( 1, 1, 1 );	// 高亮时不再是黄色
+				this.opacity = 0.5;
 
 			} else {
 
@@ -45,7 +45,6 @@
 	var GizmoLineMaterial = function ( parameters ) {
 
 		THREE.LineBasicMaterial.call( this );
-
 		this.depthTest = false;
 		this.depthWrite = false;
 		this.transparent = true;
@@ -60,7 +59,7 @@
 
 			if ( highlighted ) {
 
-				this.color.setRGB( 1, 1, 0 );
+				this.color.setRGB( 255, 0, 0 );
 				this.opacity = 1;
 
 			} else {
@@ -73,7 +72,7 @@
 		};
 
 	};
-
+	
 	GizmoLineMaterial.prototype = Object.create( THREE.LineBasicMaterial.prototype );
 	GizmoLineMaterial.prototype.constructor = GizmoLineMaterial;
 
@@ -257,9 +256,9 @@
 			],
 
 			XYZ: [
-				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.1, 0 ), new GizmoMaterial( { color: 0xffffff, opacity: 0.25 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
+				[ new THREE.Mesh( new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 ), new GizmoMaterial( { color: 0x000000, opacity: 0.25 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
 			],
-
+			/*
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xffff00, opacity: 0.25 } ) ), [ 0.15, 0.15, 0 ] ]
 			],
@@ -271,7 +270,7 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xff00ff, opacity: 0.25 } ) ), [ 0.15, 0, 0.15 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
-
+			*/
 		};
 
 		this.pickerGizmos = {
@@ -289,9 +288,9 @@
 			],
 
 			XYZ: [
-				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.2, 0 ), pickerMaterial ) ]
+				[ new THREE.Mesh( new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 ), pickerMaterial ) ]
 			],
-
+			/*
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0.2, 0 ] ]
 			],
@@ -303,7 +302,7 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0, 0.2 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
-
+			*/
 		};
 
 		this.setActivePlane = function ( axis, eye ) {
@@ -500,7 +499,8 @@
 		THREE.TransformGizmo.call( this );
 
 		var arrowGeometry = new THREE.Geometry();
-		var mesh = new THREE.Mesh( new THREE.BoxGeometry( 0.125, 0.125, 0.125 ) );
+		//var mesh = new THREE.Mesh( new THREE.BoxGeometry( 0.125, 0.125, 0.125 ) );
+		var mesh = new THREE.Mesh( new THREE.BoxGeometry( 0.25, 0.25, 0.25 ) );
 		mesh.position.y = 0.5;
 		mesh.updateMatrix();
 
@@ -848,7 +848,7 @@
 			var pointer = event.changedTouches ? event.changedTouches[ 0 ] : event;
 
 			if ( pointer.button === 0 || pointer.button === undefined ) {
-
+				console.log("mouse down.");
 				var intersect = intersectObjects( pointer, _gizmo[ _mode ].pickers.children );
 
 				if ( intersect ) {

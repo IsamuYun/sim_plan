@@ -30,6 +30,49 @@ Menubar.Import = function ( editor ) {
 
 	} );
 
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "盆骨模型" );
+	option.onClick( function() {
+		var host_name = window.location.origin;
+		var folder_name = "/static/models/";
+		var url = host_name + folder_name + "pelvis.stl";
+
+		var loader = new THREE.STLLoader();
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshLambertMaterial( {color: 0xF5DA81} );
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "盆骨模型";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+			console.log("pelvis width: " + object3DWidth);
+			console.log("pelvis height: " + object3DHeight);
+			console.log("pelvis depth: " + object3DDepth);
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			
+			editor.execute( new AddObjectCommand( mesh ) );
+		});
+	});
+
+	options.add(option);
+
+
+
 	// 髋臼杯组合
 
 	var option = new UI.Row();
@@ -62,14 +105,12 @@ Menubar.Import = function ( editor ) {
 			if (object3DWidth > 0 && object3DWidth < 10) {
 				scale_x = 0.5;
 			}
-			else if ( object3DWidth < 100 ) {
+			else {
 				scale_x = 0.1;
 			}
-			else {
-				scale_x = 0.05;
-			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-
+			mesh.rotation.z = Math.PI / 2;
+			/*
 			var plane_width = 6;
 			var plane_height = 6;
 
@@ -95,15 +136,9 @@ Menubar.Import = function ( editor ) {
 			plane_z.position.set( 0, 0, 0 );
 			plane_z.rotation.y = Math.PI / 2;
 			plane_z.name = "横截面";
+			*/
 
-			var group = new THREE.Group();
-			group.add( plane_x );
-			group.add( plane_y );
-			group.add( plane_z );
-			group.add( mesh );
-			group.name = "组合";
-			
-			editor.execute( new AddObjectCommand( group ) );
+			editor.execute( new AddObjectCommand( mesh ) );
 		});
 		
 	} );
@@ -147,13 +182,12 @@ Menubar.Import = function ( editor ) {
 			if (object3DWidth > 0 && object3DWidth < 10) {
 				scale_x = 0.5;
 			}
-			else if ( object3DWidth < 100 ) {
+			else {
 				scale_x = 0.1;
 			}
-			else {
-				scale_x = 0.05;
-			}
+
 			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.y = -(Math.PI / 4);
 			
 			editor.execute( new AddObjectCommand( mesh ) );
 		});

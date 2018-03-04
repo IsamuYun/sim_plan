@@ -431,9 +431,7 @@ Editor.prototype = {
 	},
 
 	deselect: function () {
-
 		this.select( null );
-
 	},
 
 	focus: function ( object ) {
@@ -474,9 +472,14 @@ Editor.prototype = {
 
 		// 添加对象前，需要放在objectAdded前面
 		var light = new THREE.DirectionalLight( 0xFFFFFF, 1, 100 );
-		light.position.set( 100, 200, 100 );
-		light.name = "灯光";
-		// 20180223 注释
+		light.position.set( 50, 50, 0 );
+		light.name = "灯光1";
+		this.scene.add(light);
+
+		// 添加对象前，需要放在objectAdded前面
+		var light = new THREE.DirectionalLight( 0xFFFFFF, 1, 100 );
+		light.position.set( -50, -50, 0 );
+		light.name = "灯光2";
 		this.scene.add(light);
 
 		this.signals.editorCleared.dispatch();
