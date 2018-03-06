@@ -172,7 +172,6 @@ var Viewport = function ( editor ) {
 				} else {
 
 					editor.select( object );
-
 				}
 
 			} else {

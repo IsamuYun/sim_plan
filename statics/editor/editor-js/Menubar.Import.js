@@ -40,6 +40,7 @@ Menubar.Import = function ( editor ) {
 
 		var loader = new THREE.STLLoader();
 		loader.load( url, function ( geometry ) {
+			
 			var material = new THREE.MeshLambertMaterial( {color: 0xF5DA81} );
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "盆骨模型";
@@ -64,6 +65,8 @@ Menubar.Import = function ( editor ) {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.position.set( -10.0, 3, -5 );
+			mesh.rotation.y = Math.PI / 4;
 			
 			editor.execute( new AddObjectCommand( mesh ) );
 		});
@@ -109,7 +112,15 @@ Menubar.Import = function ( editor ) {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.rotation.z = Math.PI / 2;
+			mesh.position.set( -0.54, 6.57, -3.02 );
+			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
+			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
+			mesh.rotation.z = Math.PI / 180 * 68.0;
+
+			
+
+		
+
 			/*
 			var plane_width = 6;
 			var plane_height = 6;
@@ -187,7 +198,10 @@ Menubar.Import = function ( editor ) {
 			}
 
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.rotation.y = -(Math.PI / 4);
+			mesh.position.set( -0.59, 4.29, -1.86 );
+			mesh.rotation.y = -(Math.PI / 2);
+
+
 			
 			editor.execute( new AddObjectCommand( mesh ) );
 		});

@@ -838,7 +838,6 @@
 				scope.dispatchEvent( changeEvent );
 
 			}
-
 		}
 
 		function onPointerDown( event ) {
@@ -848,7 +847,7 @@
 			var pointer = event.changedTouches ? event.changedTouches[ 0 ] : event;
 
 			if ( pointer.button === 0 || pointer.button === undefined ) {
-				console.log("mouse down.");
+				
 				var intersect = intersectObjects( pointer, _gizmo[ _mode ].pickers.children );
 
 				if ( intersect ) {
