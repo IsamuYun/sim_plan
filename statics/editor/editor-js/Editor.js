@@ -389,16 +389,8 @@ Editor.prototype = {
 		var uuid = null;
 
 		if ( object !== null ) {
-
 			uuid = object.uuid;
-
 		}
-
-		this.scene.traverse( function ( child ) {
-
-			console.log(child);
-
-		} );
 
 		
 
@@ -478,17 +470,59 @@ Editor.prototype = {
 
 		this.deselect();
 
-		// 添加对象前，需要放在objectAdded前面
-		var light = new THREE.DirectionalLight( 0xFFFFFF, 1, 100 );
-		light.position.set( 80, 80, 0 );
-		light.name = "灯光1";
-		this.scene.add(light);
+		var sky_color = 0xFFFFBB;
+		var ground_color = 0x000000;
+		var intensity = 1;
 
-		// 添加对象前，需要放在objectAdded前面
-		var light = new THREE.DirectionalLight( 0xFFFFFF, 1, 100 );
-		light.position.set( -80, -80, 0 );
-		light.name = "灯光2";
-		this.scene.add(light);
+		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
+		light.name = '半球光 ';
+
+		light.position.set( 30, 30, 17.5 );
+
+		this.scene.add( light );
+
+		const host_name = window.location.origin;
+    	const folder_name = "/static/models/";
+		var url = host_name + folder_name + "acetabular cup.stl";
+
+		var loader = new THREE.STLLoader();
+		
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshLambertMaterial({color: 0xABDCFF});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "髋臼杯";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+			console.log("width: " + object3DWidth);
+			console.log("height: " + object3DHeight);
+			console.log("depth: " + object3DDepth);
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.position.set( -0.54, 6.57, -3.02 );
+			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
+			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
+			mesh.rotation.z = Math.PI / 180 * 68.0;
+
+
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		});
+
+
 
 		this.signals.editorCleared.dispatch();
 

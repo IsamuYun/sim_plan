@@ -215,21 +215,60 @@ Menubar.Import = function ( editor ) {
 	
 	options.add( new UI.HorizontalRule() );
 
-	
+	// 截面
+	var option = new UI.Row();
+	option.setClass( "option" );
+	option.setTextContent( "截面" );
+	option.onClick( function() {
+		var plane_width = 6;
+		var plane_height = 6;
+		var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
+		var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+		var plane_mesh = new THREE.Mesh( plane_geometry, plane_material );
+		plane_mesh.position.set( 0, 0, 0 );
+		plane_mesh.rotation.x = Math.PI / 4;
+		plane_mesh.rotation.y = Math.PI / 2;
+		plane_mesh.name = "截面" + ( ++meshCount );
 
-	// DirectionalLight
+		editor.execute( new AddObjectCommand( plane_mesh ) );
+	} );
+	options.add( option ); 
+
+	options.add( new UI.HorizontalRule() );
+	
+	// AmbientLight
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( '灯光' );
+	option.setTextContent( '环境光' );
 	option.onClick( function () {
 
-		var color = 0xffffff;
+		var color = 0xFFFFFF;
+		var intensity = 1;
+
+		var light = new THREE.AmbientLight( color, intensity );
+		light.name = '环境光 ' + ( ++lightCount );
+		//light.target.name = '环境光 ' + ( lightCount ) + ' Target';
+
+		light.position.set( 20, 20, 7.5 );
+
+		editor.execute( new AddObjectCommand( light ) );
+
+	} );
+	options.add( option );
+
+	// DirectionalLight
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( '平行光' );
+	option.onClick( function () {
+
+		var color = 0xFFFFFF;
 		var intensity = 1;
 
 		var light = new THREE.DirectionalLight( color, intensity );
-		light.name = '灯光 ' + ( ++ lightCount );
-		light.target.name = '灯光 ' + ( lightCount ) + ' Target';
+		light.name = '平行光 ' + ( ++lightCount );
+		light.target.name = '平行光 ' + ( lightCount ) + ' Target';
 
 		light.position.set( 5, 10, 7.5 );
 
@@ -238,7 +277,54 @@ Menubar.Import = function ( editor ) {
 	} );
 	options.add( option );
 
-	
+	// HemisphereLight
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( '半球光' );
+	option.onClick( function () {
+
+		var sky_color = 0xFFFFBB;
+		var ground_color = 0x080820;
+		var intensity = 1;
+
+		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
+		light.name = '半球光 ' + ( ++lightCount );
+
+		light.position.set( 15, 15, 17.5 );
+
+		editor.execute( new AddObjectCommand( light ) );
+
+	} );
+	options.add( option );
+
+	// SpotLight
+	var option = new UI.Row();
+	option.setClass( 'option' );
+	option.setTextContent( '聚光灯' );
+	option.onClick( function () {
+
+		var spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set( 60, 100, 100 );
+
+		spotLight.castShadow = true;
+
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
+
+		spotLight.shadow.camera.near = 500;
+		spotLight.shadow.camera.far = 4000;
+		spotLight.shadow.camera.fov = 30;
+
+		spotLight.name = '聚光灯 ' + ( ++lightCount );
+		spotLight.target.name = '聚光灯 ' + ( lightCount ) + ' Target';
+
+
+		editor.execute( new AddObjectCommand( spotLight ) );
+
+	} );
+	options.add( option );
+
+
 
 	return container;
 
