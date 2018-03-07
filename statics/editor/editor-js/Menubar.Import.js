@@ -88,9 +88,20 @@ Menubar.Import = function ( editor ) {
 
 		var loader = new THREE.STLLoader();
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshLambertMaterial({color: 0xABDCFF});
+
+			var localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
+
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xABDCFF,
+				shininess: 100,
+				side: THREE.DoubleSide,
+				// ***** Clipping setup (material): *****
+				clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "髋臼杯";
+			mesh.castShadow = true;
 
 			geometry.computeBoundingBox();
 
@@ -112,44 +123,15 @@ Menubar.Import = function ( editor ) {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( -0.54, 6.57, -3.02 );
+			mesh.position.set( 0, 0, 0 );
+			/*
 			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
 			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
-			mesh.rotation.z = Math.PI / 180 * 68.0;
-
-			
-
-		
-
-			/*
-			var plane_width = 6;
-			var plane_height = 6;
-
-			var plane_y_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
-			var plane_y_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
-
-			var plane_y = new THREE.Mesh( plane_y_geometry, plane_y_material );
-			plane_y.position.set( 0, 0, 0 );
-			plane_y.name = "冠状面";
-
-			var plane_x_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
-			var plane_x_material = new THREE.MeshBasicMaterial( {color: 0x01DF74, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
-
-			var plane_x = new THREE.Mesh( plane_x_geometry, plane_x_material );
-			plane_x.position.set( 0, 0, 0 );
-			plane_x.rotation.x = Math.PI / 2;
-			plane_x.name = "矢状面";
-
-			var plane_z_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
-			var plane_z_material = new THREE.MeshBasicMaterial( {color: 0xFE2E2E, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
-
-			var plane_z = new THREE.Mesh( plane_z_geometry, plane_z_material );
-			plane_z.position.set( 0, 0, 0 );
-			plane_z.rotation.y = Math.PI / 2;
-			plane_z.name = "横截面";
-			*/
+			mesh.rotation.z = Math.PI / 180 * 68.0;*/
+			mesh.rotation.set(0, 0, 0);
 
 			editor.execute( new AddObjectCommand( mesh ) );
+
 		});
 		
 	} );

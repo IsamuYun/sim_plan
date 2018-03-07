@@ -475,9 +475,16 @@ Editor.prototype = {
 		var intensity = 1;
 
 		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
-		light.name = '半球光 ';
+		light.name = '半球光_1 ';
 
 		light.position.set( 30, 30, 17.5 );
+
+		this.scene.add( light );
+
+		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
+		light.name = '半球光_2 ';
+
+		light.position.set( -30, -30, -17.5 );
 
 		this.scene.add( light );
 
