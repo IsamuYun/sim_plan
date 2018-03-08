@@ -21,7 +21,7 @@ Menubar.File = function ( editor ) {
 
 	var title = new UI.Panel();
 	title.setClass( 'title' );
-	title.setTextContent( '文件' );
+	title.setTextContent( '场景' );
 	container.add( title );
 
 	var options = new UI.Panel();
@@ -32,10 +32,10 @@ Menubar.File = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( 'New' );
+	option.setTextContent( '新建' );
 	option.onClick( function () {
 
-		if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
+		if ( confirm( '所有数据将会被重置，是否确定?' ) ) {
 
 			editor.clear();
 
@@ -46,7 +46,7 @@ Menubar.File = function ( editor ) {
 
 	//
 
-	options.add( new UI.HorizontalRule() );
+	// options.add( new UI.HorizontalRule() );
 
 	// Import
 
@@ -72,7 +72,7 @@ Menubar.File = function ( editor ) {
 		fileInput.click();
 
 	} );
-	options.add( option );
+	// options.add( option );
 
 	//
 

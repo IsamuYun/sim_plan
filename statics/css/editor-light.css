@@ -240,3 +240,53 @@ select {
 	.Outliner .option.active {
 		background-color: rgba(0,0,0,0.04);
 	}
+
+#sidebar-left {
+	position: absolute;
+	left: 0;
+	top: 80px;
+	bottom: 60px;
+	width: 32px;
+	height: 320px;
+	background: #eee;
+	overflow: auto;
+}
+
+	#sidebar-left * {
+		vertical-align: middle;
+	}
+
+	#sidebar-left .Panel {
+		color: #888;
+		padding: 0px;
+		/*border-top: 1px solid #ccc;*/
+	}
+
+	#sidebar-left .Panel.collapsed {
+		margin-bottom: 0;
+	}
+
+	#sidebar-left .Row {
+		min-height: 20px;
+		margin-bottom: 10px;
+	}
+
+	#sidebar-left button {
+		color: #555;
+		background-color: #ddd;
+		border: 0;
+		padding: 0;
+		margin: 0;
+		text-transform: uppercase;
+		cursor: pointer;
+		outline: none;
+	}
+	
+	#sidebar-left button:hover {
+		background-color: #fff;
+	}
+	
+	#sidebar-left button.selected {
+		background-color: #fff;
+	}
+	

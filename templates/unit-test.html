@@ -3,14 +3,74 @@
 	<head>
 		<title>ZSFab - 编辑器</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        
+        <!-- <link href="static/css/pace/pace-theme-bounce.css" rel="stylesheet" /> -->
+        <!-- <link href="static/css/pace/pace-theme-center-simple.css" rel="stylesheet" />-->
+
+        <link href="static/css/pace/pace-theme-big-counter.css" rel="stylesheet" />
+
+        <script>
+			paceOptions = {
+				ajax: true, // disabled
+  				document: true, // disabled
+  				eventLag: false, // disabled
+				// Disable the 'elements' source
+				elements: false,
+		  
+				// Only show the progress on regular and ajax-y page navigation,
+				// not every request
+				restartOnRequestAfter: true
+		  	}
+		</script>
+
+        <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script>
+        
+        <script>
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function load(time) {
+                var x = new XMLHttpRequest()
+                x.open('GET', "http://www.google.com", true);
+                x.send();
+            };
+            //load(20);
+            //load(100);
+            //load(500);
+            //load(2000);
+            load(30000);
+            
+            /*
+            setTimeout( function(){
+                Pace.ignore( function(){
+                    load(3100);
+                } );
+            }, 4000 );
+            */
+            
+            Pace.on( 'hide', function(){
+                // window.location.href = "./sim-plan";
+                console.log('done');
+            } );
+
+            Pace.restart();
+
+
+        </script>
+
     </head>
     <body>
-        <form id="upload-form" action="./upload" method="post" enctype="multipart/form-data" >
-            　　　<input type="file" id="upload" name="upload" /> <br />
-            　　　<input type="submit" value="Upload" />
-            </form>
-            
-            
+        <input id="range" type="hidden" min="0" max="100">
+        <script>
+            range.addEventListener( 'input', function(){
+                document.querySelector('.pace').classList.remove('pace-inactive');
+                document.querySelector('.pace').classList.add('pace-active');
+                document.querySelector('.pace-progress').setAttribute('data-progress-text', range.value + '%');
+                document.querySelector('.pace-progress').setAttribute('style', '-webkit-transform: translate3d(' + range.value + '%, 0px, 0px)');
+            } );
+        </script>
     </body>
 </html>

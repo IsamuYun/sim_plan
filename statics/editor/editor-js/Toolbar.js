@@ -13,8 +13,8 @@ var Toolbar = function ( editor ) {
 	container.add( buttons );
 
 	// translate / rotate / scale
-
-	var translate = new UI.Button( 'translate' );
+	/*
+	var translate = new UI.Button( '移动' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
 	translate.dom.title = 'W';
 	translate.dom.className = 'Button selected';
 	translate.onClick( function () {
@@ -24,7 +24,7 @@ var Toolbar = function ( editor ) {
 	} );
 	buttons.add( translate );
 
-	var rotate = new UI.Button( 'rotate' );
+	var rotate = new UI.Button( '旋转' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
 	rotate.dom.title = 'E';
 	rotate.onClick( function () {
 
@@ -33,7 +33,7 @@ var Toolbar = function ( editor ) {
 	} );
 	buttons.add( rotate );
 
-	var scale = new UI.Button( 'scale' );
+	var scale = new UI.Button( '缩放' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
 	scale.dom.title = 'R';
 	scale.onClick( function () {
 
@@ -41,7 +41,8 @@ var Toolbar = function ( editor ) {
 
 	} );
 	buttons.add( scale );
-
+	*/
+	/*
 	signals.transformModeChanged.add( function ( mode ) {
 
 		translate.dom.classList.remove( 'selected' );
@@ -57,27 +58,30 @@ var Toolbar = function ( editor ) {
 		}
 
 	} );
-
+	*/
+	
 	// grid
-
+	/*
 	var grid = new UI.Number( 25 ).setWidth( '40px' ).onChange( update );
 	buttons.add( new UI.Text( 'grid: ' ) );
 	buttons.add( grid );
 
 	var snap = new UI.THREE.Boolean( false, 'snap' ).onChange( update );
 	buttons.add( snap );
+	*/
 
-	var local = new UI.THREE.Boolean( false, 'local' ).onChange( update );
+	var local = new UI.THREE.Boolean( false, '局部坐标系' ).onChange( update );
 	buttons.add( local );
-
+	/*
 	var showGrid = new UI.THREE.Boolean( true, 'show' ).onChange( update );
 	buttons.add( showGrid );
+	*/
 
 	function update() {
 
-		signals.snapChanged.dispatch( snap.getValue() === true ? grid.getValue() : null );
+		// signals.snapChanged.dispatch( snap.getValue() === true ? grid.getValue() : null );
 		signals.spaceChanged.dispatch( local.getValue() === true ? "local" : "world" );
-		signals.showGridChanged.dispatch( showGrid.getValue() );
+		// signals.showGridChanged.dispatch( showGrid.getValue() );
 
 	}
 

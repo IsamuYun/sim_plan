@@ -6,14 +6,38 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	</head>
 	<body ontouchstart="">
+
 		<link href="static/css/editor-main.css" rel="stylesheet" />
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
+		
 		<!--<link id="theme" href="static/css/editor-dark.css" rel="stylesheet" />-->
+
+		<!-- <link href="static/css/pace/pace-theme-big-counter.css" rel="stylesheet" /> -->
+		<!--loading page-->
+		<div class="loader" id="loader">
+			
+				<img src="static/img/loader/poster-01.jpg" height="100%" width="100%" alt="Loader" class="loader-loader" />
+			
+		</div>
+		<script>
+			window.onload = function() {
+    			setTimeout( function(){
+    				var loader = document.getElementById("loader");
+    				loader.className="loader fadeout" ;//使用渐隐的方法淡出loading page
+    				setTimeout( function(){
+						loader.style.display="none"},1000)
+    				}, 1000)//强制显示loading page 1s
+				}
+		</script>
+
+		<!-- <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script> -->
+		
+		
+		
 
 		<script src="static/js/three.js"></script>
 		<script src="static/editor/editor-js/libs/THREE.MeshLine.js"></script>
-		<script src="static/editor/editor-js/libs/csg.js"></script>
-		<script src="static/editor/editor-js/libs/ThreeCSG.js"></script>
+		
 		<script src="static/editor/js/libs/system.min.js"></script>
 
 		<script src="static/editor/js/controls/EditorControls.js"></script>
@@ -135,6 +159,7 @@
 		<script src="static/editor/editor-js/Sidebar.Script.js"></script>
 		<script src="static/editor/editor-js/Sidebar.History.js"></script>
 		<script src="static/editor/editor-js/Toolbar.js"></script>
+		<script src="static/editor/editor-js/Sidebar.Left.js"></script>
 		<script src="static/editor/editor-js/Viewport.js"></script>
 		<script src="static/editor/editor-js/Viewport.Info.js"></script>
 
@@ -185,10 +210,11 @@
             
             var script = new Script( editor );
 			document.body.appendChild( script.dom );
-            var player = new Player( editor );
+			
+			var player = new Player( editor );
 			document.body.appendChild( player.dom );
-            
-            var toolbar = new Toolbar( editor );
+			
+			var toolbar = new Toolbar( editor );
 			document.body.appendChild( toolbar.dom );
             
             var menubar = new Menubar( editor );
@@ -199,6 +225,9 @@
             
             var modal = new UI.Modal();
 			document.body.appendChild( modal.dom );
+
+			var sidebar_left = new SidebarLeft( editor );
+			document.body.appendChild( sidebar_left.dom );
             
 			
 			editor.setTheme( editor.config.getKey( 'theme' ) );
