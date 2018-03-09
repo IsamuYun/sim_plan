@@ -256,9 +256,9 @@
 			],
 
 			XYZ: [
-				[ new THREE.Mesh( new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 ), new GizmoMaterial( { color: 0x000000, opacity: 0.25 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
+				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.1, 0 ), new GizmoMaterial( { color: 0xFFFFFF, opacity: 0.25 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
 			],
-			/*
+			
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xffff00, opacity: 0.25 } ) ), [ 0.15, 0.15, 0 ] ]
 			],
@@ -270,7 +270,6 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xff00ff, opacity: 0.25 } ) ), [ 0.15, 0, 0.15 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
-			*/
 		};
 
 		this.pickerGizmos = {
@@ -288,9 +287,9 @@
 			],
 
 			XYZ: [
-				[ new THREE.Mesh( new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 ), pickerMaterial ) ]
+				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.2, 0 ), pickerMaterial ) ]
 			],
-			/*
+			
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0.2, 0 ] ]
 			],
@@ -302,7 +301,7 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0, 0.2 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
-			*/
+			
 		};
 
 		this.setActivePlane = function ( axis, eye ) {

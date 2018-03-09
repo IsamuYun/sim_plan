@@ -390,7 +390,33 @@ Editor.prototype = {
 
 		if ( object !== null ) {
 			uuid = object.uuid;
+
+			if ( object.name === "截面" ) {
+				console.log("点击了截面");
+				var clip_pane = object;
+				
+				this.scene.traverse( function( child ) {
+					if (child.name === "髋臼杯" ) {
+						var clip_object = child;
+
+						var v1 = clip_pane.position;
+						var v2 = clip_object.position;
+
+						var distance = v1.distanceTo(v2);
+
+						var plane = new THREE.Plane( new THREE.Vector3(0, -1, 0), distance);
+						clip_object.material.clippingPlanes = [plane];
+						
+						this.config.setKey( 'selected', uuid );
+					}
+				} );
+			}
 		}
+
+
+		
+
+		
 
 		
 
@@ -481,12 +507,14 @@ Editor.prototype = {
 
 		this.scene.add( light );
 
+		/*
 		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
 		light.name = '半球光_2 ';
 
 		light.position.set( -30, -30, -17.5 );
 
 		this.scene.add( light );
+		*/
 
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";
@@ -495,7 +523,11 @@ Editor.prototype = {
 		var loader = new THREE.STLLoader();
 		
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshLambertMaterial({color: 0xABDCFF});
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xABDCFF,
+				shininess: 100,
+				side: THREE.DoubleSide
+			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "髋臼杯";
 
@@ -506,9 +538,6 @@ Editor.prototype = {
 			var object3DWidth  = bb.max.x - bb.min.x;
 			var object3DHeight = bb.max.y - bb.min.y;
 			var object3DDepth  = bb.max.z - bb.min.z;
-			console.log("width: " + object3DWidth);
-			console.log("height: " + object3DHeight);
-			console.log("depth: " + object3DDepth);
 
 			var scale_x = 0.0;
 			
@@ -519,11 +548,15 @@ Editor.prototype = {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
+			/*
 			mesh.position.set( -0.54, 6.57, -3.02 );
 			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
 			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
 			mesh.rotation.z = Math.PI / 180 * 68.0;
+			*/
 
+			mesh.position.set(0, 0, 0);
+			mesh.rotation.set(0, 0, 0);
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			

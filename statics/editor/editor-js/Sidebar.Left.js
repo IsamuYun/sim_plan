@@ -41,6 +41,29 @@ var SidebarLeft = function ( editor ) {
         clipping_pane.dom.classList.remove( 'selected' );
         expand.dom.classList.remove( 'selected' );
         clipping_pane.dom.classList.add( 'selected' );
+
+
+        var scope = this;
+
+		editor.scene.traverse( function ( child ) {
+            if ( child.name == "髋臼杯" ) {
+                var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
+                child.material.clippingPlanes = [plane];
+
+                var plane_width = 6;
+		        var plane_height = 6;
+		        var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
+		        var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+		        var plane_mesh = new THREE.Mesh( plane_geometry, plane_material );
+		        plane_mesh.position.set( 0, 0.5, 0 );
+		        plane_mesh.rotation.set( Math.PI / 2, 0, 0 );
+		        plane_mesh.name = "截面";
+
+		        editor.execute( new AddObjectCommand( plane_mesh ) );
+            }
+
+		} );
+        
     } );
     buttons.add( clipping_pane );
 
