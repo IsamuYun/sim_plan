@@ -89,14 +89,14 @@ Menubar.Import = function ( editor ) {
 		var loader = new THREE.STLLoader();
 		loader.load( url, function ( geometry ) {
 
-			var localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
+			// var localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
 
 			var material = new THREE.MeshPhongMaterial( {
 				color: 0xABDCFF,
 				shininess: 100,
 				side: THREE.DoubleSide,
 				// ***** Clipping setup (material): *****
-				clippingPlanes: [ localPlane ],
+				// clippingPlanes: [ localPlane ],
 				clipShadows: true
 			});
 			var mesh = new THREE.Mesh( geometry, material );
@@ -210,8 +210,8 @@ Menubar.Import = function ( editor ) {
 		plane_mesh.position.set( 0, 0, 0 );
 		plane_mesh.rotation.x = Math.PI / 4;
 		plane_mesh.rotation.y = Math.PI / 2;
-		plane_mesh.name = "截面" + ( ++meshCount );
-
+		//plane_mesh.name = "截面" + ( ++meshCount );
+		plane_mesh.name = "截面";
 		editor.execute( new AddObjectCommand( plane_mesh ) );
 	} );
 	options.add( option ); 

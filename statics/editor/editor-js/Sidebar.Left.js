@@ -35,7 +35,6 @@ var SidebarLeft = function ( editor ) {
     
     var clipping_pane = new UI.Button( '截面' ).setHeight( '80px' ).setWidth( '32px' );
     clipping_pane.onClick( function() {
-        console.log("截面");
         translate.dom.classList.remove( 'selected' );
 		rotate.dom.classList.remove( 'selected' );
         clipping_pane.dom.classList.remove( 'selected' );
@@ -47,19 +46,39 @@ var SidebarLeft = function ( editor ) {
 
 		editor.scene.traverse( function ( child ) {
             if ( child.name == "髋臼杯" ) {
-                var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
+                var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.0 );
                 child.material.clippingPlanes = [plane];
+
+                
+                
+                var another_plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0.0 );
+                var clip_object = child.clone();
+                var object_geometry = child.geometry.clone();
+                var object_material =  new THREE.MeshPhongMaterial( {
+                    color: 0xFF0000,
+                    shininess: 100,
+                    side: THREE.DoubleSide,
+                    // ***** Clipping setup (material): *****
+                    clippingPlanes: [ another_plane ],
+                    clipShadows: true
+                });
+                var object = new THREE.Mesh( object_geometry, object_material );
+                object.name = "clip 模拟";
+                object.scale.set(clip_object.scale.x, clip_object.scale.y, clip_object.scale.z);
+
+                editor.execute( new AddObjectCommand( object ) );
 
                 var plane_width = 6;
 		        var plane_height = 6;
 		        var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
 		        var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
 		        var plane_mesh = new THREE.Mesh( plane_geometry, plane_material );
-		        plane_mesh.position.set( 0, 0.5, 0 );
+		        plane_mesh.position.set( 0, 0, 0 );
 		        plane_mesh.rotation.set( Math.PI / 2, 0, 0 );
 		        plane_mesh.name = "截面";
 
-		        editor.execute( new AddObjectCommand( plane_mesh ) );
+                editor.execute( new AddObjectCommand( plane_mesh ) );
+
             }
 
 		} );

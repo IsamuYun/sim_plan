@@ -68,7 +68,9 @@ var Editor = function () {
 
 		showGridChanged: new Signal(),
 		refreshSidebarObject3D: new Signal(),
-		historyChanged: new Signal()
+		historyChanged: new Signal(),
+
+		clipChanged: new Signal(),
 
 	};
 
@@ -94,8 +96,6 @@ var Editor = function () {
 
 	this.selected = null;
 	this.helpers = {};
-
-	
 
 };
 
@@ -383,8 +383,11 @@ Editor.prototype = {
 	//
 
 	select: function ( object ) {
-
-		if ( this.selected === object ) return;
+		
+		if ( this.selected === object ) {
+			
+			return;
+		}
 
 		var uuid = null;
 
@@ -392,22 +395,32 @@ Editor.prototype = {
 			uuid = object.uuid;
 
 			if ( object.name === "截面" ) {
-				console.log("点击了截面");
 				var clip_pane = object;
 				
 				this.scene.traverse( function( child ) {
 					if (child.name === "髋臼杯" ) {
 						var clip_object = child;
-
-						var v1 = clip_pane.position;
-						var v2 = clip_object.position;
-
-						var distance = v1.distanceTo(v2);
-
-						var plane = new THREE.Plane( new THREE.Vector3(0, -1, 0), distance);
-						clip_object.material.clippingPlanes = [plane];
 						
-						this.config.setKey( 'selected', uuid );
+						
+						
+						
+						/*
+						axis = new THREE.Vector3( 0, 1, 0 );
+						angle = clip_pane.rotation.y;
+						vec[0].applyAxisAngle( axis, angle );
+						vec[1].applyAxisAngle( axis, angle );
+						vec[2].applyAxisAngle( axis, angle );
+
+						axis = new THREE.Vector3( 0, 0, 1 );
+						angle = clip_pane.rotation.z;
+						vec[0].applyAxisAngle( axis, angle );
+						vec[1].applyAxisAngle( axis, angle );
+						vec[2].applyAxisAngle( axis, angle );
+						*/
+						
+							// child.geometry.needsUpdate = true;
+							
+
 					}
 				} );
 			}

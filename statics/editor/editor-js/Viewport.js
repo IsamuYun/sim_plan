@@ -117,6 +117,74 @@ var Viewport = function ( editor ) {
 
 			}
 
+			// 更改geometry中的clip_plane
+			if ( object.name === "截面" ) {
+				var clip_plane = object.clone();
+
+				editor.scene.traverse( function( child ) {
+					if (child.name === "髋臼杯" ) {
+						var clip_object = child;
+
+						var d1 = clip_plane.position;
+						var d2 = clip_object.position;
+
+						var d3 = new THREE.Vector3(0, d1.y, 0);
+						var d4 = new THREE.Vector3(0, d2.y, 0);
+
+						var d5 = d3.distanceTo(d4);
+						var vec = Array();
+
+						vec[0] = clip_plane.geometry.vertices[0];
+						vec[1] = clip_plane.geometry.vertices[1];
+						vec[2] = clip_plane.geometry.vertices[2];
+
+						console.log(clip_plane);
+						var normal_y = 0;
+						if ( d1.y < d2.y ) {
+							d5 = -d5;
+						}
+
+
+
+						var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), d5);
+						
+
+						//plane.setFromCoplanarPoints(vec[0], vec[1], vec[2]);
+						
+						clip_object.material.clippingPlanes = [plane];
+
+						
+
+						this.editor.signals.sceneGraphChanged.dispatch();
+					}
+					if ( child.name === "clip 模拟" ) {
+						var clip_object = child;
+
+						var d1 = clip_plane.position;
+						var d2 = clip_object.position;
+
+						var d3 = new THREE.Vector3(0, d1.y, 0);
+						var d4 = new THREE.Vector3(0, d2.y, 0);
+
+						var d5 = d3.distanceTo(d4);
+						var vec = Array();
+
+						vec[0] = clip_plane.geometry.vertices[0];
+						vec[1] = clip_plane.geometry.vertices[1];
+						vec[2] = clip_plane.geometry.vertices[2];
+
+						var normal_y = 0;
+						if ( d1.y < d2.y ) {
+							d5 = -d5;
+						}
+						var plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), -d5);
+						clip_object.material.clippingPlanes = [plane];
+						this.editor.signals.sceneGraphChanged.dispatch();
+					}
+
+				} );
+			}
+
 		}
 
 		controls.enabled = true;
