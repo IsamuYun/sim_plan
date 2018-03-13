@@ -39,6 +39,18 @@ RemoveObjectCommand.prototype = {
 		this.parent.remove( this.object );
 		this.editor.select( this.parent );
 
+		if (this.object.name === "截面" ) {
+			console.log("删除的是截面");
+			this.editor.scene.traverse( function ( child ) {
+				if ( child.name === "髋臼杯" ) {
+					child.material.clippingPlanes = [];
+				}
+				if ( child.name === "clip 模拟" ) {
+					this.editor.execute( new RemoveObjectCommand( child ) );
+				}
+			} );
+		}
+
 		this.editor.signals.objectRemoved.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 

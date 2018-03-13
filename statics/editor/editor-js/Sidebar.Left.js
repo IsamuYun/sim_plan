@@ -48,8 +48,6 @@ var SidebarLeft = function ( editor ) {
             if ( child.name == "髋臼杯" ) {
                 var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.0 );
                 child.material.clippingPlanes = [plane];
-
-                
                 
                 var another_plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0.0 );
                 var clip_object = child.clone();
@@ -88,7 +86,6 @@ var SidebarLeft = function ( editor ) {
 
     var expand = new UI.Button( '扩展' ).setHeight( '80px' ).setWidth( '32px' );
     expand.onClick( function() {
-        console.log("扩展");
         translate.dom.classList.remove( 'selected' );
 		rotate.dom.classList.remove( 'selected' );
         clipping_pane.dom.classList.remove( 'selected' );
@@ -96,6 +93,31 @@ var SidebarLeft = function ( editor ) {
         expand.dom.classList.add( 'selected' );
     } );
     buttons.add( expand );
+
+    var close_clip = new UI.Button( "关闭/打开 " ).setHeight( "80px" ).setWidth( "32px" );
+    close_clip.onClick( function() {
+        translate.dom.classList.remove( "selected" );
+        rotate.dom.classList.remove( "selected" );
+        clipping_pane.dom.classList.remove( "selected" );
+        expand.dom.classList.remove( "selected" );
+        close_clip.dom.classList.remove( "selected" );
+        close_clip.dom.classList.add( "selected" );
+
+        var scope = this;
+        editor.scene.traverse( function ( child ) {
+            if ( child.name == "clip 模拟" ) {
+                if (child.visible === true) {
+                    child.visible = false;
+                }
+                else {
+                    child.visible = true;
+                }
+                editor.signals.sceneGraphChanged.dispatch();
+            }
+        } );
+
+    } );
+    buttons.add( close_clip );
     
     signals.transformModeChanged.add( function ( mode ) {
 
@@ -104,6 +126,7 @@ var SidebarLeft = function ( editor ) {
         // scale.dom.classList.remove( 'selected' );
         clipping_pane.dom.classList.remove( 'selected' );
         expand.dom.classList.remove( 'selected' );
+        close_clip.dom.classList.remove( "selected" );
 
 		switch ( mode ) {
         	case 'translate': translate.dom.classList.add( 'selected' ); break;

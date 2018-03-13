@@ -14,6 +14,7 @@
 
 		<!-- <link href="static/css/pace/pace-theme-big-counter.css" rel="stylesheet" /> -->
 		<!--loading page-->
+		<!--
 		<div class="loader" id="loader">
 			
 				<img src="static/img/loader/poster-01.jpg" height="100%" width="100%" alt="Loader" class="loader-loader" />
@@ -29,7 +30,7 @@
     				}, 1000)//强制显示loading page 1s
 				}
 		</script>
-
+		-->
 		<!-- <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script> -->
 		
 		
@@ -398,6 +399,9 @@
 
 						editor.signals.transformModeChanged.dispatch( 'scale' );
 
+						break;
+					case 27: // Esc
+						editor.select( null );
 						break;
 
 				}

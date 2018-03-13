@@ -393,43 +393,11 @@ Editor.prototype = {
 
 		if ( object !== null ) {
 			uuid = object.uuid;
-
-			if ( object.name === "截面" ) {
-				var clip_pane = object;
-				
-				this.scene.traverse( function( child ) {
-					if (child.name === "髋臼杯" ) {
-						var clip_object = child;
-						
-						
-						
-						
-						/*
-						axis = new THREE.Vector3( 0, 1, 0 );
-						angle = clip_pane.rotation.y;
-						vec[0].applyAxisAngle( axis, angle );
-						vec[1].applyAxisAngle( axis, angle );
-						vec[2].applyAxisAngle( axis, angle );
-
-						axis = new THREE.Vector3( 0, 0, 1 );
-						angle = clip_pane.rotation.z;
-						vec[0].applyAxisAngle( axis, angle );
-						vec[1].applyAxisAngle( axis, angle );
-						vec[2].applyAxisAngle( axis, angle );
-						*/
-						
-							// child.geometry.needsUpdate = true;
-							
-
-					}
-				} );
+			if ( object.name === "clip 模拟" )
+			{
+				return;
 			}
 		}
-
-
-		
-
-		
 
 		
 
