@@ -122,6 +122,7 @@ var Viewport = function ( editor ) {
 				var clip_plane = object.clone();
 
 				editor.scene.traverse( function( child ) {
+					console.log( child );
 					if (child.name === "髋臼杯" ) {
 						var clip_object = child;
 

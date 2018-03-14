@@ -232,9 +232,6 @@
             
 			
 			editor.setTheme( editor.config.getKey( 'theme' ) );
-
-
-			
            
 			editor.storage.init( function () {
 
@@ -291,9 +288,6 @@
 
 				};
 				
-				
-				
-
                 var signals = editor.signals;
 
 				signals.geometryChanged.add( saveState );
@@ -312,14 +306,6 @@
 					modal.show( content );
 
 				} );
-
-				
-				
-				
-				
-				
-
-				
 
 			} );
             
@@ -401,7 +387,7 @@
 
 						break;
 					case 27: // Esc
-						editor.select( null );
+						 editor.select( null );
 						break;
 
 				}
@@ -434,7 +420,7 @@
 
 						editor.clear();
 						editor.fromJSON( JSON.parse( text ) );
-
+						
 					} );
 
 					isLoadingFromHash = true;

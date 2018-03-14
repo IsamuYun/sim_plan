@@ -275,6 +275,8 @@ Editor.prototype = {
 			} else if ( object instanceof THREE.SpotLight ) {
 
 				helper = new THREE.SpotLightHelper( object, 1 );
+				// 2018年3月14日添加
+				return;
 
 			} else if ( object instanceof THREE.HemisphereLight ) {
 
@@ -482,9 +484,11 @@ Editor.prototype = {
 		light.position.set( 20.0, 20.0, 7.5 );
 		this.scene.add( light );
 
-		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		var spotLight = new THREE.SpotLight( 0xFFFFFF, 0.3 );
 		spotLight.position.set( 0, 12.0, 12.0 );
 		spotLight.name = "聚光灯";
+		
+		/*
 		spotLight.castShadow = true;
 
 		spotLight.shadow.mapSize.width = 1024;
@@ -493,13 +497,13 @@ Editor.prototype = {
 		spotLight.shadow.camera.near = 500;
 		spotLight.shadow.camera.far = 4000;
 		spotLight.shadow.camera.fov = 30;
-
+		*/
 		this.scene.add( spotLight );
-
+		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( 0, 12.0, -12.0 );
 		spotLight.name = "聚光灯";
-
+		/*
 		spotLight.castShadow = true;
 
 		spotLight.shadow.mapSize.width = 1024;
@@ -508,13 +512,13 @@ Editor.prototype = {
 		spotLight.shadow.camera.near = 500;
 		spotLight.shadow.camera.far = 4000;
 		spotLight.shadow.camera.fov = 30;
-
+		*/
 		this.scene.add( spotLight );
-
+		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( 12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
-
+		/*
 		spotLight.castShadow = true;
 
 		spotLight.shadow.mapSize.width = 1024;
@@ -523,12 +527,13 @@ Editor.prototype = {
 		spotLight.shadow.camera.near = 500;
 		spotLight.shadow.camera.far = 4000;
 		spotLight.shadow.camera.fov = 30;
-
+		*/
 		this.scene.add( spotLight );
-
+		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( -12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
+		/*
 		spotLight.castShadow = true;
 
 		spotLight.shadow.mapSize.width = 1024;
@@ -537,9 +542,8 @@ Editor.prototype = {
 		spotLight.shadow.camera.near = 500;
 		spotLight.shadow.camera.far = 4000;
 		spotLight.shadow.camera.fov = 30;
-
+		*/
 		this.scene.add( spotLight );
-
 		
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";

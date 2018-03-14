@@ -407,7 +407,6 @@ Sidebar.Object = function ( editor ) {
 			}
 
 			if ( object.distance !== undefined && Math.abs( object.distance - objectDistance.getValue() ) >= 0.01 ) {
-
 				editor.execute( new SetValueCommand( object, 'distance', objectDistance.getValue() ) );
 
 			}

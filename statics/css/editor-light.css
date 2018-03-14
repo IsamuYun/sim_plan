@@ -244,11 +244,11 @@ select {
 #sidebar-left {
 	position: absolute;
 	left: 0;
-	top: 80px;
+	top: 60px;
 	bottom: 60px;
-	width: 32px;
-	height: 400px;
-	background: #eee;
+	width: 40px;
+	height: 550px;
+	background: #4FC3F7;
 	overflow: auto;
 }
 
@@ -257,7 +257,7 @@ select {
 	}
 
 	#sidebar-left .Panel {
-		color: #888;
+		color: #000000;
 		padding: 0px;
 		/*border-top: 1px solid #ccc;*/
 	}
@@ -272,21 +272,26 @@ select {
 	}
 
 	#sidebar-left button {
-		color: #555;
-		background-color: #ddd;
+		color: #FFFFFF;
+		background-color: #4FC3F7;
 		border: 0;
 		padding: 0;
 		margin: 0;
+		width: 40px;
+		height: 110px;
 		text-transform: uppercase;
+		writing-mode: vertical-rl;
 		cursor: pointer;
 		outline: none;
 	}
 	
 	#sidebar-left button:hover {
-		background-color: #fff;
+		background-color: #FFFFFF;
+		color: #4FC3F7;
 	}
 	
 	#sidebar-left button.selected {
-		background-color: #fff;
+		background-color: #FFFFFF;
+		color: #4FC3F7;
 	}
 	
