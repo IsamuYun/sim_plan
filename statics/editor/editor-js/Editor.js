@@ -477,26 +477,70 @@ Editor.prototype = {
 
 		this.deselect();
 
-		var sky_color = 0xFFFFBB;
-		var ground_color = 0x000000;
-		var intensity = 1;
-
-		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
-		light.name = '半球光_1 ';
-
-		light.position.set( 30, 30, 17.5 );
-
+		var light = new THREE.AmbientLight( 0xFFFFFF, 0.38 ); // soft white light
+		light.name = "环境光";
+		light.position.set( 20.0, 20.0, 7.5 );
 		this.scene.add( light );
 
-		/*
-		var light = new THREE.HemisphereLight( sky_color, ground_color, intensity );
-		light.name = '半球光_2 ';
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		spotLight.position.set( 0, 12.0, 12.0 );
+		spotLight.name = "聚光灯";
+		spotLight.castShadow = true;
 
-		light.position.set( -30, -30, -17.5 );
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
 
-		this.scene.add( light );
-		*/
+		spotLight.shadow.camera.near = 500;
+		spotLight.shadow.camera.far = 4000;
+		spotLight.shadow.camera.fov = 30;
 
+		this.scene.add( spotLight );
+
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		spotLight.position.set( 0, 12.0, -12.0 );
+		spotLight.name = "聚光灯";
+
+		spotLight.castShadow = true;
+
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
+
+		spotLight.shadow.camera.near = 500;
+		spotLight.shadow.camera.far = 4000;
+		spotLight.shadow.camera.fov = 30;
+
+		this.scene.add( spotLight );
+
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		spotLight.position.set( 12.0, 12.0, 0.0 );
+		spotLight.name = "聚光灯";
+
+		spotLight.castShadow = true;
+
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
+
+		spotLight.shadow.camera.near = 500;
+		spotLight.shadow.camera.far = 4000;
+		spotLight.shadow.camera.fov = 30;
+
+		this.scene.add( spotLight );
+
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		spotLight.position.set( -12.0, 12.0, 0.0 );
+		spotLight.name = "聚光灯";
+		spotLight.castShadow = true;
+
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
+
+		spotLight.shadow.camera.near = 500;
+		spotLight.shadow.camera.far = 4000;
+		spotLight.shadow.camera.fov = 30;
+
+		this.scene.add( spotLight );
+
+		
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";
 		var url = host_name + folder_name + "acetabular cup.stl";
@@ -505,9 +549,13 @@ Editor.prototype = {
 		
 		loader.load( url, function ( geometry ) {
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0xABDCFF,
-				shininess: 100,
-				side: THREE.DoubleSide
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
 			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "髋臼杯";

@@ -41,7 +41,15 @@ Menubar.Import = function ( editor ) {
 		var loader = new THREE.STLLoader();
 		loader.load( url, function ( geometry ) {
 			
-			var material = new THREE.MeshLambertMaterial( {color: 0xF5DA81} );
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "盆骨模型";
 
@@ -92,9 +100,10 @@ Menubar.Import = function ( editor ) {
 			// var localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.5 );
 
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0xABDCFF,
-				shininess: 100,
+				color: 0xFFFFFF,
+				shininess: 80,
 				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
 				// ***** Clipping setup (material): *****
 				// clippingPlanes: [ localPlane ],
 				clipShadows: true
@@ -155,7 +164,15 @@ Menubar.Import = function ( editor ) {
 
 		var loader = new THREE.STLLoader();
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshLambertMaterial({color: 0xABDCFF});
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "髋关节植入体";
 

@@ -53,7 +53,7 @@ var SidebarLeft = function ( editor ) {
                 var clip_object = child.clone();
                 var object_geometry = child.geometry.clone();
                 var object_material =  new THREE.MeshPhongMaterial( {
-                    color: 0xFF0000,
+                    color: 0xC00000,
                     shininess: 100,
                     side: THREE.DoubleSide,
                     // ***** Clipping setup (material): *****
