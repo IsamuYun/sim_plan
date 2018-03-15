@@ -9,6 +9,7 @@
 
 		<link href="static/css/editor-main.css" rel="stylesheet" />
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
+		<link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
 		
 		<!--<link id="theme" href="static/css/editor-dark.css" rel="stylesheet" />-->
 
@@ -32,7 +33,9 @@
 		</script>
 		-->
 		<!-- <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script> -->
-		
+		<!-- 进度条 -->
+
+		<progress id="model-load-progress" max="100"></progress>
 		
 		
 
@@ -47,7 +50,7 @@
 		<script src="static/editor/js/libs/jszip.min.js"></script>
 		<script src="static/editor/js/libs/inflate.min.js"></script> <!-- FBX -->
 
-		<script src="static/editor/js/loaders/AMFLoader.js"></script>
+		<!--<script src="static/editor/js/loaders/AMFLoader.js"></script>
 		<script src="static/editor/js/loaders/AWDLoader.js"></script>
 		<script src="static/editor/js/loaders/BabylonLoader.js"></script>
 		<script src="static/editor/js/loaders/ColladaLoader.js"></script>
@@ -58,9 +61,9 @@
 		<script src="static/editor/js/loaders/OBJLoader.js"></script>
 		<script src="static/editor/js/loaders/MTLLoader.js"></script>
 		<script src="static/editor/js/loaders/PlayCanvasLoader.js"></script>
-		<script src="static/editor/js/loaders/PLYLoader.js"></script>
+		<script src="static/editor/js/loaders/PLYLoader.js"></script>-->
 		<script src="static/editor/js/loaders/STLLoader.js"></script>
-		<script src="static/editor/js/loaders/TGALoader.js"></script>
+		<!--<script src="static/editor/js/loaders/TGALoader.js"></script>
 		<script src="static/editor/js/loaders/TDSLoader.js"></script>
 		<script src="static/editor/js/loaders/UTF8Loader.js"></script>
 		<script src="static/editor/js/loaders/VRMLLoader.js"></script>
@@ -70,15 +73,15 @@
 		<script src="static/editor/js/loaders/ctm/CTMLoader.js"></script>
 		<script src="static/editor/js/exporters/OBJExporter.js"></script>
 		<script src="static/editor/js/exporters/GLTFExporter.js"></script>
-		<script src="static/editor/js/exporters/STLExporter.js"></script>
+		<script src="static/editor/js/exporters/STLExporter.js"></script>-->
 
 		<script src="static/editor/js/renderers/Projector.js"></script>
-		<script src="static/editor/js/renderers/CanvasRenderer.js"></script>
+		<!--<script src="static/editor/js/renderers/CanvasRenderer.js"></script>-->
 		<script src="static/editor/js/renderers/RaytracingRenderer.js"></script>
-		<script src="static/editor/js/renderers/SoftwareRenderer.js"></script>
-		<script src="static/editor/js/renderers/SVGRenderer.js"></script>
+		<!--<script src="static/editor/js/renderers/SoftwareRenderer.js"></script>
+		<script src="static/editor/js/renderers/SVGRenderer.js"></script>-->
 
-		<script src="static/editor/js/geometries/TeapotBufferGeometry.js"></script>
+		<!--<script src="static/editor/js/geometries/TeapotBufferGeometry.js"></script>-->
 
 		<link rel="stylesheet" href="static/editor/editor-js/libs/codemirror/codemirror.css">
 		<link rel="stylesheet" href="static/editor/editor-js/libs/codemirror/theme/monokai.css">
@@ -113,7 +116,7 @@
 		<script src="static/editor/editor-js/libs/ui.three.js"></script>
 
 		<script src="static/editor/editor-js/libs/app.js"></script>
-		<script src="static/editor/editor-js/Player.js"></script>
+		<!--<script src="static/editor/editor-js/Player.js"></script>
 		<script src="static/editor/editor-js/Script.js"></script>
 
 		<!--<script src="editor/js/vr/WebVR.js"></script>-->
@@ -153,8 +156,8 @@
 		<script src="static/editor/editor-js/Sidebar.Geometry.TorusGeometry.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Geometry.TorusKnotGeometry.js"></script>
 		
-		<script src="static/editor/editor-js/Sidebar.Geometry.TeapotBufferGeometry.js"></script>
-		<script src="static/editor/editor-js/Sidebar.Geometry.LatheGeometry.js"></script>
+		<!--<script src="static/editor/editor-js/Sidebar.Geometry.TeapotBufferGeometry.js"></script>
+		<script src="static/editor/editor-js/Sidebar.Geometry.LatheGeometry.js"></script>-->
 		<script src="static/editor/editor-js/Sidebar.Material.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Animation.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Script.js"></script>
@@ -209,11 +212,11 @@
             var viewport = new Viewport( editor );
 			document.body.appendChild( viewport.dom );
             
-            var script = new Script( editor );
+            /*var script = new Script( editor );
 			document.body.appendChild( script.dom );
 			
 			var player = new Player( editor );
-			document.body.appendChild( player.dom );
+			document.body.appendChild( player.dom );*/
 			
 			var toolbar = new Toolbar( editor );
 			document.body.appendChild( toolbar.dom );

@@ -488,63 +488,25 @@ Editor.prototype = {
 		spotLight.position.set( 0, 12.0, 12.0 );
 		spotLight.name = "聚光灯";
 		
-		/*
-		spotLight.castShadow = true;
-
-		spotLight.shadow.mapSize.width = 1024;
-		spotLight.shadow.mapSize.height = 1024;
-
-		spotLight.shadow.camera.near = 500;
-		spotLight.shadow.camera.far = 4000;
-		spotLight.shadow.camera.fov = 30;
-		*/
 		this.scene.add( spotLight );
 		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( 0, 12.0, -12.0 );
 		spotLight.name = "聚光灯";
-		/*
-		spotLight.castShadow = true;
-
-		spotLight.shadow.mapSize.width = 1024;
-		spotLight.shadow.mapSize.height = 1024;
-
-		spotLight.shadow.camera.near = 500;
-		spotLight.shadow.camera.far = 4000;
-		spotLight.shadow.camera.fov = 30;
-		*/
+		
 		this.scene.add( spotLight );
 		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( 12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
-		/*
-		spotLight.castShadow = true;
-
-		spotLight.shadow.mapSize.width = 1024;
-		spotLight.shadow.mapSize.height = 1024;
-
-		spotLight.shadow.camera.near = 500;
-		spotLight.shadow.camera.far = 4000;
-		spotLight.shadow.camera.fov = 30;
-		*/
 		this.scene.add( spotLight );
 		
 		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
 		spotLight.position.set( -12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
-		/*
-		spotLight.castShadow = true;
-
-		spotLight.shadow.mapSize.width = 1024;
-		spotLight.shadow.mapSize.height = 1024;
-
-		spotLight.shadow.camera.near = 500;
-		spotLight.shadow.camera.far = 4000;
-		spotLight.shadow.camera.fov = 30;
-		*/
 		this.scene.add( spotLight );
 		
+		// 添加髋臼杯
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";
 		var url = host_name + folder_name + "acetabular cup.stl";
@@ -581,20 +543,55 @@ Editor.prototype = {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			/*
-			mesh.position.set( -0.54, 6.57, -3.02 );
-			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
-			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
-			mesh.rotation.z = Math.PI / 180 * 68.0;
-			*/
-
-			mesh.position.set(0, 0, 0);
-			mesh.rotation.set(0, 0, 0);
+			mesh.position.set( 0, -0.98, 2.99 );
+			mesh.rotation.x = - ((Math.PI / 180) * 127.40);
+			mesh.rotation.y = 0.0;
+			mesh.rotation.z = 0.0;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		});
 
+		var url = host_name + folder_name + "hip implant.stl";
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "髋关节植入体";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.position.set( -0.59, -4.35, 5.67 );
+			mesh.rotation.x = 0;
+			mesh.rotation.y = -(Math.PI / 2);
+			mesh.rotation.z = 0;
+
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		});
 
 
 		this.signals.editorCleared.dispatch();

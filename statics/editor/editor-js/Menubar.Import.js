@@ -132,13 +132,11 @@ Menubar.Import = function ( editor ) {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( 0, 0, 0 );
-			/*
-			mesh.rotation.x = - ((Math.PI / 180) * 150.42);
-			mesh.rotation.y = - ((Math.PI / 180) * 1.82);
-			mesh.rotation.z = Math.PI / 180 * 68.0;*/
-			mesh.rotation.set(0, 0, 0);
-
+			mesh.position.set( 0, -1.0, 3.0 );
+			mesh.rotation.x = - ((Math.PI / 180) * 127.40);
+			mesh.rotation.y = 0.0;
+			mesh.rotation.z = 0.0;
+			
 			editor.execute( new AddObjectCommand( mesh ) );
 
 		});
@@ -197,9 +195,10 @@ Menubar.Import = function ( editor ) {
 			}
 
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( -0.59, 4.29, -1.86 );
+			mesh.position.set( -0.59, -4.35, 5.67 );
+			mesh.rotation.x = 0;
 			mesh.rotation.y = -(Math.PI / 2);
-
+			mesh.rotation.z = 0;
 
 			
 			editor.execute( new AddObjectCommand( mesh ) );
@@ -236,7 +235,7 @@ Menubar.Import = function ( editor ) {
 	options.add( new UI.HorizontalRule() );
 	
 	// AmbientLight
-
+	/*
 	var option = new UI.Row();
 	option.setClass( 'option' );
 	option.setTextContent( '环境光' );
@@ -322,7 +321,7 @@ Menubar.Import = function ( editor ) {
 
 	} );
 	options.add( option );
-
+	*/
 
 
 	return container;

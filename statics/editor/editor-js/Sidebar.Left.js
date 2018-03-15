@@ -14,9 +14,10 @@ var SidebarLeft = function ( editor ) {
 
 	// translate / rotate / scale
 
-	var translate = new UI.Button( '移动' ).setHeight( '80px' ).setWidth( '32px' );
+	var translate = new UI.Button( '移动' );
 	translate.dom.title = 'W';
-	translate.dom.className = 'Button selected';
+    translate.dom.className = 'Button selected';
+    translate.dom.textContent = "移动";
 	translate.onClick( function () {
 
 		signals.transformModeChanged.dispatch( 'translate' );
@@ -24,26 +25,13 @@ var SidebarLeft = function ( editor ) {
 	} );
     buttons.add( translate );
     
-    var rotate = new UI.Button( '旋转' ).setHeight( '80px' ).setWidth( '32px' );
-	rotate.dom.title = 'E';
-	rotate.onClick( function () {
-
-		signals.transformModeChanged.dispatch( 'rotate' );
-
-	} );
-    buttons.add( rotate );
-    
-    var clipping_pane = new UI.Button( '截面' ).setHeight( '80px' ).setWidth( '32px' );
-    clipping_pane.onClick( function() {
-        translate.dom.classList.remove( 'selected' );
-		rotate.dom.classList.remove( 'selected' );
-        clipping_pane.dom.classList.remove( 'selected' );
-        expand.dom.classList.remove( 'selected' );
-        clipping_pane.dom.classList.add( 'selected' );
+    var cut = new UI.Button( '切割' )
+    cut.onClick( function() {
+        updateSelectedButton( "cut" );
 
 
         var scope = this;
-
+        /*
 		editor.scene.traverse( function ( child ) {
             if ( child.name == "髋臼杯" ) {
                 var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.0 );
@@ -78,32 +66,101 @@ var SidebarLeft = function ( editor ) {
                 editor.execute( new AddObjectCommand( plane_mesh ) );
 
             }
-
+            
 		} );
-        
+        */
     } );
-    buttons.add( clipping_pane );
+    buttons.add( cut );
 
-    var expand = new UI.Button( '扩展' ).setHeight( '80px' ).setWidth( '32px' );
-    expand.onClick( function() {
-        translate.dom.classList.remove( 'selected' );
-		rotate.dom.classList.remove( 'selected' );
-        clipping_pane.dom.classList.remove( 'selected' );
-        expand.dom.classList.remove( 'selected' );
-        expand.dom.classList.add( 'selected' );
+    var measure = new UI.Button( '测量' );
+	measure.dom.title = 'E';
+	measure.onClick( function () {
+        updateSelectedButton( 'measure' );
+	} );
+    buttons.add( measure );
+
+    var comment = new UI.Button( '注释' );
+    comment.onClick( function() {
+        updateSelectedButton( "comment" );
     } );
-    buttons.add( expand );
+    buttons.add( comment );
 
-    var close_clip = new UI.Button( "关闭/打开 " ).setHeight( "80px" ).setWidth( "32px" );
-    close_clip.onClick( function() {
-        translate.dom.classList.remove( "selected" );
-        rotate.dom.classList.remove( "selected" );
-        clipping_pane.dom.classList.remove( "selected" );
-        expand.dom.classList.remove( "selected" );
-        close_clip.dom.classList.remove( "selected" );
-        close_clip.dom.classList.add( "selected" );
+    var zoom = new UI.Button( "放大" );
+    zoom.onClick( function() {
+        updateSelectedButton( "zoom" );
+        var acetabular_cup_close_x = 0.0;
+        var acetabular_cup_close_y = -0.98;
+        var acetabular_cup_close_z = 2.99;
 
+        var acetabular_cup_expand_x = 0;
+        var acetabular_cup_expand_y = 3;
+        var acetabular_cup_expand_z = 2.49;
+
+        var hip_implant_close_x = -0.59;
+        var hip_implant_close_y = -4.35;
+        var hip_implant_close_z = 5.67;
+
+        var hip_implant_expand_x = -0.59;
+        var hip_implant_expand_y = -4.85;
+        var hip_implant_expand_z = 5.67;
         var scope = this;
+
+        editor.scene.traverse( function( child )  {
+            if ( child.name === "髋臼杯" ) {
+                if ( child.position.x == acetabular_cup_close_x ) {
+                    child.position.x = acetabular_cup_expand_x;
+                }
+                else if ( child.position.x == acetabular_cup_expand_x ) {
+                    child.position.x = acetabular_cup_close_x;
+                }
+                else {
+                    child.position.x = acetabular_cup_close_x;
+                }
+
+                if ( child.position.y == acetabular_cup_close_y ) {
+                    child.position.y = acetabular_cup_expand_y;
+                }
+                else if ( child.position.y == acetabular_cup_expand_y ) {
+                    child.position.y = acetabular_cup_close_y;
+                }
+                else {
+                    child.position.y = acetabular_cup_close_y;
+                }
+
+                if ( child.position.z == acetabular_cup_close_z ) {
+                    child.position.z = acetabular_cup_expand_z;
+                }
+                else if ( child.position.z == acetabular_cup_expand_z ) {
+                    child.position.z = acetabular_cup_close_z;
+                }
+            }
+
+            if ( child.name === "髋关节植入体" ) {
+                if ( child.position.x == hip_implant_close_x ) {
+                    child.position.x = hip_implant_expand_x;
+                }
+                else {
+                    child.position.x = hip_implant_close_x;
+                }
+
+                if ( child.position.y == hip_implant_close_y ) {
+                    child.position.y = hip_implant_expand_y;
+                }
+                else {
+                    child.position.y = hip_implant_close_y;
+                }
+
+                if ( child.position.z == hip_implant_close_z ) {
+                    child.position.z = hip_implant_expand_z;
+                }
+                else {
+                    child.position.z = hip_implant_close_z;
+                }
+            }
+        });
+        editor.signals.objectChanged.dispatch( editor.selected );
+
+        /*
         editor.scene.traverse( function ( child ) {
             if ( child.name == "clip 模拟" ) {
                 if (child.visible === true) {
@@ -115,22 +172,45 @@ var SidebarLeft = function ( editor ) {
                 editor.signals.sceneGraphChanged.dispatch();
             }
         } );
+        */
 
     } );
-    buttons.add( close_clip );
+    buttons.add( zoom );
+
+    function updateSelectedButton( mode ) {
+        translate.dom.classList.remove( 'selected' );
+		measure.dom.classList.remove( 'selected' );
+        cut.dom.classList.remove( 'selected' );
+        comment.dom.classList.remove( 'selected' );
+        zoom.dom.classList.remove( "selected" );
+
+        switch ( mode ) {
+            case "measure":
+                measure.dom.classList.add( "selected" );
+                break;
+            case "cut":
+                cut.dom.classList.add( "selected" );
+                break;
+            case "comment":
+                comment.dom.classList.add( "selected" );
+                break;
+            case "zoom":
+                zoom.dom.classList.add( "selected" );
+                break;
+        }
+    };
     
     signals.transformModeChanged.add( function ( mode ) {
 
 		translate.dom.classList.remove( 'selected' );
-		rotate.dom.classList.remove( 'selected' );
-        // scale.dom.classList.remove( 'selected' );
-        clipping_pane.dom.classList.remove( 'selected' );
-        expand.dom.classList.remove( 'selected' );
-        close_clip.dom.classList.remove( "selected" );
+		measure.dom.classList.remove( 'selected' );
+        cut.dom.classList.remove( 'selected' );
+        comment.dom.classList.remove( 'selected' );
+        zoom.dom.classList.remove( "selected" );
 
 		switch ( mode ) {
         	case 'translate': translate.dom.classList.add( 'selected' ); break;
-			case 'rotate': rotate.dom.classList.add( 'selected' ); break;
+			//case 'rotate': rotate.dom.classList.add( 'selected' ); break;
             // case 'scale': scale.dom.classList.add( 'selected' ); break;
            
         }

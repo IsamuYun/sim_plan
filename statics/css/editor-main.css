@@ -1,5 +1,19 @@
+@font-face {
+    font-family: "Lato";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../font/Lato-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Lato-Bold";
+    font-style: bold;
+    font-weight: bold;
+    src: url("../font/Lato-Bold.woff") format("woff");
+}
+
 body {
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Lato", "Helvetica Neue", "Helvetica", "Microsoft Yahei", "Arial";
 	font-size: 14px;
 	margin: 0;
 	overflow: hidden;
