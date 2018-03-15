@@ -510,9 +510,14 @@ Editor.prototype = {
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";
 		var url = host_name + folder_name + "acetabular cup.stl";
-
 		var loader = new THREE.STLLoader();
 		
+		var onLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "acetabular-load-progress" );
+			progress_bar.value = percentage;
+		};
+
 		loader.load( url, function ( geometry ) {
 			var material = new THREE.MeshPhongMaterial( {
 				color: 0xFFFFFF,
@@ -550,9 +555,15 @@ Editor.prototype = {
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
-		});
+		}, onLoadProgress);
 
 		var url = host_name + folder_name + "hip implant.stl";
+
+		var onHipLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "hip-load-progress" );
+			progress_bar.value = percentage;
+		};
 
 		loader.load( url, function ( geometry ) {
 			var material = new THREE.MeshPhongMaterial( {
@@ -591,7 +602,107 @@ Editor.prototype = {
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
-		});
+		}, onHipLoadProgress);
+
+		// 添加股骨
+		var url = host_name + folder_name + "femur.stl";
+		
+		var loader = new THREE.STLLoader();
+
+		var onFemurLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "femur-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "股骨";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.position.set( -8.06, 0, 7.72 );
+			mesh.rotation.x = 0;
+			mesh.rotation.y = Math.PI / 2;
+			mesh.rotation.z = -(Math.PI / 2);
+
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onFemurLoadProgress);
+
+		// 载入盆骨
+		var url = host_name + folder_name + "pelvis.stl";
+		var loader = new THREE.STLLoader();
+
+		var onPelvisLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "pelvis-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "盆骨";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.position.set( -0.66, -7.87, -5.00 );
+			mesh.rotation.x = 0;
+			mesh.rotation.y = 0;
+			mesh.rotation.z = Math.PI / 2;
+
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onPelvisLoadProgress);
+
 
 
 		this.signals.editorCleared.dispatch();

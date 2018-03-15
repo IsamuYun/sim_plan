@@ -9,82 +9,39 @@ var Toolbar = function ( editor ) {
 	var container = new UI.Panel();
 	container.setId( 'toolbar' );
 
-	var buttons = new UI.Panel();
-	container.add( buttons );
+	var acetabular_cup_label = new UI.Text("髋臼杯载入进度");
+	container.add( acetabular_cup_label );
 
-	// translate / rotate / scale
-	/*
-	var translate = new UI.Button( '移动' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
-	translate.dom.title = 'W';
-	translate.dom.className = 'Button selected';
-	translate.onClick( function () {
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "acetabular-load-progress" );
+	progress_bar.setValue( 0 );
 
-		signals.transformModeChanged.dispatch( 'translate' );
+	container.add( progress_bar );
 
-	} );
-	buttons.add( translate );
+	var hip_implant_label = new UI.Text("植入体载入进度");
+	container.add( hip_implant_label );
 
-	var rotate = new UI.Button( '旋转' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
-	rotate.dom.title = 'E';
-	rotate.onClick( function () {
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "hip-load-progress" );
+	progress_bar.setValue( 0 );
 
-		signals.transformModeChanged.dispatch( 'rotate' );
+	container.add( progress_bar );
 
-	} );
-	buttons.add( rotate );
+	var femur_label = new UI.Text( "股骨载入进度" );
+	container.add( femur_label );
 
-	var scale = new UI.Button( '缩放' ).setHeight( '40px' ).setWidth( '80px' ).setBottom( '5px' );
-	scale.dom.title = 'R';
-	scale.onClick( function () {
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "femur-load-progress" );
+	progress_bar.setValue( 0 );
+	container.add( progress_bar );
 
-		signals.transformModeChanged.dispatch( 'scale' );
+	var label = new UI.Text( "盆骨载入进度" );
+	container.add( label );
 
-	} );
-	buttons.add( scale );
-	*/
-	/*
-	signals.transformModeChanged.add( function ( mode ) {
-
-		translate.dom.classList.remove( 'selected' );
-		rotate.dom.classList.remove( 'selected' );
-		scale.dom.classList.remove( 'selected' );
-
-		switch ( mode ) {
-
-			case 'translate': translate.dom.classList.add( 'selected' ); break;
-			case 'rotate': rotate.dom.classList.add( 'selected' ); break;
-			case 'scale': scale.dom.classList.add( 'selected' ); break;
-
-		}
-
-	} );
-	*/
-	
-	// grid
-	/*
-	var grid = new UI.Number( 25 ).setWidth( '40px' ).onChange( update );
-	buttons.add( new UI.Text( 'grid: ' ) );
-	buttons.add( grid );
-
-	var snap = new UI.THREE.Boolean( false, 'snap' ).onChange( update );
-	buttons.add( snap );
-	*/
-
-	var local = new UI.THREE.Boolean( false, '局部坐标系' ).onChange( update );
-	buttons.add( local );
-	/*
-	var showGrid = new UI.THREE.Boolean( true, 'show' ).onChange( update );
-	buttons.add( showGrid );
-	*/
-
-	function update() {
-
-		// signals.snapChanged.dispatch( snap.getValue() === true ? grid.getValue() : null );
-		signals.spaceChanged.dispatch( local.getValue() === true ? "local" : "world" );
-		// signals.showGridChanged.dispatch( showGrid.getValue() );
-
-	}
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "pelvis-load-progress" );
+	progress_bar.setValue( 0 );
+	container.add( progress_bar );
 
 	return container;
-
 };

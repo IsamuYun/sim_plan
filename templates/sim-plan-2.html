@@ -34,8 +34,6 @@
 		-->
 		<!-- <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script> -->
 		<!-- 进度条 -->
-
-		<progress id="model-load-progress" max="100"></progress>
 		
 		
 
@@ -212,11 +210,11 @@
             var viewport = new Viewport( editor );
 			document.body.appendChild( viewport.dom );
             
-            /*var script = new Script( editor );
-			document.body.appendChild( script.dom );
+            //var script = new Script( editor );
+			//document.body.appendChild( script.dom );
 			
-			var player = new Player( editor );
-			document.body.appendChild( player.dom );*/
+			//var player = new Player( editor );
+			//document.body.appendChild( player.dom );
 			
 			var toolbar = new Toolbar( editor );
 			document.body.appendChild( toolbar.dom );
@@ -264,7 +262,7 @@
 				//
 
 				var timeout;
-
+				
 				function saveState( scene ) {
 
 					if ( editor.config.getKey( 'autosave' ) === false ) {
@@ -291,6 +289,7 @@
 
 				};
 				
+
                 var signals = editor.signals;
 
 				signals.geometryChanged.add( saveState );
@@ -298,12 +297,12 @@
 				signals.objectChanged.add( saveState );
 				signals.objectRemoved.add( saveState );
 				signals.materialChanged.add( saveState );
-				signals.sceneBackgroundChanged.add( saveState );
-				signals.sceneFogChanged.add( saveState );
+				//signals.sceneBackgroundChanged.add( saveState );
+				//signals.sceneFogChanged.add( saveState );
 				signals.sceneGraphChanged.add( saveState );
-				signals.scriptChanged.add( saveState );
-				signals.historyChanged.add( saveState );
-
+				//signals.scriptChanged.add( saveState );
+				//signals.historyChanged.add( saveState );
+				
 				signals.showModal.add( function ( content ) {
 
 					modal.show( content );
@@ -447,5 +446,9 @@
 		<dialog id="upload-file">
 			<button id="close">关闭</button>
 		</dialog>
+
+		<div style="z-index: 99999; width: 200px; top: 300px; left: 500px;">
+				<progress  id="model-load-progress" value="10" max="100"></progress>
+				</div>
 	</body>
 </html>

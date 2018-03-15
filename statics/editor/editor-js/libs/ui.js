@@ -22,10 +22,9 @@ UI.Element.prototype = {
 
 				this.dom.appendChild( argument.dom );
 
-			} else {
-
+			} 
+			else {
 				console.error( 'UI.Element:', argument, 'is not an instance of UI.Element.' );
-
 			}
 
 		}
@@ -998,6 +997,32 @@ UI.Modal.prototype.show = function ( content ) {
 UI.Modal.prototype.hide = function () {
 
 	this.dom.style.display = 'none';
+
+	return this;
+
+};
+
+// 添加Progress
+UI.Progress = function( value ) {
+	
+	UI.Element.call( this );
+
+	var dom = document.createElement( 'progress' );
+	// dom.className = '';
+
+	this.dom = dom;
+	this.dom.value = 0;
+	this.dom.max = 100;
+
+	return this;
+};
+
+UI.Progress.prototype = Object.create( UI.Element.prototype );
+UI.Progress.prototype.constructor = UI.Progress;
+
+UI.Progress.prototype.setValue = function ( value ) {
+
+	this.dom.value = value;
 
 	return this;
 

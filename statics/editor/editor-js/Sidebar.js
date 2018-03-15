@@ -8,15 +8,16 @@ var Sidebar = function ( editor ) {
 	container.setId( 'sidebar' );
 
 	//
-    var dicomTab = new UI.Text( "三维重构" ).onClick( onClick );
+    //var dicomTab = new UI.Text( "三维重构" ).onClick( onClick );
 	var sceneTab = new UI.Text( "手术模拟" ).onClick( onClick );
-	var projectTab = new UI.Text( "部件订制" ).onClick( onClick );
+	//var projectTab = new UI.Text( "部件订制" ).onClick( onClick );
 	var settingsTab = new UI.Text( "3D打印" ).onClick( onClick );
 
 	var tabs = new UI.Div();
 	tabs.setId( 'tabs' );
-	tabs.add( dicomTab, sceneTab, projectTab, settingsTab );
-	container.add( tabs );
+	//tabs.add( dicomTab, sceneTab, projectTab, settingsTab );
+	tabs.add( sceneTab, settingsTab );
+	//container.add( tabs );
 
 	function onClick( event ) {
 
@@ -28,7 +29,7 @@ var Sidebar = function ( editor ) {
 	var dicom = new UI.Span().add(
 
 	);
-	container.add( dicom );
+	//container.add( dicom );
 	
 
 	var scene = new UI.Span().add(
@@ -53,14 +54,14 @@ var Sidebar = function ( editor ) {
 	//
 
 	function select( section ) {
-		dicomTab.setClass( "" );
+		//dicomTab.setClass( "" );
 		sceneTab.setClass( '' );
-		projectTab.setClass( '' );
+		//projectTab.setClass( '' );
 		settingsTab.setClass( '' );
 
-		dicom.setDisplay( "none" );
+		//dicom.setDisplay( "none" );
 		scene.setDisplay( 'none' );
-		project.setDisplay( 'none' );
+		//project.setDisplay( 'none' );
 		settings.setDisplay( 'none' );
 
 		switch ( section ) {
@@ -71,7 +72,7 @@ var Sidebar = function ( editor ) {
 				window.location.href = "./";
 				break;
 			case '手术模拟':
-				sceneTab.setClass( 'selected' );
+				//sceneTab.setClass( 'selected' );
 				scene.setDisplay( '' );
 				break;
 			case '部件订制':

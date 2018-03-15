@@ -205,3 +205,27 @@ textarea, input { outline: none; } /* osx */
 @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
 @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);
 */
+
+
+
+#model-load-progress {
+	/* style rules */
+	background-color: #F3F3F3;
+	color: #1734CC;
+	border: 0;
+	height: 18px;
+	border-radius: 9px;
+}
+
+
+  progress::-webkit-progress-bar {
+
+  }
+  progress::-webkit-progress-value {
+	color: #1734CC;
+  }
+/*
+  progress::-moz-progress-bar {
+	
+  }
+*/
