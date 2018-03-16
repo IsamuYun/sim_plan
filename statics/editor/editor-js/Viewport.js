@@ -121,65 +121,63 @@ var Viewport = function ( editor ) {
 			if ( object.name === "截面" ) {
 				var clip_plane = object.clone();
 
+				var vec = Array();
+				vec[0] = clip_plane.geometry.vertices[0].clone();
+				vec[1] = clip_plane.geometry.vertices[1].clone();
+				vec[2] = clip_plane.geometry.vertices[2].clone();
+
+				var axis = new THREE.Vector3( 1, 0, 0 );
+                var angle = clip_plane.rotation.x;
+                vec[0].applyAxisAngle( axis, angle );
+                vec[1].applyAxisAngle( axis, angle );
+                vec[2].applyAxisAngle( axis, angle );
+				
+				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0);
+				plane.setFromCoplanarPoints(vec[0], vec[1], vec[2]);
+				
+				var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0);
+				another_plane.normal.x = -plane.normal.x;
+				another_plane.normal.y = -plane.normal.y;
+				another_plane.normal.z = -plane.normal.z;
+
 				editor.scene.traverse( function( child ) {
-					console.log( child );
-					if (child.name === "髋臼杯" ) {
+					if (child.name === "股骨" ) {
 						var clip_object = child;
 
 						var d1 = clip_plane.position;
 						var d2 = clip_object.position;
 
 						var d3 = new THREE.Vector3(0, d1.y, 0);
-						var d4 = new THREE.Vector3(0, d2.y, 0);
+						var d4 = new THREE.Vector3(0, 0, 0);
 
 						var d5 = d3.distanceTo(d4);
-						var vec = Array();
-
-						vec[0] = clip_plane.geometry.vertices[0];
-						vec[1] = clip_plane.geometry.vertices[1];
-						vec[2] = clip_plane.geometry.vertices[2];
-
-						console.log(clip_plane);
-						var normal_y = 0;
+						
 						if ( d1.y < d2.y ) {
 							d5 = -d5;
 						}
 
-
-
-						var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), d5);
-						
-
-						//plane.setFromCoplanarPoints(vec[0], vec[1], vec[2]);
-						
-						clip_object.material.clippingPlanes = [plane];
-
-						
+						another_plane.constant = d5;
+						clip_object.material.clippingPlanes = [another_plane];
 
 						this.editor.signals.sceneGraphChanged.dispatch();
 					}
-					if ( child.name === "clip 模拟" ) {
+					if ( child.name === "切割预览" ) {
 						var clip_object = child;
+						clip_object.visible = true;
 
 						var d1 = clip_plane.position;
 						var d2 = clip_object.position;
 
 						var d3 = new THREE.Vector3(0, d1.y, 0);
-						var d4 = new THREE.Vector3(0, d2.y, 0);
+						var d4 = new THREE.Vector3(0, 0, 0);
 
 						var d5 = d3.distanceTo(d4);
-						var vec = Array();
-
-						vec[0] = clip_plane.geometry.vertices[0];
-						vec[1] = clip_plane.geometry.vertices[1];
-						vec[2] = clip_plane.geometry.vertices[2];
-
-						var normal_y = 0;
 						if ( d1.y < d2.y ) {
 							d5 = -d5;
 						}
-						var plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), -d5);
+						plane.constant = -d5;
 						clip_object.material.clippingPlanes = [plane];
+						
 						this.editor.signals.sceneGraphChanged.dispatch();
 					}
 
@@ -473,6 +471,13 @@ var Viewport = function ( editor ) {
 			selectionBox.setFromObject( object );
 			transformControls.update();
 
+			if ( object.name === "股骨" ) {
+				editor.scene.traverse( function ( child ) {
+					if ( child.name === "切割预览" ) {
+						child.position.set( object.position.x, object.position.y, object.position.z );
+					}
+				});
+			}
 		}
 
 		if ( object instanceof THREE.PerspectiveCamera ) {

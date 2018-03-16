@@ -29,46 +29,70 @@ var SidebarLeft = function ( editor ) {
     cut.onClick( function() {
         updateSelectedButton( "cut" );
 
-
         var scope = this;
-        /*
+        
 		editor.scene.traverse( function ( child ) {
-            if ( child.name == "髋臼杯" ) {
-                var plane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0.0 );
-                child.material.clippingPlanes = [plane];
+            if ( child.name === "股骨" ) {
+                var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
                 
-                var another_plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0.0 );
-                var clip_object = child.clone();
-                var object_geometry = child.geometry.clone();
-                var object_material =  new THREE.MeshPhongMaterial( {
-                    color: 0xC00000,
-                    shininess: 100,
-                    side: THREE.DoubleSide,
-                    // ***** Clipping setup (material): *****
-                    clippingPlanes: [ another_plane ],
-                    clipShadows: true
-                });
-                var object = new THREE.Mesh( object_geometry, object_material );
-                object.name = "clip 模拟";
-                object.scale.set(clip_object.scale.x, clip_object.scale.y, clip_object.scale.z);
-
-                editor.execute( new AddObjectCommand( object ) );
-
                 var plane_width = 6;
 		        var plane_height = 6;
-		        var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
-		        var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
+                var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
+                var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
 		        var plane_mesh = new THREE.Mesh( plane_geometry, plane_material );
-		        plane_mesh.position.set( 0, 0, 0 );
-		        plane_mesh.rotation.set( Math.PI / 2, 0, 0 );
 		        plane_mesh.name = "截面";
+                plane_mesh.position.set( child.position.x + 4.0, child.position.y - 3, child.position.z - 3.7 );
+		        plane_mesh.rotation.set( Math.PI / 180 * 35, 0, 0 );
+               
+                var v1 = plane_mesh.geometry.vertices[0].clone();
+                var v2 = plane_mesh.geometry.vertices[1].clone();
+                var v3 = plane_mesh.geometry.vertices[2].clone();
 
+                var v4 = plane_mesh.geometry.vertices[0].clone();
+                var v5 = plane_mesh.geometry.vertices[1].clone();
+                var v6 = plane_mesh.geometry.vertices[2].clone();
+
+                var axis = new THREE.Vector3( 1, 0, 0 );
+                var angle = plane_mesh.rotation.x;
+                v1.applyAxisAngle( axis, angle );
+                v2.applyAxisAngle( axis, angle );
+                v3.applyAxisAngle( axis, angle );
+
+                
+
+                plane.setFromCoplanarPoints( v1, v2, v3 );
+                plane.constant = 5.0;
+                
+                var axis = new THREE.Vector3( -1, 0, 0 );
+                var angle =  -(Math.PI / 180 * 145);
+                v4.applyAxisAngle( axis, angle );
+                v5.applyAxisAngle( axis, angle );
+                v5.applyAxisAngle( axis, angle );
+                
+                var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+                another_plane.constant = -5.0
+                another_plane.normal.x = -plane.normal.x;
+                another_plane.normal.y = -plane.normal.y;
+                another_plane.normal.z = -plane.normal.z;
+                child.material.clippingPlanes = [another_plane];
+                console.log(child.material);
+
+                
+                editor.scene.traverse( function ( object ) {
+                    if ( object.name === "切割预览" ) {
+                        
+                        object.visible = true;
+                        object.position.set(child.position.x, child.position.y, child.position.z);
+                        object.material.clippingPlanes = [plane];
+                    }
+                });
+                
                 editor.execute( new AddObjectCommand( plane_mesh ) );
 
             }
             
-		} );
-        */
+        } );
+        
     } );
     buttons.add( cut );
 
@@ -82,6 +106,20 @@ var SidebarLeft = function ( editor ) {
     var comment = new UI.Button( '注释' );
     comment.onClick( function() {
         updateSelectedButton( "comment" );
+
+        
+        editor.scene.traverse( function ( child ) {
+            if ( child.name == "切割预览" ) {
+                if (child.visible === true) {
+                    child.visible = false;
+                }
+                else {
+                    child.visible = true;
+                }
+                editor.signals.sceneGraphChanged.dispatch();
+            }
+        } );
+
     } );
     buttons.add( comment );
 
@@ -160,19 +198,7 @@ var SidebarLeft = function ( editor ) {
         });
         editor.signals.objectChanged.dispatch( editor.selected );
 
-        /*
-        editor.scene.traverse( function ( child ) {
-            if ( child.name == "clip 模拟" ) {
-                if (child.visible === true) {
-                    child.visible = false;
-                }
-                else {
-                    child.visible = true;
-                }
-                editor.signals.sceneGraphChanged.dispatch();
-            }
-        } );
-        */
+       
 
     } );
     buttons.add( zoom );

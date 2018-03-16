@@ -395,7 +395,7 @@ Editor.prototype = {
 
 		if ( object !== null ) {
 			uuid = object.uuid;
-			if ( object.name === "clip 模拟" )
+			if ( object.name === "切割预览" )
 			{
 				return;
 			}
@@ -651,6 +651,26 @@ Editor.prototype = {
 			mesh.rotation.z = -(Math.PI / 2);
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
+
+			//var another_plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0.0 );
+            var faker_material =  new THREE.MeshPhongMaterial( {
+                color: 0xF73711,
+                shininess: 100,
+                side: THREE.DoubleSide,
+                // ***** Clipping setup (material): *****
+                // clippingPlanes: [ another_plane ],
+                clipShadows: true
+            });
+			
+			var faker_object = new THREE.Mesh( geometry, faker_material );
+            faker_object.name = "切割预览";
+            faker_object.scale.set( mesh.scale.x, mesh.scale.y, mesh.scale.z);
+            faker_object.position.set( mesh.position.x, mesh.position.y, mesh.position.z );
+            faker_object.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
+			faker_object.parent = mesh;
+			faker_object.visible = false;
+			
+			this.editor.execute( new AddObjectCommand( faker_object ) );
 			
 		}, onFemurLoadProgress);
 

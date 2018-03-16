@@ -264,7 +264,6 @@
 				var timeout;
 				
 				function saveState( scene ) {
-
 					if ( editor.config.getKey( 'autosave' ) === false ) {
 
 						return;
@@ -283,9 +282,9 @@
 
 							editor.signals.savingFinished.dispatch();
 
-						}, 100 );
+						}, 120 * 1000 );
 
-					}, 1000 );
+					}, 30 * 60 * 1000 );
 
 				};
 				
