@@ -107,19 +107,6 @@ var SidebarLeft = function ( editor ) {
     comment.onClick( function() {
         updateSelectedButton( "comment" );
 
-        
-        editor.scene.traverse( function ( child ) {
-            if ( child.name == "切割预览" ) {
-                if (child.visible === true) {
-                    child.visible = false;
-                }
-                else {
-                    child.visible = true;
-                }
-                editor.signals.sceneGraphChanged.dispatch();
-            }
-        } );
-
     } );
     buttons.add( comment );
 
@@ -203,12 +190,32 @@ var SidebarLeft = function ( editor ) {
     } );
     buttons.add( zoom );
 
+    var preview = new UI.Button( "预览" );
+    preview.onClick( function() {
+        updateSelectedButton( "preview" );
+   
+        editor.scene.traverse( function ( child ) {
+            if ( child.name == "切割预览" ) {
+                if (child.visible === true) {
+                    child.visible = false;
+                }
+                else {
+                    child.visible = true;
+                }
+                editor.signals.sceneGraphChanged.dispatch();
+            }
+        } );
+
+    } );
+    buttons.add( preview );
+
     function updateSelectedButton( mode ) {
         translate.dom.classList.remove( 'selected' );
 		measure.dom.classList.remove( 'selected' );
         cut.dom.classList.remove( 'selected' );
         comment.dom.classList.remove( 'selected' );
         zoom.dom.classList.remove( "selected" );
+        preview.dom.classList.remove( "selected" );
 
         switch ( mode ) {
             case "measure":
@@ -223,6 +230,9 @@ var SidebarLeft = function ( editor ) {
             case "zoom":
                 zoom.dom.classList.add( "selected" );
                 break;
+            case "preview":
+                preview.dom.classList.add( "selected" );
+                break;
         }
     };
     
@@ -233,6 +243,7 @@ var SidebarLeft = function ( editor ) {
         cut.dom.classList.remove( 'selected' );
         comment.dom.classList.remove( 'selected' );
         zoom.dom.classList.remove( "selected" );
+        preview.dom.classList.remove( "selected" );
 
 		switch ( mode ) {
         	case 'translate': translate.dom.classList.add( 'selected' ); break;

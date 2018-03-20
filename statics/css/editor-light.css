@@ -249,7 +249,7 @@ select {
 	top: 50%;
 	bottom: 60px;
 	width: 40px;
-	height: 550px;
+	height: 480px;
 	background: #4FC3F7;
 	overflow: auto;
 	
@@ -285,7 +285,10 @@ select {
 		padding: 0;
 		margin: 0;
 		width: 40px;
-		height: 110px;
+		/* 为6个按钮临时减少高度 */
+		/*height: 110px;*/
+		height: 80px;
+
 		line-height: 36px;
 		
 		text-transform: uppercase;
@@ -312,4 +315,172 @@ select {
 		background-color: #FFFFFF;
 		color: #4FC3F7;
 	}
+
+#sidebar-item-box {
+	position: absolute;
+	right: 10px;
+	top: 8%;
+	bottom: 0;
+	width: 200px;
+	height: 143px;
+
+	background: #FCFCFC;
+	color: #000000;
+	border: 1px #BDBDBD solid;
+	overflow: auto;
+	display: none;
+}
+
+#sidebar-item-box * {
+	vertical-align: middle;
+}
+
+#sidebar-item-box .title, #sidebar-scene-box .title {
+	color: #585858;
+	background: #FFFFFF;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	border-bottom: 1px #BDBDBD solid;
+}
+
+#sidebar-item-box .detail, #sidebar-scene-box .detail {
+	color: #BCBCBC;
+	background: #000000;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+#sidebar-item-box .Panel {
+	color: #000000;
+	background: #FFFFFF;
+	padding: 0px;
+	/*border-top: 1px solid #ccc;*/
+}
+
+#sidebar-item-box .Panel.collapsed {
+	margin-bottom: 0;
+}
+
+#sidebar-item-box .content {
+	height: 100px;
+	font-size: 14px;
+}
+
+#sidebar-item-box .Row {
+	min-height: 20px;
+	margin-bottom: 0;
+}
+
+#sidebar-item-box .td-header {
+	border: 0;
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 40px;
+	margin-right: 5px;
+	line-height: 20px;
 	
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#sidebar-item-box .td-content {
+	border: 0;
+	padding: 0px;
+	margin-top: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	width: 140px;
+	line-height: 20px;
+	
+	font-size: 14px;
+	font-weight: normal;
+}
+
+
+
+#sidebar-scene-box {
+	position: absolute;
+	right: 10px;
+	top: 28%;
+	bottom: 50px;
+	width: 200px;
+	height: 450px;
+	background: #FCFCFC;
+	color: #000000;
+	overflow: auto;
+	border: 1px #BDBDBD solid;
+
+	display: none;
+}
+
+#sidebar-scene-box * {
+	vertical-align: middle;
+}
+
+#sidebar-scene-box .Panel {
+	color: #000000;
+	padding: 0px;
+	/*border-top: 1px solid #ccc;*/
+}
+
+#sidebar-scene-box .Panel.collapsed {
+	margin-bottom: 0;
+}
+
+#sidebar-scene-box .Row {
+	min-height: 20px;
+	margin-bottom: 10px;
+}
+
+#sidebar-scene-box .slider {
+	width: 180px;
+	margin: 10px;
+	padding: 0;
+	height: 20px; 
+}
+
+#sidebar-scene-box input[type=range] {
+	overflow: hidden !important;
+	-webkit-appearance: none;
+    width: 180px;
+	border-radius: 0px; /*这个属性设置使填充进度条时的图形为圆角*/
+	background-color: #BCBCBC;
+}
+
+#sidebar-scene-box input[type=range]::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	height: 18px;
+    border-radius: 0px; /*将轨道设为圆角的*/
+	/*box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+	color: #4FC3F7;
+	
+}
+
+#sidebar-scene-box input[type=range]:focus {
+    outline: none;
+}
+
+#sidebar-scene-box input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
+    background: #ffffff; 
+    border-radius: 0; /*外观设置为圆形*/
+    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
+	/*box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/ 
+	
+	cursor: ew-resize;
+    box-shadow: -80px 0 0 80px #4FC3F7;
+}
+
