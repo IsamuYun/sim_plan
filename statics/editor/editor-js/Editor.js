@@ -557,7 +557,7 @@ Editor.prototype = {
 			
 		}, onLoadProgress);
 
-		var url = host_name + folder_name + "hip implant.stl";
+		var url = host_name + folder_name + "hil-1.stl";
 
 		var onHipLoadProgress = function (e) {
 			var percentage = Math.round((e.loaded / e.total * 100));

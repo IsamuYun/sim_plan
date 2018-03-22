@@ -25,7 +25,8 @@ var SidebarLeft = function ( editor ) {
 	} );
     buttons.add( translate );
     
-    var cut = new UI.Button( '切割' )
+    var cut = new UI.Button( '切割' );
+    cut.dom.className = "Button";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
 
@@ -94,8 +95,14 @@ var SidebarLeft = function ( editor ) {
         } );
         
     } );
+    
+    var cut_image = document.createElement( "img" );
+    cut_image.src = "static/img/icons/comment.svg";
+    cut_image.width = "400";
+    cut_image.height = "400";
+    cut.dom.appendChild( cut_image );
     buttons.add( cut );
-
+    
     var measure = new UI.Button( '测量' );
 	measure.dom.title = 'E';
 	measure.onClick( function () {

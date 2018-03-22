@@ -156,7 +156,7 @@ Menubar.Import = function ( editor ) {
 	option.onClick( function () {
 		var host_name = window.location.origin;
     	var folder_name = "/static/models/";
-		var url = host_name + folder_name + "hip implant.stl";
+		var url = host_name + folder_name + "hil-1.stl";
 
 		
 
