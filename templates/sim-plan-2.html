@@ -164,6 +164,7 @@
 		<script src="static/editor/editor-js/Sidebar.Left.js"></script>
 		<script src="static/editor/editor-js/Sidebar.ItemBox.js"></script>
 		<script src="static/editor/editor-js/Sidebar.SceneBox.js"></script>
+		<script src="static/editor/editor-js/Banner.Top.js"></script>
 		<script src="static/editor/editor-js/Viewport.js"></script>
 		<script src="static/editor/editor-js/Viewport.Info.js"></script>
 		
@@ -207,6 +208,12 @@
 			};
 
 			//
+			var G_clip_point_1 = false;
+			var G_clip_point_2 = false;
+			var G_clip_point_3 = false;
+
+			var G_point_list = new Array();
+			
 
 			var editor = new Editor();
 
@@ -239,6 +246,9 @@
 
 			var sidebar_scene_box = new SidebarSceneBox( editor );
 			document.body.appendChild( sidebar_scene_box.dom );
+
+			var banner = new BannerTop( editor );
+			document.body.appendChild( banner.dom );
             
 			
 			editor.setTheme( editor.config.getKey( 'theme' ) );

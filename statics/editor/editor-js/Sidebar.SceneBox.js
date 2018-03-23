@@ -25,8 +25,11 @@ var SidebarSceneBox = function ( editor ) {
 
 	container.add( image );
 
+	
+
 	var slider_area = new UI.Div();
 
+	
 	var slider_bar_dom = document.createElement( "input" );
 	slider_bar_dom.type = "range";
 	slider_bar_dom.className = "slider";
@@ -36,5 +39,44 @@ var SidebarSceneBox = function ( editor ) {
 	slider_bar_dom.max = 100;
 	slider_area.dom.appendChild( slider_bar_dom );
 	container.add( slider_area );
+
+	var slider_area = new UI.Div();
+
+	var slider_bar_dom = document.createElement( "input" );
+	slider_bar_dom.type = "range";
+	slider_bar_dom.className = "slider";
+	slider_bar_dom.value = 20;
+	slider_bar_dom.step = 1;
+	slider_bar_dom.min = 1;
+	slider_bar_dom.max = 100;
+	slider_area.dom.appendChild( slider_bar_dom );
+	container.add( slider_area );
+
+	var slider_area = new UI.Div();
+
+	var slider_bar_dom = document.createElement( "input" );
+	slider_bar_dom.type = "range";
+	slider_bar_dom.className = "slider";
+	slider_bar_dom.value = 30;
+	slider_bar_dom.step = 1;
+	slider_bar_dom.min = 1;
+	slider_bar_dom.max = 100;
+	slider_area.dom.appendChild( slider_bar_dom );
+	container.add( slider_area );
+	
+	var slider_area = new UI.Div();
+
+	var slider_bar_dom = document.createElement( "input" );
+	slider_bar_dom.type = "range";
+	slider_bar_dom.className = "slider";
+	slider_bar_dom.value = 40;
+	slider_bar_dom.step = 1;
+	slider_bar_dom.min = 1;
+	slider_bar_dom.max = 100;
+	slider_area.dom.appendChild( slider_bar_dom );
+	container.add( slider_area );
+
+
+
 	return container;
 };

@@ -184,6 +184,8 @@ var Viewport = function ( editor ) {
 				} );
 			}
 
+			
+
 		}
 
 		controls.enabled = true;
@@ -229,7 +231,7 @@ var Viewport = function ( editor ) {
 			if ( intersects.length > 0 ) {
 
 				var object = intersects[ 0 ].object;
-
+				
 				if ( object.userData.object !== undefined ) {
 
 					// helper
@@ -241,12 +243,40 @@ var Viewport = function ( editor ) {
 					editor.select( object );
 				}
 
+				if ( object.name === "股骨" ) {
+					if ( G_clip_point_1 == true ) {
+						G_clip_point_1 = false;
+						G_clip_point_2 = true;
+						G_point_list[ 0 ] = intersects[ 0 ].point;
+					}
+					else if ( G_clip_point_2 == true ) {
+						G_clip_point_2 = false;
+						G_clip_point_3 = true;
+						G_point_list[ 1 ] = intersects[ 0 ].point;
+					}
+					else if ( G_clip_point_3 == true ) {
+						G_clip_point_3 = false;
+						G_point_list[ 2 ] = intersects[ 0 ].point;
+						// 构造一个截面
+
+						console.log("point_list:");
+						console.log( G_point_list );
+
+						var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
+						
+						object.material.clippingPlanes = [plane];
+                
+					}
+
+				}
+
+
 			} else {
 
 				editor.select( null );
 
 			}
-
 			render();
 
 		}
