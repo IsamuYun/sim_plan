@@ -34,6 +34,23 @@ var BannerTop = function ( editor ) {
     var cut = new UI.Button( "截面" );
     cut.onClick( function () {
         G_clip_point_1 = true;
+        editor.scene.traverse( function ( object ) {
+            if ( object.name === "股骨" ) {
+                var femur = object;
+                femur.material.clippingPlanes = [];
+
+                editor.scene.traverse( function ( another_object ) {
+                    if ( another_object.name === "切割预览" ) {
+                
+                        another_object.visible = false;
+                        another_object.position.set(femur.position.x, femur.position.y, femur.position.z);
+                        another_object.material.clippingPlanes = [];
+                    }
+                } );
+            }
+        } );
+
+        editor.signals.sceneGraphChanged.dispatch();
     } );
 
 

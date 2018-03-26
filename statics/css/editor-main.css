@@ -208,24 +208,34 @@ textarea, input { outline: none; } /* osx */
 
 
 
-#model-load-progress {
-	/* style rules */
-	background-color: #F3F3F3;
+
+progress {
+	background-color: #E6E6E6;
 	color: #1734CC;
 	border: 0;
-	height: 18px;
-	border-radius: 9px;
+	height: 16px;
+	width: 100px;
+	border-radius: 6px;
+	margin: 3px;
+}
+
+progress::-webkit-progress-bar {
+	border: 0;
+	height: 16px;
+	width: 100px;
+	border-radius: 6px;
+	background: #E6E6E6;
+}
+
+progress::-webkit-progress-value {
+	border-radius: 6px;
+	background: #4FC3F7;
+	
+}
+
+progress::-webkit-progress-inner-element {
+	border-radius: 6px;
+	background: #4FC3F7;
 }
 
 
-  progress::-webkit-progress-bar {
-
-  }
-  progress::-webkit-progress-value {
-	color: #1734CC;
-  }
-/*
-  progress::-moz-progress-bar {
-	
-  }
-*/

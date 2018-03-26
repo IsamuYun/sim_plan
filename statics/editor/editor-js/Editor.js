@@ -506,9 +506,12 @@ Editor.prototype = {
 		spotLight.name = "聚光灯";
 		this.scene.add( spotLight );
 		
-		// 添加髋臼杯
+		
+		
 		const host_name = window.location.origin;
     	const folder_name = "/static/models/";
+		/*
+		// 添加髋臼杯
 		var url = host_name + folder_name + "acetabular cup.stl";
 		var loader = new THREE.STLLoader();
 		
@@ -556,7 +559,9 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onLoadProgress);
+		*/
 
+		/*
 		var url = host_name + folder_name + "hil-1.stl";
 
 		var onHipLoadProgress = function (e) {
@@ -603,6 +608,7 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onHipLoadProgress);
+		*/
 
 		// 添加股骨
 		var url = host_name + folder_name + "femur.stl";
@@ -673,7 +679,7 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( faker_object ) );
 			
 		}, onFemurLoadProgress);
-
+		/*
 		// 载入盆骨
 		var url = host_name + folder_name + "pelvis.stl";
 		var loader = new THREE.STLLoader();
@@ -722,8 +728,192 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onPelvisLoadProgress);
+		*/
 
+		// 2018年3月26日 新增载入四个STL
+		// 载入新髋臼杯
+		var url = host_name + folder_name + "髋臼杯.stl";
+		var loader = new THREE.STLLoader();
 
+		var onNewAcetabularLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "new-acetabular-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "新髋臼杯";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.set ( -(Math.PI / 2), 0, 0 );
+			
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onNewAcetabularLoadProgress);
+
+		// 载入髋臼内衬
+		var url = host_name + folder_name + "髋臼内衬.stl";
+		var loader = new THREE.STLLoader();
+
+		var onAcetabularInnerLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "acetabular-inner-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "髋臼内衬";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.set ( -(Math.PI / 2), 0, 0 );
+			
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onAcetabularInnerLoadProgress);
+
+		// 载入股骨头假体
+		var url = host_name + folder_name + "股骨头假体.stl";
+		var loader = new THREE.STLLoader();
+
+		var onFemurHeadLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "femur-head-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "股骨头假体";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.set ( -(Math.PI / 2), 0, 0 );
+			
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onFemurHeadLoadProgress);
+
+		// 载入股骨柄假体
+		var url = host_name + folder_name + "股骨柄假体.stl";
+		var loader = new THREE.STLLoader();
+
+		var onFemurHipLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "femur-hip-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		loader.load( url, function ( geometry ) {
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xFFFFFF,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0xB9B9B9,
+				// ***** Clipping setup (material): *****
+				// clippingPlanes: [ localPlane ],
+				clipShadows: true
+			});
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "股骨柄假体";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.set ( -(Math.PI / 2), 0, 0 );
+			
+			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onFemurHipLoadProgress);
 
 		this.signals.editorCleared.dispatch();
 

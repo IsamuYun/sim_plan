@@ -130,8 +130,20 @@ var Viewport = function ( editor ) {
                 var angle = clip_plane.rotation.x;
                 vec[0].applyAxisAngle( axis, angle );
                 vec[1].applyAxisAngle( axis, angle );
-                vec[2].applyAxisAngle( axis, angle );
+				vec[2].applyAxisAngle( axis, angle );
 				
+				var axis_y = new THREE.Vector3( 0, 0, 1 );
+                var angle_y = clip_plane.rotation.y;
+                vec[0].applyAxisAngle( axis_y, angle_y );
+                vec[1].applyAxisAngle( axis_y, angle_y );
+                vec[2].applyAxisAngle( axis_y, angle_y );
+
+                var axis_z = new THREE.Vector3( 0, 1, 0 );
+                var angle_z = clip_plane.rotation.z;
+                vec[0].applyAxisAngle( axis_z, angle_z );
+                vec[1].applyAxisAngle( axis_z, angle_z );
+                vec[2].applyAxisAngle( axis_z, angle_z );
+
 				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0);
 				plane.setFromCoplanarPoints(vec[0], vec[1], vec[2]);
 				
@@ -147,16 +159,18 @@ var Viewport = function ( editor ) {
 						var d1 = clip_plane.position;
 						var d2 = clip_object.position;
 
-						var d3 = new THREE.Vector3(0, d1.y, 0);
 						var d4 = new THREE.Vector3(0, 0, 0);
 
-						var d5 = d3.distanceTo(d4);
+						var d5 = d1.add(d4);
 						
+						/*
 						if ( d1.y < d2.y ) {
 							d5 = -d5;
 						}
+						*/
 
-						another_plane.constant = d5;
+						//another_plane.constant = d5;
+						another_plane.translate( d5 );
 						clip_object.material.clippingPlanes = [another_plane];
 
 						this.editor.signals.sceneGraphChanged.dispatch();
@@ -168,14 +182,16 @@ var Viewport = function ( editor ) {
 						var d1 = clip_plane.position;
 						var d2 = clip_object.position;
 
-						var d3 = new THREE.Vector3(0, d1.y, 0);
 						var d4 = new THREE.Vector3(0, 0, 0);
-
-						var d5 = d3.distanceTo(d4);
+						var d5 = d1.add(d4);
+						/*var d5 = d3.distanceTo(d4);
+						
 						if ( d1.y < d2.y ) {
 							d5 = -d5;
 						}
 						plane.constant = -d5;
+						*/
+						plane.translate( d5 );
 						clip_object.material.clippingPlanes = [plane];
 						
 						this.editor.signals.sceneGraphChanged.dispatch();
@@ -266,6 +282,22 @@ var Viewport = function ( editor ) {
 						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
 						
 						object.material.clippingPlanes = [plane];
+
+						var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+						another_plane.normal.x = -plane.normal.x;
+						another_plane.normal.y = -plane.normal.y;
+						another_plane.normal.z = -plane.normal.z;
+						another_plane.constant = -plane.constant;
+
+						editor.scene.traverse( function( child ) {
+							if ( child.name === "切割预览" ) {
+                        
+								child.visible = true;
+								child.position.set(object.position.x, object.position.y, object.position.z);
+								child.material.clippingPlanes = [another_plane];
+								console.log( child.material );
+							}
+						} );
                 
 					}
 

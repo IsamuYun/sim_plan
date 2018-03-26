@@ -48,8 +48,7 @@ select {
 	position: absolute;
 	top: 32px;
 	left: 0;
-	/*right: 300px;*/
-	right: 0;
+	right: 300px;
 	bottom: 32px;
 }
 
@@ -153,7 +152,7 @@ select {
 	right: 0;
 	top: 32px;
 	bottom: 0;
-	width: 280px;
+	width: 300px;
 	background: #eee;
 	overflow: auto;
 }
@@ -197,7 +196,7 @@ select {
 	position: absolute;
 	left: 0;
 	/*right: 300px;*/
-	right: 0;
+	right: 300px;
 	bottom: 0;
 	height: 32px;
 	background: #eee;
@@ -320,7 +319,7 @@ select {
 
 #sidebar-item-box {
 	position: absolute;
-	right: 290px;
+	right: 310px;
 	top: 6%;
 	bottom: 0;
 	width: 200px;
@@ -411,7 +410,7 @@ select {
 
 #sidebar-scene-box {
 	position: absolute;
-	right: 290px;
+	right: 310px;
 	top: 28%;
 	bottom: 50px;
 	width: 200px;
@@ -486,19 +485,13 @@ select {
 
 #banner-top {
 	position: absolute;
-	left: 10%;
-	top: 6%;
+	left: calc(50% - 300px);
+	top: 5%;
 	bottom: 0;
-	width: 280px;
+	width: auto;
 	height: 56px;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.0);
-	/*
-	-webkit-writing-mode: vertical-lr;
-	writing-mode: vertical-lr;
-	word-break: break-all;
-	transform: translateY(-50%);
-	*/
 }
 	
 
