@@ -15,14 +15,17 @@ var BannerTop = function ( editor ) {
     info_panel.onClick( function () {
         var item_box = document.getElementById( "sidebar-item-box" );
         var scene_box = document.getElementById( "sidebar-scene-box" );
+        var sidebar = document.getElementById( "sidebar" );
         if ( click_flag == false ) {
-            item_box.style["display"] = "none";
-            scene_box.style["display"] = "none";
+            item_box.style["right"] = "10px";
+            scene_box.style["right"] = "10px";
+            sidebar.style["display"] = "none";
             click_flag = true;
         }
         else {
-            item_box.style["display"] = "";
-            scene_box.style["display"] = "";
+            item_box.style["right"] = "310px";
+            scene_box.style["right"] = "310px";
+            sidebar.style["display"] = "";
             click_flag = false;
         }
         

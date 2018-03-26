@@ -651,10 +651,10 @@ Editor.prototype = {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( -8.06, 0, 7.72 );
-			mesh.rotation.x = 0;
-			mesh.rotation.y = Math.PI / 2;
-			mesh.rotation.z = -(Math.PI / 2);
+			mesh.position.set( 2.46, 1.81, 6.28 );
+			mesh.rotation.x = Math.PI / 180 * 9.40;
+			mesh.rotation.y = Math.PI / 180 * 148.60;
+			mesh.rotation.z = -(Math.PI / 180) * 99.20;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 
