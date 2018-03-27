@@ -40,7 +40,7 @@
 					else {
             			fadeTarget.style.opacity -= 0.025;
         			}
-    			}, 300);
+    			}, 100);
 			}
 
 			function fadeOutSlowEffect( fadeTarget ) {
@@ -506,6 +506,33 @@
 
 			}, false );
 			*/
+
+			var rippleEffect = (function() {
+        function rippleEffect(event) {
+           var time = 2000;
+           var self = this;
+           var rect = self.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+              var y = event.clientY - rect.top;
+            var circle = document.createElement("div");
+           
+           circle.style.top = y + "px";
+           circle.style.left = x + "px";
+           circle.className = "ripple animate";
+           self.appendChild(circle);
+     
+           setTimeout(function() {
+              self.removeChild(circle);
+           }, time);
+        }
+     
+        var targets = document.getElementsByClassName("ripple-effect");
+        var l = targets.length;
+        
+        for ( var i = 0; i < l; i++) {
+           targets[i].addEventListener('mousedown', rippleEffect, false);
+        }   
+     }());
 
 		</script>
 

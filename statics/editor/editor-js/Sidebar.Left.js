@@ -16,7 +16,7 @@ var SidebarLeft = function ( editor ) {
 
 	var translate = new UI.Button( '移动' );
 	translate.dom.title = 'W';
-    translate.dom.className = 'Button selected';
+    translate.dom.className = 'Button selected ripple-effect';
     translate.dom.textContent = "移动";
 	translate.onClick( function () {
 
@@ -26,7 +26,7 @@ var SidebarLeft = function ( editor ) {
     buttons.add( translate );
     
     var cut = new UI.Button( '切割' );
-    cut.dom.className = "Button";
+    cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
 
@@ -103,20 +103,21 @@ var SidebarLeft = function ( editor ) {
     buttons.add( cut );
     
     var measure = new UI.Button( '测量' );
-	measure.dom.title = 'E';
+    measure.dom.title = 'E';
+    measure.dom.className = "Button ripple-effect";
 	measure.onClick( function () {
         updateSelectedButton( 'measure' );
 	} );
     buttons.add( measure );
 
-    var comment = new UI.Button( '注释' );
+    var comment = new UI.Button( '注释' ).setClass( "Button ripple-effect" );
     comment.onClick( function() {
         updateSelectedButton( "comment" );
 
     } );
     buttons.add( comment );
 
-    var zoom = new UI.Button( "放大" );
+    var zoom = new UI.Button( "放大" ).setClass( "Button ripple-effect" );
     zoom.onClick( function() {
         updateSelectedButton( "zoom" );
         var acetabular_cup_close_x = 0.0;
@@ -196,7 +197,7 @@ var SidebarLeft = function ( editor ) {
     } );
     buttons.add( zoom );
 
-    var preview = new UI.Button( "预览" );
+    var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
     preview.onClick( function() {
         updateSelectedButton( "preview" );
    

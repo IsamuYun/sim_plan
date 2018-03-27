@@ -307,8 +307,6 @@ select {
 	}
 	
 	#sidebar-left button:hover {
-		background-color: #FFFFFF;
-		color: #4FC3F7;
 		box-shadow: 0px 4px 5px rgba(0, 0, 0, 0, 0.3);
 	}
 	
@@ -522,9 +520,7 @@ select {
 	}
 	
 	#banner-top button:hover {
-		background-color: #FFFFFF;
-		color: #4FC3F7;
-		box-shadow: 0px 4px 5px rgba(0, 0, 0, 0, 0.3);
+		box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.38);
 	}
 	
 	#banner-top button.selected {

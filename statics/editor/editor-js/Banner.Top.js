@@ -4,6 +4,8 @@
 
 var BannerTop = function ( editor ) {
 
+    
+
     var signals = editor.signals;
 
 	var container = new UI.Panel();
@@ -12,6 +14,7 @@ var BannerTop = function ( editor ) {
     var click_flag = false;
 
     var info_panel = new UI.Button( "面板" );
+    info_panel.setClass( "ripple-effect" );
     info_panel.onClick( function () {
         var item_box = document.getElementById( "sidebar-item-box" );
         var scene_box = document.getElementById( "sidebar-scene-box" );
@@ -32,9 +35,13 @@ var BannerTop = function ( editor ) {
     } );
 
     var button_2 = new UI.Button( "按钮2" );
+    button_2.setClass( "ripple-effect" );
     var button_3 = new UI.Button( "按钮3" );
+    button_3.setClass( "ripple-effect" );
     var button_4 = new UI.Button( "按钮4" );
+    button_4.setClass( "ripple-effect" );
     var cut = new UI.Button( "截面" );
+    cut.setClass( "ripple-effect" );
     cut.onClick( function () {
         G_clip_point_1 = true;
         editor.scene.traverse( function ( object ) {
