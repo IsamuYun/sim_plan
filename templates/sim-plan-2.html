@@ -5,35 +5,84 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	</head>
-	<body ontouchstart="">
+	<body ontouchstart="" id="zs-sim-plan-body">
 
 		<link href="static/css/editor-main.css" rel="stylesheet" />
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
 		<link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
 		
-		<!--<link id="theme" href="static/css/editor-dark.css" rel="stylesheet" />-->
-
-		<!-- <link href="static/css/pace/pace-theme-big-counter.css" rel="stylesheet" /> -->
-		<!--loading page-->
-		<!--
-		<div class="loader" id="loader">
-			
-				<img src="static/img/loader/poster-01.jpg" height="100%" width="100%" alt="Loader" class="loader-loader" />
-			
+		<div id="preloader">
+			<div id="status">
+				<object class="preloader" data="static/img/logo/main_loader.html"></object>
+			</div>
 		</div>
+
 		<script>
+			function sleep(milliseconds) {
+  				var start = new Date().getTime();
+  				for (var i = 0; i < 1e7; i++) {
+    				if ((new Date().getTime() - start) > milliseconds){
+      					break;
+    				}
+ 				}
+			}
+
+			function fadeOutEffect( fadeTarget ) {
+    			// var fadeTarget = document.getElementById("target");
+    			var fadeEffect = setInterval(function () {
+        			if ( !fadeTarget.style.opacity ) {
+            			fadeTarget.style.opacity = 1;
+        			}
+        			if (fadeTarget.style.opacity < 0.01) {
+						clearInterval(fadeEffect);
+						fadeTarget.style.display = "none";
+					}
+					else {
+            			fadeTarget.style.opacity -= 0.025;
+        			}
+    			}, 300);
+			}
+
+			function fadeOutSlowEffect( fadeTarget ) {
+    			// var fadeTarget = document.getElementById("target");
+    			var fadeEffect = setInterval(function () {
+        			if ( !fadeTarget.style.opacity ) {
+            			fadeTarget.style.opacity = 1;
+        			}
+        			if (fadeTarget.style.opacity < 0.01) {
+            			clearInterval(fadeEffect);
+					}
+					else {
+            			fadeTarget.style.opacity -= 0.01;
+        			}
+    			}, 200);
+			}
+
+
 			window.onload = function() {
-    			setTimeout( function(){
-    				var loader = document.getElementById("loader");
-    				loader.className="loader fadeout" ;//使用渐隐的方法淡出loading page
-    				setTimeout( function(){
-						loader.style.display="none"},1000)
-    				}, 1000)//强制显示loading page 1s
+				"use strict";
+    			// makes sure the whole site is loaded
+				var zs_status = document.getElementById( "status" );
+				var zs_preloader = document.getElementById( "preloader" );
+				var zs_body = document.getElementById( "zs-sim-plan-body" );
+				if ( zs_status != null ) {
+					fadeOutSlowEffect( zs_status ); // will first fade out the loading animation
+					//sleep( 15000 );
 				}
+				
+				if ( zs_preloader != null ) {
+					//sleep( 30000 );
+					fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
+				}
+				if ( zs_body != null ) {
+					sleep( 3000 );
+					zs_body.style["overflow"] = "visible";
+					
+					
+				}
+				
+			};
 		</script>
-		-->
-		<!-- <script  src="static/editor/editor-js/libs/pace/pace.min.js"></script> -->
-		<!-- 进度条 -->
 		
 		
 

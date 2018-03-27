@@ -1,0 +1,233 @@
+<style type="text/css">
+   body {
+      background: linear-gradient(#5fcaa7, #5aaec5);
+   }
+
+   
+   #S {
+      fill: none;
+      stroke-width: 1px;
+      stroke: white;
+
+      stroke-dasharray: 1550;
+      stroke-dashoffset: 1550;
+
+      animation: animS 5s linear forwards;
+      animation-delay: 1s;
+   }
+
+
+   #Z {
+      fill: none;
+      stroke-width: 1px;
+      stroke: white;
+
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+
+      animation: animZ 5s linear forwards;
+      animation-delay: 1s;
+
+
+   } 
+
+   #logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1500px;
+      height: 450px;
+   }
+
+   #align {
+      stroke-dasharray: 4 4;
+      animation: fadein 1s linear forwards;
+   }
+
+   @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
+   }
+
+   @keyframes animZ {
+      0% {
+         opacity: 0;
+         stroke-dashoffset: 1000;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      20% {
+         opacity: 1;
+         stroke-width: 1px;
+      }
+
+      77% {
+         stroke-dashoffset: 0;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      80% {
+         stroke-dashoffset: 0;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      100% {
+         stroke-dashoffset: 0;
+         fill: white;
+         stroke-width: 0px;
+      }
+   }
+
+   @keyframes animS{
+      0% {
+         opacity: 0;
+         stroke-dashoffset: 1550;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      20% {
+         opacity: 1;
+         stroke-width: 1px;
+      }
+
+      77% {
+         stroke-dashoffset: 0;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      80% {
+         stroke-dashoffset: 0;
+         fill: transparent;
+         stroke-width: 1px;
+      }
+
+      100% {
+         stroke-dashoffset: 0;
+         fill: white;
+         stroke-width: 0px;   
+      }
+   }
+</style>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.15 284.75" id="logo">
+   <defs>
+      <style>
+         .cls-1 {
+            opacity:0.56;
+         }
+         .cls-2 {
+            fill:none;
+            opacity: 0.6;
+            mix-blend-mode: overlay;
+            stroke:#ffffff;
+            stroke-miterlimit:10;
+            stroke-width: 0.6px;
+         }
+      </style>
+
+      <filter id="f1" x="-100%" y="-50%" width="300%" height="200%">
+         <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
+         <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+         <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+      </filter>
+   </defs>
+
+   <g id="S">
+      <g id="ARC">
+         <path stroke-linecap="round" d="M433.91,381.26a49.31,49.31,0,0,1-67.27-72.06q10.65-11.46,9.25-41.55a80.67,80.67,0,1,0,78.69,137.19l111.51-97.75a49.31,49.31,0,0,1,67.27,72.06q-10.65,11.46-9.25,41.56A80.67,80.67,0,1,0,545,283.9L433.82,381.33" transform="translate(-312.93 -201.63)" filter="url(#f1)" />
+      </g>
+   </g>
+   <g id="Z">
+      <g id="LINE">
+         <path stroke-linecap="round" d="M401.4,374.91V263.51a80.69,80.69,0,0,1,53.18,20l113.29,99.31V344.18a30.73,30.73,0,0,1,30.73-30.74V424.85A80.67,80.67,0,0,1,545,404.45L432.13,305.54v38.64A30.73,30.73,0,0,1,401.4,374.91Z" transform="translate(-312.93 -201.63)" filter="url(#f1)" />
+      </g>
+   </g>
+
+   <g id="align">
+      <g id="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M567.87,344.18a30.73,30.73,0,1,1,30.73,30.73,30.73,30.73,0,0,1-30.73-30.73Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-2" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M370.67,344.18a30.73,30.73,0,1,1,30.73,30.73,30.73,30.73,0,0,1-30.73-30.73Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-3" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M370.05,263.51a31.36,31.36,0,1,1,31.35,31.35,31.36,31.36,0,0,1-31.35-31.35Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-4" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M624.11,401.39a31.36,31.36,0,1,1,31.36,31.36,31.36,31.36,0,0,1-31.36-31.36Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-5" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M598,418.75a31.36,31.36,0,1,1,31.36,31.36A31.35,31.35,0,0,1,598,418.75Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-6" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M313.18,287a31.36,31.36,0,1,1,31.35,31.36A31.36,31.36,0,0,1,313.18,287Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-7" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M339.29,269.6A31.36,31.36,0,1,1,370.64,301a31.36,31.36,0,0,1-31.35-31.36Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-8" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M567.24,424.85A31.36,31.36,0,1,1,598.6,456.2a31.36,31.36,0,0,1-31.36-31.35Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="LINE-2" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="285.67" y1="223.22" x2="210.12" y2="223.22"/>
+      </g>
+      <g id="LINE-3" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="88.48" y1="61.88" x2="164.08" y2="61.88"/>
+      </g>
+      <g id="CIRCLE-9" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M549.28,344.18a49.32,49.32,0,1,1,49.32,49.31,49.32,49.32,0,0,1-49.32-49.31Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="CIRCLE-10" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M352.09,344.18a49.32,49.32,0,1,1,49.31,49.31,49.32,49.32,0,0,1-49.31-49.31Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="372.87" y1="23.59" x2="141.65" y2="226.26"/>
+      </g>
+      <g id="POLYLINE-2" data-name="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="1.28" y1="261.51" x2="232.05" y2="59.23"/>
+      </g>
+      <g id="LINE-4" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="254.94" y1="39.9" x2="254.94" y2="245.2"/>
+      </g>
+      <g id="LINE-5" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="285.67" y1="39.9" x2="285.67" y2="245.2"/>
+      </g>
+      <g id="LINE-6" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="119.21" y1="39.9" x2="119.21" y2="245.2"/>
+      </g>
+      <g id="POLYLINE-3" data-name="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="0.88" y1="0.19" x2="232.05" y2="202.82"/>
+      </g>
+      <g id="POLYLINE-4" data-name="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="1.28" y1="284.56" x2="232.05" y2="82.28"/>
+      </g>
+      <g id="CIRCLE-11" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M517.93,344.18a80.67,80.67,0,1,1,80.67,80.67,80.66,80.66,0,0,1-80.67-80.67Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="POLYLINE-5" data-name="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="372.87" y1="0.54" x2="141.65" y2="203.21"/>
+      </g>
+      <g id="LINE-7" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="285.67" y1="142.55" x2="232.64" y2="81.76"/>
+      </g>
+      <g id="CIRCLE-12" data-name="CIRCLE" class="cls-1">
+         <path stroke-linecap="round" class="cls-2" d="M320.73,344.18a80.67,80.67,0,1,1,80.67,80.67,80.67,80.67,0,0,1-80.67-80.67Z" transform="translate(-312.93 -201.63)"/>
+      </g>
+      <g id="POLYLINE-6" data-name="POLYLINE" class="cls-1">
+         <line class="cls-2" x1="372.87" y1="284.56" x2="141.65" y2="81.89"/>
+      </g>
+      <g id="LINE-8" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="88.48" y1="39.9" x2="88.48" y2="245.2"/>
+      </g>
+      <g id="LINE-9" data-name="LINE" class="cls-1">
+         <line class="cls-2" x1="88.48" y1="142.55" x2="141.51" y2="203.34"/>
+      </g>
+   </g>
+</svg>
