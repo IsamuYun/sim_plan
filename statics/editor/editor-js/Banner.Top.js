@@ -58,6 +58,10 @@ var BannerTop = function ( editor ) {
                     }
                 } );
             }
+            if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
+                object.visible = false;
+            }
+        
         } );
 
         editor.signals.sceneGraphChanged.dispatch();

@@ -40,13 +40,11 @@ RemoveObjectCommand.prototype = {
 		this.editor.select( this.parent );
 
 		if (this.object.name === "截面" ) {
-			console.log("删除的是截面");
 			this.editor.scene.traverse( function ( child ) {
 				if ( child.name === "股骨" ) {
 					child.material.clippingPlanes = [];
 				}
 				if ( child.name === "切割预览" ) {
-					//this.editor.execute( new RemoveObjectCommand( child ) );
 					child.visible = false;
 					child.material.clippingPlanes = [];
 				}

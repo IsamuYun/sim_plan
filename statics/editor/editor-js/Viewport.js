@@ -160,16 +160,8 @@ var Viewport = function ( editor ) {
 						var d2 = clip_object.position;
 
 						var d4 = new THREE.Vector3(0, 0, 0);
-
 						var d5 = d1.add(d4);
 						
-						/*
-						if ( d1.y < d2.y ) {
-							d5 = -d5;
-						}
-						*/
-
-						//another_plane.constant = d5;
 						another_plane.translate( d5 );
 						clip_object.material.clippingPlanes = [another_plane];
 
@@ -184,13 +176,6 @@ var Viewport = function ( editor ) {
 
 						var d4 = new THREE.Vector3(0, 0, 0);
 						var d5 = d1.add(d4);
-						/*var d5 = d3.distanceTo(d4);
-						
-						if ( d1.y < d2.y ) {
-							d5 = -d5;
-						}
-						plane.constant = -d5;
-						*/
 						plane.translate( d5 );
 						clip_object.material.clippingPlanes = [plane];
 						
@@ -264,24 +249,36 @@ var Viewport = function ( editor ) {
 						G_clip_point_1 = false;
 						G_clip_point_2 = true;
 						G_point_list[ 0 ] = intersects[ 0 ].point;
+						editor.scene.traverse( function( child ) {
+							if (child.name === "第1点") {
+								child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
+								child.visible = true;
+							}
+						} );
+
 					}
 					else if ( G_clip_point_2 == true ) {
 						G_clip_point_2 = false;
 						G_clip_point_3 = true;
 						G_point_list[ 1 ] = intersects[ 0 ].point;
+						editor.scene.traverse( function( child ) {
+							if (child.name === "第2点") {
+								child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
+								child.visible = true;
+							}
+						} );
 					}
 					else if ( G_clip_point_3 == true ) {
 						G_clip_point_3 = false;
 						G_point_list[ 2 ] = intersects[ 0 ].point;
 						// 构造一个截面
 
-						console.log("point_list:");
-						console.log( G_point_list );
+						
 
 						var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
 						
-						object.material.clippingPlanes = [plane];
+						
 
 						var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 						another_plane.normal.x = -plane.normal.x;
@@ -289,13 +286,18 @@ var Viewport = function ( editor ) {
 						another_plane.normal.z = -plane.normal.z;
 						another_plane.constant = -plane.constant;
 
+						object.material.clippingPlanes = [another_plane];
+
 						editor.scene.traverse( function( child ) {
 							if ( child.name === "切割预览" ) {
                         
 								child.visible = true;
 								child.position.set(object.position.x, object.position.y, object.position.z);
-								child.material.clippingPlanes = [another_plane];
-								console.log( child.material );
+								child.material.clippingPlanes = [plane];
+							}
+							if ( child.name === "第3点" ) {
+								child.visible = true;
+								child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
 							}
 						} );
                 
@@ -539,6 +541,38 @@ var Viewport = function ( editor ) {
 						child.position.set( object.position.x, object.position.y, object.position.z );
 					}
 				});
+			}
+
+			if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点" ) {
+				if ( object.name === "第1点" ) {
+					G_point_list[ 0 ] = object.position;
+				}
+				if ( object.name === "第2点" ) {
+					G_point_list[ 1 ] = object.position;
+				}
+				if ( object.name === "第3点" ) {
+					G_point_list[ 2 ] = object.position;
+				}
+
+				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+				plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
+				
+				var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+				another_plane.normal.x = -plane.normal.x;
+				another_plane.normal.y = -plane.normal.y;
+				another_plane.normal.z = -plane.normal.z;
+				another_plane.constant = -plane.constant;
+
+				editor.scene.traverse( function( child ) {
+					if ( child.name === "切割预览" ) {
+                        child.visible = true;
+						child.material.clippingPlanes = [plane];
+					}
+					if ( child.name === "股骨" ) {
+						// child.visible = true;
+						child.material.clippingPlanes = [another_plane];
+					}
+				} );
 			}
 		}
 

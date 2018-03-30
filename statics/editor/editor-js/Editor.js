@@ -915,6 +915,43 @@ Editor.prototype = {
 			
 		}, onFemurHipLoadProgress);
 
+		// 增加第一点和第二点，将它们设为隐身
+		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0x58D68D,
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0x58D68D
+		});
+		var cone = new THREE.Mesh( geometry, material );
+		cone.name = "第1点";
+		cone.visible = false;
+		editor.execute( new AddObjectCommand( cone ) );
+
+		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0x3498DB,
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0x3498DB
+		});
+		var cone = new THREE.Mesh( geometry, material );
+		cone.name = "第2点";
+		cone.visible = false;
+		editor.execute( new AddObjectCommand( cone ) );
+
+		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xAF7AC5,
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0xAF7AC5
+		});
+		var cone = new THREE.Mesh( geometry, material );
+		cone.name = "第3点";
+		cone.visible = false;
+		editor.execute( new AddObjectCommand( cone ) );
+
 		this.signals.editorCleared.dispatch();
 
 	},

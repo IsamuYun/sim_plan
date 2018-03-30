@@ -52,7 +52,10 @@ textarea, input { outline: none; } /* osx */
 
 	/* No support for these yet */
 	-o-user-select: none;
-	user-select: none;
+    user-select: none;
+    
+    user-select: none;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.22);
 }
 
 /* CodeMirror */
