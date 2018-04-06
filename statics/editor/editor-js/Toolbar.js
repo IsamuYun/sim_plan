@@ -36,7 +36,7 @@ var Toolbar = function ( editor ) {
 	progress_bar.setValue( 0 );
 	container.add( progress_bar );
 
-	/*
+	
 	var label = new UI.Text( "盆骨" );
 	container.add( label );
 
@@ -44,7 +44,7 @@ var Toolbar = function ( editor ) {
 	progress_bar.setId( "pelvis-load-progress" );
 	progress_bar.setValue( 0 );
 	container.add( progress_bar );
-	*/
+	
 
 	var label = new UI.Text( "新髋臼杯" );
 	container.add( label );

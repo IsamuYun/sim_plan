@@ -311,8 +311,8 @@ select {
 	}
 	
 	#sidebar-left button.selected {
-		background-color: #FFFFFF;
-		color: #4FC3F7;
+		background: #4FC3F7;
+		color: #FFFFFF;
 	}
 
 #sidebar-item-box {
@@ -446,40 +446,100 @@ select {
 }
 
 #sidebar-scene-box input[type=range] {
-	overflow: hidden !important;
 	-webkit-appearance: none;
-    width: 180px;
-	border-radius: 0px; /*这个属性设置使填充进度条时的图形为圆角*/
-	background-color: #BCBCBC;
-}
-
-#sidebar-scene-box input[type=range]::-webkit-slider-runnable-track {
-	-webkit-appearance: none;
-	height: 18px;
-    border-radius: 0px; /*将轨道设为圆角的*/
-	/*box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
-	color: #4FC3F7;
-	
+	width: 80%;
 }
 
 #sidebar-scene-box input[type=range]:focus {
-    outline: none;
+	outline: none;
+}
+
+#sidebar-scene-box input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+  	height: 4.3px;
+  	cursor: pointer;
+  	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+  	background: #eee;
+  	border-radius: 1.5px;
+  	border: 0px solid #010001;
+  	transition: 0.2s;
 }
 
 #sidebar-scene-box input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 24px;
-    width: 24px;
-    margin-top: -5px; /*使滑块超出轨道部分的偏移量相等*/
-    background: #ffffff; 
-    border-radius: 0; /*外观设置为圆形*/
-    border: solid 0.125em rgba(205, 224, 230, 0.5); /*设置边框*/
-	/*box-shadow: 0 .125em .125em #3b4547; /*添加底部阴影*/ 
-	
-	cursor: ew-resize;
-    box-shadow: -80px 0 0 80px #4FC3F7;
+	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+	border: 0px solid #000000;
+	height: 16px;
+	width: 16px;
+	border-radius: 8px;
+	background: #4FC3F7;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -6.45px;
+	transition: 0.2s;
 }
 
+#sidebar-scene-box input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #4FC3F788;
+}
+
+#sidebar-scene-box input[type=range]::-moz-range-track {
+	width: 100%;
+  	height: 4.3px;
+  	cursor: pointer;
+  	box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  	background: #9c71a9;
+  	border-radius: 1.5px;
+  	border: 0.6px solid #010001;
+  	transition: 0.2s;
+}
+#sidebar-scene-box input[type=range]::-moz-range-thumb {
+	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+	border: 0px solid #000000;
+	height: 16px;
+	width: 16px;
+	border-radius: 8px;
+	background: #dcffff;
+	cursor: pointer;
+}
+#sidebar-scene-box input[type=range]::-ms-track {
+	width: 100%;
+  height: 4.3px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+#sidebar-scene-box input[type=range]::-ms-fill-lower {
+	background: #eee;
+  /*border: 0.6px solid #010001;*/
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+#sidebar-scene-box input[type=range]::-ms-fill-upper {
+	background: #eee;
+  /*border: 0.6px solid #010001;*/
+  border-radius: 3px;
+  /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+}
+#sidebar-scene-box input[type=range]::-ms-thumb {
+	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+	border: 1px solid #000000;
+	height: 16px;
+	width: 16px;
+	border-radius: 8px;
+	background: #dcffff;
+	cursor: pointer;
+	height: 4.3px;
+}
+
+#sidebar-scene-box input[type=range]:focus::-ms-fill-lower {
+	/*background: #9c71a9;*/
+}
+
+#sidebar-scene-box input[type=range]:focus::-ms-fill-upper {
+	/*background: #a781b3;*/
+}
 
 #banner-top {
 	position: absolute;

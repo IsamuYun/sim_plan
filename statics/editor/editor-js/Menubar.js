@@ -9,7 +9,7 @@ var Menubar = function ( editor ) {
 
 	container.add( new Menubar.File( editor ) );
 	container.add( new Menubar.Edit( editor ) );
-	container.add( new Menubar.Import( editor ) );
+	// container.add( new Menubar.Import( editor ) );
 	// container.add( new Menubar.Upload( editor ) );
 	//  container.add( new Menubar.Play( editor ) );
 	//  container.add( new Menubar.View( editor ) ); // VR Mode

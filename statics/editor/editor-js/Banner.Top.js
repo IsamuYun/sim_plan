@@ -54,6 +54,7 @@ var BannerTop = function ( editor ) {
                 
                         another_object.visible = false;
                         another_object.position.set(femur.position.x, femur.position.y, femur.position.z);
+                        another_object.rotation.set(femur.rotation.x, femur.rotation.y, femur.rotation.z);
                         another_object.material.clippingPlanes = [];
                     }
                 } );

@@ -285,15 +285,26 @@ var Viewport = function ( editor ) {
 						another_plane.normal.y = -plane.normal.y;
 						another_plane.normal.z = -plane.normal.z;
 						another_plane.constant = -plane.constant;
-
-						object.material.clippingPlanes = [another_plane];
+						if ( another_plane.normal.y <= 0.0 ) {
+							object.material.clippingPlanes = [another_plane];
+						}
+						else {
+							object.material.clippingPlanes = [plane];
+						}
+						
 
 						editor.scene.traverse( function( child ) {
 							if ( child.name === "切割预览" ) {
                         
 								child.visible = true;
 								child.position.set(object.position.x, object.position.y, object.position.z);
-								child.material.clippingPlanes = [plane];
+								if ( another_plane.normal.y <= 0.0 ) {
+									child.material.clippingPlanes = [plane];
+								}
+								else {
+									child.material.clippingPlanes = [another_plane];
+								}
+								
 							}
 							if ( child.name === "第3点" ) {
 								child.visible = true;
@@ -562,15 +573,28 @@ var Viewport = function ( editor ) {
 				another_plane.normal.y = -plane.normal.y;
 				another_plane.normal.z = -plane.normal.z;
 				another_plane.constant = -plane.constant;
-
+				console.log( plane );
+				console.log( another_plane );
 				editor.scene.traverse( function( child ) {
 					if ( child.name === "切割预览" ) {
-                        child.visible = true;
-						child.material.clippingPlanes = [plane];
+						child.visible = true;
+						if ( another_plane.normal.y <= 0.0 ) {
+							child.material.clippingPlanes = [plane];
+						}
+						else {
+							child.material.clippingPlanes = [another_plane];
+						}
+						
+						
 					}
 					if ( child.name === "股骨" ) {
 						// child.visible = true;
-						child.material.clippingPlanes = [another_plane];
+						if ( another_plane.normal.y <= 0.0 ) {
+							child.material.clippingPlanes = [another_plane];
+						}
+						else {
+							child.material.clippingPlanes = [plane];
+						}
 					}
 				} );
 			}

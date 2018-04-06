@@ -29,74 +29,7 @@ var SidebarLeft = function ( editor ) {
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
-
-        var scope = this;
         
-		editor.scene.traverse( function ( child ) {
-            if ( child.name === "股骨" ) {
-                var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
-                
-                var plane_width = 6;
-		        var plane_height = 6;
-                var plane_geometry = new THREE.PlaneGeometry( plane_width, plane_height );
-                var plane_material = new THREE.MeshBasicMaterial( {color: 0xA9E2F3, opacity: 0.5, transparent: true, side: THREE.DoubleSide} );
-		        var plane_mesh = new THREE.Mesh( plane_geometry, plane_material );
-                plane_mesh.name = "截面";
-                var plane_position = new THREE.Vector3(child.position.x + 4.0, child.position.y - 3, child.position.z - 3.7 );
-                plane_mesh.position.set( plane_position.x, plane_position.y, plane_position.z );
-                plane_mesh.rotation.set( Math.PI / 180 * 35, Math.PI / 180 * 30, Math.PI / 180 * 30 );
-               
-                var v1 = plane_mesh.geometry.vertices[0].clone();
-                var v2 = plane_mesh.geometry.vertices[1].clone();
-                var v3 = plane_mesh.geometry.vertices[2].clone();
-
-                var axis = new THREE.Vector3( 1, 0, 0 );
-                var angle = plane_mesh.rotation.x;
-                v1.applyAxisAngle( axis, angle );
-                v2.applyAxisAngle( axis, angle );
-                v3.applyAxisAngle( axis, angle );
-
-                axis = new THREE.Vector3( 0, 0, 1 );
-                angle = plane_mesh.rotation.y;
-                v1.applyAxisAngle( axis, angle );
-                v2.applyAxisAngle( axis, angle );
-                v3.applyAxisAngle( axis, angle );
-
-                axis = new THREE.Vector3( 0, 1, 0 );
-                angle = plane_mesh.rotation.z;
-                v1.applyAxisAngle( axis, angle );
-                v2.applyAxisAngle( axis, angle );
-                v3.applyAxisAngle( axis, angle );
-
-                var origin_point = new THREE.Vector3(0, 0, 0);
-                plane.setFromCoplanarPoints( v1, v2, v3 );
-                plane.translate( plane_position.add( origin_point ) );
-                //plane.constant = 5.0;
-                
-                
-                var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
-                //another_plane.constant = -5.0;
-                another_plane.normal.x = -plane.normal.x;
-                another_plane.normal.y = -plane.normal.y;
-                another_plane.normal.z = -plane.normal.z;
-                another_plane.translate( plane_position.add( origin_point ) );
-                child.material.clippingPlanes = [another_plane];
-                
-                
-                editor.scene.traverse( function ( object ) {
-                    if ( object.name === "切割预览" ) {
-                        
-                        object.visible = true;
-                        object.position.set(child.position.x, child.position.y, child.position.z);
-                        object.material.clippingPlanes = [plane];
-                    }
-                });
-                
-                editor.execute( new AddObjectCommand( plane_mesh ) );
-
-            }
-            
-        } );
         
     } );
     

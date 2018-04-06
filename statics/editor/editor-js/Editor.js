@@ -387,21 +387,20 @@ Editor.prototype = {
 	select: function ( object ) {
 		
 		if ( this.selected === object ) {
-			
 			return;
 		}
+
+		
 
 		var uuid = null;
 
 		if ( object !== null ) {
 			uuid = object.uuid;
-			if ( object.name === "切割预览" )
+			if ( object.name != "第1点" && object.name != "第2点" && object.name != "第3点" )
 			{
 				return;
 			}
 		}
-
-		
 
 		this.selected = object;
 
@@ -651,10 +650,10 @@ Editor.prototype = {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( 2.46, 1.81, 6.28 );
-			mesh.rotation.x = Math.PI / 180 * 9.40;
-			mesh.rotation.y = Math.PI / 180 * 148.60;
-			mesh.rotation.z = -(Math.PI / 180) * 99.20;
+			mesh.position.set( 0, 0, 0 );
+			mesh.rotation.x = -Math.PI / 180 * 90;
+			mesh.rotation.y = 0;
+			mesh.rotation.z = 0;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 
@@ -675,11 +674,11 @@ Editor.prototype = {
             faker_object.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
 			faker_object.parent = mesh;
 			faker_object.visible = false;
-			
+			console.log( faker_object );		
 			this.editor.execute( new AddObjectCommand( faker_object ) );
 			
 		}, onFemurLoadProgress);
-		/*
+		
 		// 载入盆骨
 		var url = host_name + folder_name + "pelvis.stl";
 		var loader = new THREE.STLLoader();
@@ -720,15 +719,15 @@ Editor.prototype = {
 				scale_x = 0.1;
 			}
 			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( -0.66, -7.87, -5.00 );
-			mesh.rotation.x = 0;
+			mesh.position.set( 0, 0, 0 );
+			mesh.rotation.x = -Math.PI / 2;
 			mesh.rotation.y = 0;
-			mesh.rotation.z = Math.PI / 2;
+			mesh.rotation.z = 0;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onPelvisLoadProgress);
-		*/
+		
 
 		// 2018年3月26日 新增载入四个STL
 		// 载入新髋臼杯
