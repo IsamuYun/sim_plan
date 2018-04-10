@@ -44,6 +44,52 @@ var Viewport = function ( editor ) {
 	// 判定标签是否半透明
 	var sprite_behind_object = new Array();
 
+	// composer
+	var composer = null;
+	var effectFXAA = null;
+	var outlinePass = null;
+
+	
+
+	function init_composer() {
+		console.log( "init begin" );
+		var width = container.dom.offsetWidth;
+		var height = container.dom.offsetHeight;
+
+		// postprocessing
+		composer = new THREE.EffectComposer( renderer );
+		var renderPass = new THREE.RenderPass( scene, editor.DEFAULT_CAMERA );
+		composer.addPass( renderPass );
+		outlinePass = new THREE.OutlinePass( new THREE.Vector2( width, height ), scene, editor.DEFAULT_CAMERA );
+		outlinePass.edgeStrength = 3.0;
+		outlinePass.usePatternTexture = false;
+		outlinePass.edgeThickness = 1.0;
+		outlinePass.visibleEdgeColor.set( "#FF0000" );
+		outlinePass.hiddenEdgeColor.set( "#190a05" );
+		outlinePass.edgeGlow = 0.0;
+		outlinePass.rotate = false;
+		outlinePass.pulsePeriod = 0;
+		console.log(outlinePass);
+		
+		var onTextureLoad = function ( texture ) {
+			outlinePass.patternTexture = texture;
+			texture.wrapS = THREE.RepeatWrapping;
+			texture.wrapT = THREE.RepeatWrapping;
+		};
+		var loader = new THREE.TextureLoader();
+		loader.load( "../../static/img/textures/tri_pattern.jpg", onTextureLoad );
+		
+		composer.addPass( outlinePass );
+
+		
+		effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
+		effectFXAA.uniforms["resolution"].value.set( 1 / width, 1 / height );
+		effectFXAA.renderToScreen = true;
+		composer.addPass( effectFXAA );
+
+		
+	}
+
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
 
@@ -60,17 +106,11 @@ var Viewport = function ( editor ) {
 			}
 
 			signals.refreshSidebarObject3D.dispatch( object );
-
 		}
 
-		
-
-
 		render();
-
-		
-
 	} );
+
 	transformControls.addEventListener( 'mouseDown', function () {
 
 		var object = transformControls.object;
@@ -320,14 +360,9 @@ var Viewport = function ( editor ) {
 								
 						annotation.style["display"] = "table";
 						// 构造一个截面
-
-						
-
 						var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
 						
-						
-
 						var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 						another_plane.normal.x = -plane.normal.x;
 						another_plane.normal.y = -plane.normal.y;
@@ -433,15 +468,53 @@ var Viewport = function ( editor ) {
 
 			var intersect = intersects[ 0 ];
 
+			var select_object = intersects[0].object;
+			// outlinePass.selectedObjects = select_object;
+			if ( select_object.name === "股骨" ) {
+				if ( editor.femur_helper != null ) {
+					editor.femur_helper.visible = true;
+				}
+				
+			}
+			else if ( select_object.name === "股骨外框" ) {
+				if ( editor.femur_helper != null ) {
+					editor.femur_helper.visible = false;
+				}
+			}
+			else {
+				editor.femur_helper.visible = false;
+			}
+
 			signals.objectFocused.dispatch( intersect.object );
 
 		}
 
 	}
 
+	function onTouchMove( event ) {
+		event.preventDefault();
+
+		var move_position = new THREE.Vector2();
+		var array = getMousePosition( container.dom, event.clientX, event.clientY );
+		move_position.fromArray( array );
+
+		var intersects = getIntersects( move_position, objects );
+		if ( intersects.length > 0 ) {
+			
+		}
+		else {
+			// outlinePass.selectedObjects = [];
+		}
+	}
+
 	container.dom.addEventListener( 'mousedown', onMouseDown, false );
 	container.dom.addEventListener( 'touchstart', onTouchStart, false );
 	container.dom.addEventListener( 'dblclick', onDoubleClick, false );
+	// 20180410 增加一个mousemove的事件响应
+	container.dom.addEventListener( "mousemove", onTouchMove, false );
+
+	
+
 
 	// controls need to be added *after* main logic,
 	// otherwise controls.enabled doesn't work.
@@ -457,7 +530,8 @@ var Viewport = function ( editor ) {
 	// signals
 
 	signals.editorCleared.add( function () {
-
+		init_composer();
+		// 在这里初始化相关的物体
 		controls.center.set( 0, 0, 0 );
 		render();
 
@@ -756,6 +830,13 @@ var Viewport = function ( editor ) {
 		camera.updateProjectionMatrix();
 
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
+		if ( composer != null ) {
+			composer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
+		}
+		if ( effectFXAA != null ) {
+			effectFXAA.uniforms["resolution" ].value.set( 1 / container.dom.offsetWidth, 1 / container.dom.offsetHeight );
+		}
+		
 
 		render();
 
@@ -776,7 +857,11 @@ var Viewport = function ( editor ) {
 		scene.updateMatrixWorld();
 
 		renderer.localClippingEnabled = true;
-
+		renderer.shadowMap.enabled = true;
+		if (composer != null ) {
+			console.log( composer );
+			composer.render();
+		}
 		renderer.render( scene, camera );
 
 		if ( renderer instanceof THREE.RaytracingRenderer === false ) {

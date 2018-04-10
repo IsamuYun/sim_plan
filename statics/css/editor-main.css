@@ -394,4 +394,5 @@ progress::-webkit-progress-inner-element {
     line-height: 1.2;
     transition: opacity .5s;
     transform: translate(0%, 30%);
+    display: none;
 }

@@ -96,6 +96,7 @@ var Editor = function () {
 
 	this.selected = null;
 	this.helpers = {};
+	this.femur_helper = null;
 
 };
 
@@ -481,10 +482,14 @@ Editor.prototype = {
 		var light = new THREE.AmbientLight( 0xFFFFFF, 0.38 ); // soft white light
 		light.name = "环境光";
 		light.position.set( 20.0, 20.0, 7.5 );
+		
 		this.scene.add( light );
 
 		var spotLight = new THREE.SpotLight( 0xFFFFFF, 0.3 );
 		spotLight.position.set( 0, 12.0, 12.0 );
+		spotLight.castShadow = true;
+		spotLight.shadow.mapSize.width = 1024;
+		spotLight.shadow.mapSize.height = 1024;
 		spotLight.name = "聚光灯";
 		
 		this.scene.add( spotLight );
@@ -508,109 +513,32 @@ Editor.prototype = {
 		
 		
 		const host_name = window.location.origin;
-    	const folder_name = "/static/models/";
-		/*
-		// 添加髋臼杯
-		var url = host_name + folder_name + "acetabular cup.stl";
-		var loader = new THREE.STLLoader();
+		const folder_name = "/static/models/";
+
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xFFFFFF,
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0xB9B9B9,
+			// ***** Clipping setup (material): *****
+			// clippingPlanes: [ localPlane ],
+			clipShadows: true,
+			
+		});
+
+		var faker_material =  new THREE.MeshPhongMaterial( {
+			color: 0xF73711,
+			shininess: 100,
+			side: THREE.DoubleSide,
+			// ***** Clipping setup (material): *****
+			// clippingPlanes: [ another_plane ],
+			clipShadows: true,
+		});
 		
-		var onLoadProgress = function (e) {
-			var percentage = Math.round((e.loaded / e.total * 100));
-			var progress_bar = document.getElementById( "acetabular-load-progress" );
-			progress_bar.value = percentage;
-		};
-
-		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.name = "髋臼杯";
-
-			geometry.computeBoundingBox();
-
-			var bb = geometry.boundingBox;
-			// 计算得出以毫米为单位的计量
-			var object3DWidth  = bb.max.x - bb.min.x;
-			var object3DHeight = bb.max.y - bb.min.y;
-			var object3DDepth  = bb.max.z - bb.min.z;
-
-			var scale_x = 0.0;
-			
-			if (object3DWidth > 0 && object3DWidth < 10) {
-				scale_x = 0.5;
-			}
-			else {
-				scale_x = 0.1;
-			}
-			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( 0, -0.98, 2.99 );
-			mesh.rotation.x = - ((Math.PI / 180) * 127.40);
-			mesh.rotation.y = 0.0;
-			mesh.rotation.z = 0.0;
-
-			this.editor.execute( new AddObjectCommand( mesh ) );
-			
-		}, onLoadProgress);
-		*/
-
-		/*
-		var url = host_name + folder_name + "hil-1.stl";
-
-		var onHipLoadProgress = function (e) {
-			var percentage = Math.round((e.loaded / e.total * 100));
-			var progress_bar = document.getElementById( "hip-load-progress" );
-			progress_bar.value = percentage;
-		};
-
-		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.name = "髋关节植入体";
-
-			geometry.computeBoundingBox();
-
-			var bb = geometry.boundingBox;
-			// 计算得出以毫米为单位的计量
-			var object3DWidth  = bb.max.x - bb.min.x;
-			var object3DHeight = bb.max.y - bb.min.y;
-			var object3DDepth  = bb.max.z - bb.min.z;
-
-			var scale_x = 0.0;
-			
-			if (object3DWidth > 0 && object3DWidth < 10) {
-				scale_x = 0.5;
-			}
-			else {
-				scale_x = 0.1;
-			}
-			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.position.set( -0.59, -4.35, 5.67 );
-			mesh.rotation.x = 0;
-			mesh.rotation.y = -(Math.PI / 2);
-			mesh.rotation.z = 0;
-
-			this.editor.execute( new AddObjectCommand( mesh ) );
-			
-		}, onHipLoadProgress);
-		*/
-
+		
 		// 添加股骨
-		var url = host_name + folder_name + "femur.stl";
+		// var url = host_name + folder_name + "femur.stl";
+		var url = "../../static/models/femur.stl"; 
 		
 		var loader = new THREE.STLLoader();
 
@@ -621,15 +549,7 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
+			
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "股骨";
 
@@ -656,16 +576,13 @@ Editor.prototype = {
 			mesh.rotation.z = 0;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
-
-			//var another_plane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0.0 );
-            var faker_material =  new THREE.MeshPhongMaterial( {
-                color: 0xF73711,
-                shininess: 100,
-                side: THREE.DoubleSide,
-                // ***** Clipping setup (material): *****
-                // clippingPlanes: [ another_plane ],
-                clipShadows: true
-            });
+			editor.femur_helper = new THREE.WireframeHelper( mesh, 0x5FCAA7 );
+			editor.femur_helper.scale.set( mesh.scale.x, mesh.scale.y, mesh.scale.z );
+			editor.femur_helper.position.set( mesh.position.x, mesh.position.y, mesh.position.z );
+			editor.femur_helper.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
+			editor.femur_helper.name = "股骨外框";
+			editor.femur_helper.visible = false;
+			this.editor.execute( new AddObjectCommand( editor.femur_helper ) );
 			
 			var faker_object = new THREE.Mesh( geometry, faker_material );
             faker_object.name = "切割预览";
@@ -674,13 +591,19 @@ Editor.prototype = {
             faker_object.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
 			faker_object.parent = mesh;
 			faker_object.visible = false;
-			console.log( faker_object );		
+
+			var faker_helper = new THREE.WireframeHelper( faker_object, 0xFF0000 );
+			
+			
+
 			this.editor.execute( new AddObjectCommand( faker_object ) );
+			//this.editor.execute( new AddObjectCommand( faker_helper ) );
 			
 		}, onFemurLoadProgress);
 		
 		// 载入盆骨
-		var url = host_name + folder_name + "pelvis.stl";
+		//var url = host_name + folder_name + "pelvis.stl";
+		var url = "../../static/models/pelvis.stl"; 
 		var loader = new THREE.STLLoader();
 
 		var onPelvisLoadProgress = function (e) {
@@ -690,15 +613,6 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "盆骨";
 
@@ -741,15 +655,6 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "新髋臼杯";
 
@@ -787,15 +692,6 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "髋臼内衬";
 
@@ -833,15 +729,7 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
+			
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "股骨头假体";
 
@@ -879,15 +767,6 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFFFFFF,
-				shininess: 80,
-				side: THREE.DoubleSide,
-				specular: 0xB9B9B9,
-				// ***** Clipping setup (material): *****
-				// clippingPlanes: [ localPlane ],
-				clipShadows: true
-			});
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.name = "股骨柄假体";
 
@@ -916,37 +795,37 @@ Editor.prototype = {
 
 		// 增加第一点和第二点，将它们设为隐身
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
-		var material = new THREE.MeshPhongMaterial( {
+		var p1_material = new THREE.MeshPhongMaterial( {
 			color: 0x58D68D,
 			shininess: 80,
 			side: THREE.DoubleSide,
-			specular: 0x58D68D
+			specular: 0x58D68D,
 		});
-		var cone = new THREE.Mesh( geometry, material );
+		var cone = new THREE.Mesh( geometry, p1_material );
 		cone.name = "第1点";
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
 
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
-		var material = new THREE.MeshPhongMaterial( {
+		var p2_material = new THREE.MeshPhongMaterial( {
 			color: 0x3498DB,
 			shininess: 80,
 			side: THREE.DoubleSide,
 			specular: 0x3498DB
 		});
-		var cone = new THREE.Mesh( geometry, material );
+		var cone = new THREE.Mesh( geometry, p2_material );
 		cone.name = "第2点";
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
 
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
-		var material = new THREE.MeshPhongMaterial( {
+		var p3_material = new THREE.MeshPhongMaterial( {
 			color: 0xAF7AC5,
 			shininess: 80,
 			side: THREE.DoubleSide,
 			specular: 0xAF7AC5
 		});
-		var cone = new THREE.Mesh( geometry, material );
+		var cone = new THREE.Mesh( geometry, p3_material );
 		cone.name = "第3点";
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
