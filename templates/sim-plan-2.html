@@ -17,6 +17,18 @@
 			</div>
 		</div>
 
+		<div id="point-1" class="zs-annotation">
+			<p><strong>第1点</strong></p>
+		</div>
+		
+		<div id="point-2" class="zs-annotation">
+			<p><strong>第2点</strong></p>
+		</div>
+
+		<div id="point-3" class="zs-annotation">
+			<p><strong>第3点</strong></p>
+		</div>
+
 		<script>
 			function sleep(milliseconds) {
   				var start = new Date().getTime();
@@ -83,8 +95,6 @@
 				
 			};
 		</script>
-		
-		
 
 		<script src="static/js/three.js"></script>
 		<script src="static/editor/editor-js/libs/THREE.MeshLine.js"></script>
@@ -462,6 +472,7 @@
 				}
 
 			}, false );
+
             function onWindowResize( event ) {
 
 				editor.signals.windowResize.dispatch();

@@ -29,7 +29,38 @@ var SidebarLeft = function ( editor ) {
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
+
+        G_clip_point_1 = true;
+        editor.scene.traverse( function ( object ) {
+            if ( object.name === "股骨" ) {
+                var femur = object;
+                femur.material.clippingPlanes = [];
+
+                editor.scene.traverse( function ( another_object ) {
+                    if ( another_object.name === "切割预览" ) {
+                
+                        another_object.visible = false;
+                        another_object.position.set(femur.position.x, femur.position.y, femur.position.z);
+                        another_object.rotation.set(femur.rotation.x, femur.rotation.y, femur.rotation.z);
+                        another_object.material.clippingPlanes = [];
+                    }
+                } );
+            }
+            if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
+                object.visible = false;
+                
+            }
         
+        } );
+
+        var p1_annotation = document.getElementById( "point-1" );
+        p1_annotation.style["display"] = "none";
+        var p2_annotation = document.getElementById( "point-2" );
+        p2_annotation.style["display"] = "none";
+        var p3_annotation = document.getElementById( "point-3" );
+        p3_annotation.style["display"] = "none";
+
+        editor.signals.sceneGraphChanged.dispatch();
         
     } );
     
