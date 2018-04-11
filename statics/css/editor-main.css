@@ -251,6 +251,7 @@ progress::-webkit-progress-inner-element {
     background-color: #fff;
     z-index: 10000
 }
+
 #status,
 .preloader {
     display: block;
@@ -260,6 +261,7 @@ progress::-webkit-progress-inner-element {
     left: 50%;*/
     position: absolute
 }
+
 #status {
     width: 100%;
     height: 100%;

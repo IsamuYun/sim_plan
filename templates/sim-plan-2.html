@@ -9,6 +9,7 @@
 
 		<link href="static/css/editor-main.css" rel="stylesheet" />
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
+		<link href="static/css/editor-zs.css" rel="stylesheet" />
 		<link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
 		
 		<div id="preloader">
@@ -219,6 +220,7 @@
 		<script src="static/editor/editor-js/Sidebar.Left.js"></script>
 		<script src="static/editor/editor-js/Sidebar.ItemBox.js"></script>
 		<script src="static/editor/editor-js/Sidebar.SceneBox.js"></script>
+		<script src="static/editor/editor-js/Sidebar.CTBox.js"></script>
 		<script src="static/editor/editor-js/Banner.Top.js"></script>
 		<script src="static/editor/editor-js/Viewport.js"></script>
 		<script src="static/editor/editor-js/Viewport.Info.js"></script>
@@ -302,15 +304,15 @@
 			var sidebar_scene_box = new SidebarSceneBox( editor );
 			document.body.appendChild( sidebar_scene_box.dom );
 
+			var sidebar_ct_box = new SidebarCTBox( editor );
+			document.body.appendChild( sidebar_ct_box.dom );
+
 			var banner = new BannerTop( editor );
 			document.body.appendChild( banner.dom );
             
-			
 			editor.setTheme( editor.config.getKey( 'theme' ) );
            
 			editor.storage.init( function () {
-
-
                  editor.storage.get( function ( state ) {
 
 					if ( isLoadingFromHash ) return;
@@ -320,8 +322,6 @@
 						editor.fromJSON( state );
 
 					}
-
-					
 
 					var selected = editor.config.getKey( 'selected' );
 

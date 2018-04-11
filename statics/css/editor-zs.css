@@ -1,0 +1,82 @@
+#sidebar-ct-box {
+	position: absolute;
+	right: 0;
+	top: 32px;
+	width: 300px;
+	height: 100%;
+
+	background: #FCFCFC;
+	color: #000000;
+	border: 0;
+	overflow: auto;
+}
+
+#sidebar-ct-box * {
+	vertical-align: middle;
+}
+
+#sidebar-ct-box .title {
+	color: #585858;
+	background: #FFFFFF;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	border-bottom: 1px #BDBDBD solid;
+}
+
+#sidebar-ct-box .detail {
+	color: #BCBCBC;
+	background: #000000;
+	bottom: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	cursor: pointer;
+}
+
+#sidebar-ct-box .Panel {
+	color: #000000;
+	background: #FFFFFF;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar-ct-box .content {
+	height: 100px;
+	font-size: 14px;
+}
+
+#sidebar-ct-box .Row {
+	min-height: 20px;
+	margin-bottom: 0;
+}
+
+#sidebar-ct-box .td-header {
+	border: 0;
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 40px;
+	margin-right: 5px;
+	line-height: 20px;
+	
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#sidebar-ct-box .td-content {
+	border: 0;
+	padding: 0;
+	margin-top: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	width: 140px;
+	line-height: 20px;
+	
+	font-size: 14px;
+	font-weight: normal;
+}

@@ -3,9 +3,6 @@
  */
 
 var BannerTop = function ( editor ) {
-
-    
-
     var signals = editor.signals;
 
 	var container = new UI.Panel();
@@ -34,43 +31,23 @@ var BannerTop = function ( editor ) {
         
     } );
 
-    var button_2 = new UI.Button( "按钮2" );
-    button_2.setClass( "ripple-effect" );
-    var button_3 = new UI.Button( "按钮3" );
-    button_3.setClass( "ripple-effect" );
-    var button_4 = new UI.Button( "按钮4" );
-    button_4.setClass( "ripple-effect" );
-    var cut = new UI.Button( "截面" );
-    cut.setClass( "ripple-effect" );
+    var ct_button = new UI.Button( "CT" ).setClass( "ripple-effect" );
+    ct_button.onClick( function() {
+
+    } );
+
+
+    var button_3 = new UI.Button( "按钮3" ).setClass( "ripple-effect" );
+    var button_4 = new UI.Button( "按钮4" ).setClass( "ripple-effect" );
+    
+    var cut = new UI.Button( "按钮4" ).setClass( "ripple-effect" );
     cut.onClick( function () {
-        G_clip_point_1 = true;
-        editor.scene.traverse( function ( object ) {
-            if ( object.name === "股骨" ) {
-                var femur = object;
-                femur.material.clippingPlanes = [];
-
-                editor.scene.traverse( function ( another_object ) {
-                    if ( another_object.name === "切割预览" ) {
-                
-                        another_object.visible = false;
-                        another_object.position.set(femur.position.x, femur.position.y, femur.position.z);
-                        another_object.rotation.set(femur.rotation.x, femur.rotation.y, femur.rotation.z);
-                        another_object.material.clippingPlanes = [];
-                    }
-                } );
-            }
-            if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
-                object.visible = false;
-            }
         
-        } );
-
-        editor.signals.sceneGraphChanged.dispatch();
     } );
 
 
     container.add( info_panel );
-    container.add( button_2 );
+    container.add( ct_button );
     container.add( button_3 );
     container.add( button_4 );
     container.add( cut );
