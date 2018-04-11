@@ -550,7 +550,7 @@ Editor.prototype = {
 
 		loader.load( url, function ( geometry ) {
 			
-			var mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "股骨";
 
 			geometry.computeBoundingBox();
@@ -613,7 +613,7 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "盆骨";
 
 			geometry.computeBoundingBox();

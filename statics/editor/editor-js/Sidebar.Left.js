@@ -78,6 +78,18 @@ var SidebarLeft = function ( editor ) {
     comment.onClick( function() {
         updateSelectedButton( "comment" );
 
+        for ( var i = 1; i <= 3; ++i ) {
+            var point_comment = document.getElementById( "point-" + i );
+            if ( point_comment != null ) {
+                if ( point_comment.style["display"] == "none" ) {
+                    point_comment.style["display"] = "table";
+                }
+                else {
+                    point_comment.style["display"] = "none";
+                }
+            }
+        }
+
     } );
     buttons.add( comment );
 

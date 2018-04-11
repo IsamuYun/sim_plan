@@ -44,52 +44,6 @@ var Viewport = function ( editor ) {
 	// 判定标签是否半透明
 	var sprite_behind_object = new Array();
 
-	// composer
-	var composer = null;
-	var effectFXAA = null;
-	var outlinePass = null;
-
-	
-
-	function init_composer() {
-		console.log( "init begin" );
-		var width = container.dom.offsetWidth;
-		var height = container.dom.offsetHeight;
-
-		// postprocessing
-		composer = new THREE.EffectComposer( renderer );
-		var renderPass = new THREE.RenderPass( scene, editor.DEFAULT_CAMERA );
-		composer.addPass( renderPass );
-		outlinePass = new THREE.OutlinePass( new THREE.Vector2( width, height ), scene, editor.DEFAULT_CAMERA );
-		outlinePass.edgeStrength = 3.0;
-		outlinePass.usePatternTexture = false;
-		outlinePass.edgeThickness = 1.0;
-		outlinePass.visibleEdgeColor.set( "#FF0000" );
-		outlinePass.hiddenEdgeColor.set( "#190a05" );
-		outlinePass.edgeGlow = 0.0;
-		outlinePass.rotate = false;
-		outlinePass.pulsePeriod = 0;
-		console.log(outlinePass);
-		
-		var onTextureLoad = function ( texture ) {
-			outlinePass.patternTexture = texture;
-			texture.wrapS = THREE.RepeatWrapping;
-			texture.wrapT = THREE.RepeatWrapping;
-		};
-		var loader = new THREE.TextureLoader();
-		loader.load( "../../static/img/textures/tri_pattern.jpg", onTextureLoad );
-		
-		composer.addPass( outlinePass );
-
-		
-		effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
-		effectFXAA.uniforms["resolution"].value.set( 1 / width, 1 / height );
-		effectFXAA.renderToScreen = true;
-		composer.addPass( effectFXAA );
-
-		
-	}
-
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
 
@@ -491,28 +445,10 @@ var Viewport = function ( editor ) {
 
 	}
 
-	function onTouchMove( event ) {
-		event.preventDefault();
-
-		var move_position = new THREE.Vector2();
-		var array = getMousePosition( container.dom, event.clientX, event.clientY );
-		move_position.fromArray( array );
-
-		var intersects = getIntersects( move_position, objects );
-		if ( intersects.length > 0 ) {
-			
-		}
-		else {
-			// outlinePass.selectedObjects = [];
-		}
-	}
-
 	container.dom.addEventListener( 'mousedown', onMouseDown, false );
 	container.dom.addEventListener( 'touchstart', onTouchStart, false );
 	container.dom.addEventListener( 'dblclick', onDoubleClick, false );
-	// 20180410 增加一个mousemove的事件响应
-	container.dom.addEventListener( "mousemove", onTouchMove, false );
-
+	
 	
 
 
@@ -530,8 +466,7 @@ var Viewport = function ( editor ) {
 	// signals
 
 	signals.editorCleared.add( function () {
-		init_composer();
-		// 在这里初始化相关的物体
+		// 在这里可以再进行一些初始化操作 
 		controls.center.set( 0, 0, 0 );
 		render();
 
@@ -695,8 +630,6 @@ var Viewport = function ( editor ) {
 				another_plane.normal.y = -plane.normal.y;
 				another_plane.normal.z = -plane.normal.z;
 				another_plane.constant = -plane.constant;
-				console.log( plane );
-				console.log( another_plane );
 				editor.scene.traverse( function( child ) {
 					if ( child.name === "切割预览" ) {
 						child.visible = true;
@@ -830,12 +763,7 @@ var Viewport = function ( editor ) {
 		camera.updateProjectionMatrix();
 
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
-		if ( composer != null ) {
-			composer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
-		}
-		if ( effectFXAA != null ) {
-			effectFXAA.uniforms["resolution" ].value.set( 1 / container.dom.offsetWidth, 1 / container.dom.offsetHeight );
-		}
+		
 		
 
 		render();
@@ -856,23 +784,17 @@ var Viewport = function ( editor ) {
 		sceneHelpers.updateMatrixWorld();
 		scene.updateMatrixWorld();
 
+		// 使渲染器支持平面截取
 		renderer.localClippingEnabled = true;
-		renderer.shadowMap.enabled = true;
-		if (composer != null ) {
-			console.log( composer );
-			composer.render();
-		}
+		
 		renderer.render( scene, camera );
 
 		if ( renderer instanceof THREE.RaytracingRenderer === false ) {
-
 			renderer.render( sceneHelpers, camera );
-
 		}
 
 		updateAnnotationOpacity();
 		updateScreenPosition();
-
 	}
 
 	// 更新三个标签框的位置
@@ -887,7 +809,6 @@ var Viewport = function ( editor ) {
 		var femur_distance = camera.position.distanceTo( femur_position );
 
 		for (var i = 0; i < G_point_list.length; ++i) {
-
 			var point_distance = camera.position.distanceTo( G_point_list[i] );
 			sprite_behind_object[i] = point_distance > femur_distance;
 		}
