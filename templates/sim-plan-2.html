@@ -304,8 +304,8 @@
 			var sidebar_scene_box = new SidebarSceneBox( editor );
 			document.body.appendChild( sidebar_scene_box.dom );
 
-			var sidebar_ct_box = new SidebarCTBox( editor );
-			document.body.appendChild( sidebar_ct_box.dom );
+			// var sidebar_ct_box = new SidebarCTBox( editor );
+			// document.body.appendChild( sidebar_ct_box.dom );
 
 			var banner = new BannerTop( editor );
 			document.body.appendChild( banner.dom );
@@ -543,10 +543,22 @@
 
 		</script>
 
-<!--增加一个id值为user_uid-->
-		<dialog id="upload-file">
-			<button id="close">关闭</button>
-		</dialog>
+	<!--这里添加CT盒子的代码-->
+
+	<div id="sidebar-ct-box">
+		<div id="zs-image-box-a" class="zs-image-box">
+			<img src="static/img/hipdicom/x/slice_100.png" alt="A轴CT图" width="296" height="256" />
+			<input type="range" class="slider" value="40" step="1" min="1" max="100" />
+		</div>
+		<div id="zs-image-box-r" class="zs-image-box">
+			<img src="static/img/hipdicom/y/slice_100.png" alt="R轴CT图" width="296" height="256" />
+			<input type="range" class="slider" value="40" step="1" min="1" max="100" />
+		</div>
+		<div id="zs-image-box-s" class="zs-image-box">
+			<img src="static/img/hipdicom/z/slice_100.png" alt="S轴CT图" width="296" height="256" />
+			<input type="range" class="slider" value="40" step="1" min="1" max="100" />
+		</div>
+	</div>
 
 	</body>
 </html>

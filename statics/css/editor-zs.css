@@ -80,3 +80,12 @@
 	font-size: 14px;
 	font-weight: normal;
 }
+
+.zs-image-box {
+    position: relative;
+    width: 296px;
+    height: 296px;
+    margin: 2px;
+    color: black;
+}
+

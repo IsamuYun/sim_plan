@@ -10,12 +10,12 @@ var BannerTop = function ( editor ) {
     
     var click_flag = false;
 
-    var info_panel = new UI.Button( "面板" );
+    var info_panel = new UI.Button( "CT" );
     info_panel.setClass( "ripple-effect" );
     info_panel.onClick( function () {
         var item_box = document.getElementById( "sidebar-item-box" );
         var scene_box = document.getElementById( "sidebar-scene-box" );
-        var sidebar = document.getElementById( "sidebar" );
+        var sidebar = document.getElementById( "sidebar-ct-box" );
         if ( click_flag == false ) {
             item_box.style["right"] = "10px";
             scene_box.style["right"] = "10px";
@@ -31,7 +31,7 @@ var BannerTop = function ( editor ) {
         
     } );
 
-    var ct_button = new UI.Button( "CT" ).setClass( "ripple-effect" );
+    var ct_button = new UI.Button( "按钮2" ).setClass( "ripple-effect" );
     ct_button.onClick( function() {
 
     } );
@@ -40,7 +40,7 @@ var BannerTop = function ( editor ) {
     var button_3 = new UI.Button( "按钮3" ).setClass( "ripple-effect" );
     var button_4 = new UI.Button( "按钮4" ).setClass( "ripple-effect" );
     
-    var cut = new UI.Button( "按钮4" ).setClass( "ripple-effect" );
+    var cut = new UI.Button( "按钮5" ).setClass( "ripple-effect" );
     cut.onClick( function () {
         
     } );
