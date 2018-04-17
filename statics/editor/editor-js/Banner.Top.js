@@ -31,9 +31,21 @@ var BannerTop = function ( editor ) {
         
     } );
 
-    var ct_button = new UI.Button( "按钮2" ).setClass( "ripple-effect" );
-    ct_button.onClick( function() {
-
+    var transparency_button = new UI.Button( "半透明" ).setClass( "ripple-effect" );
+    transparency_button.onClick( function() {
+        editor.scene.traverse( function( child ) {
+            if ( child.name === "股骨" || child.name === "盆骨" ) {
+                if ( child.material.opacity == 0.4 && child.material.transparent == true ) {
+                    child.material.opacity = 1.0;
+                    child.material.transparent = false;
+                }
+                else {
+                    child.material.opacity = 0.4;
+                    child.material.transparent = true;
+                }
+            }
+            editor.signals.sceneGraphChanged.dispatch();
+        });
     } );
 
 
@@ -47,7 +59,7 @@ var BannerTop = function ( editor ) {
 
 
     container.add( info_panel );
-    container.add( ct_button );
+    container.add( transparency_button );
     container.add( button_3 );
     container.add( button_4 );
     container.add( cut );

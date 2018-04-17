@@ -468,6 +468,7 @@ var Viewport = function ( editor ) {
 	signals.editorCleared.add( function () {
 		// 在这里可以再进行一些初始化操作 
 		controls.center.set( 0, 0, 0 );
+		editor.select(null);
 		render();
 
 	} );
