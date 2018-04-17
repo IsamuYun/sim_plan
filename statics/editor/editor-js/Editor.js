@@ -535,7 +535,6 @@ Editor.prototype = {
 			clipShadows: true,
 		});
 		
-		
 		// 添加股骨
 		// var url = host_name + folder_name + "femur.stl";
 		var url = "../../static/models/femur.stl"; 
@@ -792,9 +791,11 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onFemurHipLoadProgress);
-
+		
 		var url = host_name + folder_name + "test.stl";
 		var loader = new THREE.STLLoader();
+
+		var v1 = new Date();
 
 		loader.load( url, function ( geometry ) {
 			var mesh = new THREE.Mesh( geometry, material );
@@ -821,7 +822,8 @@ Editor.prototype = {
 			mesh.position.set( 10.0, 10.0, 10.0 );
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
-		}, onFemurHipLoadProgress);
+		});
+
 
 		// 增加第一点和第二点，将它们设为隐身
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
