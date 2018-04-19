@@ -795,7 +795,7 @@ Editor.prototype = {
 		var url = host_name + folder_name + "test.stl";
 		var loader = new THREE.STLLoader();
 
-		var v1 = new Date();
+		console.time("Model Load");
 
 		loader.load( url, function ( geometry ) {
 			var mesh = new THREE.Mesh( geometry, material );
@@ -823,7 +823,8 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		});
-
+		
+		console.timeEnd("Model Load");
 
 		// 增加第一点和第二点，将它们设为隐身
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;

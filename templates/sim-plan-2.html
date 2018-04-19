@@ -170,7 +170,8 @@
 		<script src="static/editor/editor-js/libs/signals.min.js"></script>
 		<script src="static/editor/editor-js/libs/ui.js"></script>
 		<script src="static/editor/editor-js/libs/ui.three.js"></script>
-
+		<script src="static/editor/editor-js/libs/math.min.js"></script>
+		<script src="static/editor/editor-js/libs/2d.hip.implant.js"></script>
 		<script src="static/editor/editor-js/libs/app.js"></script>
 		<!--<script src="static/editor/editor-js/Player.js"></script>
 		<script src="static/editor/editor-js/Script.js"></script>
@@ -188,7 +189,7 @@
 		<script src="static/editor/editor-js/Menubar.Edit.js"></script>
 		<script src="static/editor/editor-js/Menubar.Add.js"></script>
 		<script src="static/editor/editor-js/Menubar.Play.js"></script>
-		<!--<script src="static/editor/editor-js/Menubar.Upload.js"></script>-->
+		
 		<script src="static/editor/editor-js/Menubar.Import.js"></script>
 		<script src="static/editor/editor-js/Menubar.Examples.js"></script>
 		<script src="static/editor/editor-js/Menubar.Help.js"></script>
@@ -309,6 +310,8 @@
 
 			var banner = new BannerTop( editor );
 			document.body.appendChild( banner.dom );
+
+			console.log(generate_2d_model(107, 36, 30, 32, 130.0));
             
 			editor.setTheme( editor.config.getKey( 'theme' ) );
            
