@@ -439,16 +439,24 @@ select {
 	margin-bottom: 10px;
 }
 
-#sidebar-scene-box .slider {
-	width: 180px;
-	margin: 10px;
+#sidebar-scene-box .row-title {
+	width: 36px;
+	text-align: left;
+	margin: 0;
 	padding: 0;
-	height: 20px; 
+}
+
+#sidebar-scene-box .slider {
+	width: 158px;
+	margin: 0;
+	padding: 0;
+	height: 20px;
+	display: inline-block;
 }
 
 #sidebar-scene-box input[type=range] {
 	-webkit-appearance: none;
-	width: 80%;
+	width: 100%;
 }
 
 #sidebar-scene-box input[type=range]:focus {
@@ -503,7 +511,7 @@ select {
 	cursor: pointer;
 }
 #sidebar-scene-box input[type=range]::-ms-track {
-	width: 100%;
+	width: 80%;
   height: 4.3px;
   cursor: pointer;
   background: transparent;

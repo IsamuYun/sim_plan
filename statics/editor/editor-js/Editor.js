@@ -575,7 +575,7 @@ Editor.prototype = {
 			mesh.rotation.z = 0;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
-			editor.femur_helper = new THREE.WireframeHelper( mesh, 0x5FCAA7 );
+			editor.femur_helper = new THREE.EdgesHelper( mesh, 0x5FCAA7 );
 			editor.femur_helper.scale.set( mesh.scale.x, mesh.scale.y, mesh.scale.z );
 			editor.femur_helper.position.set( mesh.position.x, mesh.position.y, mesh.position.z );
 			editor.femur_helper.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
