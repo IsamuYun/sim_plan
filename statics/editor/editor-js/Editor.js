@@ -792,40 +792,6 @@ Editor.prototype = {
 			
 		}, onFemurHipLoadProgress);
 		
-		var url = host_name + folder_name + "test.stl";
-		var loader = new THREE.STLLoader();
-
-		console.time("Model Load");
-
-		loader.load( url, function ( geometry ) {
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.name = "即时生成假体";
-
-			geometry.computeBoundingBox();
-
-			var bb = geometry.boundingBox;
-			// 计算得出以毫米为单位的计量
-			var object3DWidth  = bb.max.x - bb.min.x;
-			var object3DHeight = bb.max.y - bb.min.y;
-			var object3DDepth  = bb.max.z - bb.min.z;
-
-			var scale_x = 0.0;
-			
-			if (object3DWidth > 0 && object3DWidth < 10) {
-				scale_x = 0.5;
-			}
-			else {
-				scale_x = 0.1;
-			}
-			mesh.scale.set( scale_x, scale_x, scale_x );
-			mesh.rotation.set( -(Math.PI / 2), 0, 0 );
-			mesh.position.set( 10.0, 10.0, 10.0 );
-			this.editor.execute( new AddObjectCommand( mesh ) );
-			
-		});
-		
-		console.timeEnd("Model Load");
-
 		// 增加第一点和第二点，将它们设为隐身
 		var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );;
 		var p1_material = new THREE.MeshPhongMaterial( {
