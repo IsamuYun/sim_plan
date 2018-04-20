@@ -447,7 +447,23 @@ select {
 }
 
 #sidebar-scene-box .slider {
-	width: 158px;
+	width: 110px;
+	margin: 0;
+	padding: 0;
+	height: 20px;
+	display: inline-block;
+}
+
+#sidebar-scene-box .input-box {
+	width: 38px;
+	margin: 0;
+	padding: 0;
+	height: 20px;
+	display: inline-block;
+}
+
+#sidebar-scene-box input {
+	width: 38px;
 	margin: 0;
 	padding: 0;
 	height: 20px;
@@ -511,7 +527,7 @@ select {
 	cursor: pointer;
 }
 #sidebar-scene-box input[type=range]::-ms-track {
-	width: 80%;
+	width: 100%;
   height: 4.3px;
   cursor: pointer;
   background: transparent;

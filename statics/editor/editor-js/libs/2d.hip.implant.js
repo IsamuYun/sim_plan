@@ -27,7 +27,7 @@ function get_bottom_curve (A, B, C, D, alpha, x0, z0, L1, L2)
 		var beta = (180.0 - alpha) * Math.PI / 180.0;
 		var x1 = 0;
 		var z1 = 0;
-		var offset_x = 30; // adjust position of drawing on canvas
+		var offset_x = 80; // adjust position of drawing on canvas
 		var offset_z = -50;	// adjust position of drawing on canvas
 		var x0 = x1 + D * Math.sin(beta);
 		var z0 = z1 - D * Math.cos(beta);
