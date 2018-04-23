@@ -409,7 +409,7 @@ select {
 
 #sidebar-scene-box {
 	position: absolute;
-	right: 310px;
+	right: 270px;
 	top: 28%;
 	bottom: 50px;
 	width: 200px;
@@ -436,27 +436,31 @@ select {
 
 #sidebar-scene-box .Row {
 	min-height: 20px;
-	margin-bottom: 10px;
+	margin-bottom: 8px;
 }
 
 #sidebar-scene-box .row-title {
-	width: 36px;
-	text-align: left;
-	margin: 0;
+	width: 40px;
+	text-align: right;
+	margin-left: 3px;
+	margin-right: 3px;
 	padding: 0;
+	font-size: 14px;
 }
 
 #sidebar-scene-box .slider {
-	width: 110px;
-	margin: 0;
+	width: 100px;
+	margin-left: 3px;
+	margin-right: 3px;
 	padding: 0;
 	height: 20px;
 	display: inline-block;
 }
 
 #sidebar-scene-box .input-box {
-	width: 38px;
-	margin-left: 2px;
+	width: 40px;
+	margin-left: 3px;
+	margin-right: 3px;
 	padding: 0;
 	height: 20px;
 	display: inline-block;
@@ -464,13 +468,14 @@ select {
 
 #sidebar-scene-box button {
 	position: absolute;
-	left: calc(50% - 55px);
+	left: 0;
 	color: #FFFFFF;
 	background: #4FC3F7;
 	border: 0;
 	padding: 0;
-	margin: 0;
-	width: 110px;
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 90px;
 	height: 20px;
 
 	line-height: 20px;
@@ -480,14 +485,35 @@ select {
 	outline: none;
 	font-size: 16px;
 	
-	/*
-	text-align: center;
-	vertical-align: middle;
-	display: table-cell;
-	*/
 	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50);
 	transition: 0.2s;
+	display: inline-block;
 }
+
+#sidebar-scene-box .confirm-button {
+	position: absolute;
+	left: calc(100% - 100px);
+	color: #FFFFFF;
+	background: #4FC3F7;
+	border: 0;
+	padding: 0;
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 90px;
+	height: 20px;
+
+	line-height: 20px;
+	
+	text-transform: uppercase;
+	cursor: pointer;
+	outline: none;
+	font-size: 16px;
+	
+	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50);
+	transition: 0.2s;
+	display: inline-block;
+}
+
 
 #sidebar-scene-box input {
 	width: 38px;

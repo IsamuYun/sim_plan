@@ -109,7 +109,7 @@ const image_x = document.getElementById('dicom-image-x');
 function onImageRenderedX(e) {
     var eventData = e.detail;
     var viewport = eventData.viewport;
-    document.getElementById('zoom-text-x').textContent = "Zoom: " + viewport.scale.toFixed(2);
+    //document.getElementById('zoom-text-x').textContent = "Zoom: " + viewport.scale.toFixed(2);
 
     // 在这里，监控一个数值，画十字线
     cornerstone.setToPixelCoordinateSystem(e.detail.enabledElement, e.detail.canvasContext);
@@ -232,7 +232,7 @@ const image_y = document.getElementById('dicom-image-y');
 function onImageRenderedY(e) {
     var eventData = e.detail;
     var viewport = eventData.viewport;
-    document.getElementById('zoom-text-y').textContent = "Zoom: " + viewport.scale.toFixed(2);
+    //document.getElementById('zoom-text-y').textContent = "Zoom: " + viewport.scale.toFixed(2);
 
     // 在这里，监控一个数值，画十字线
     cornerstone.setToPixelCoordinateSystem(e.detail.enabledElement, e.detail.canvasContext);
@@ -350,7 +350,7 @@ function onImageRenderedZ(e) {
     var eventData = e.detail;
     var viewport = eventData.viewport;
     //document.getElementById('mr-bottom-left').textContent = "WW/WC: " + Math.round(viewport.voi.windowWidth) + "/" + Math.round(viewport.voi.windowCenter);
-    document.getElementById('zoom-text-z').textContent = "Zoom: " + viewport.scale.toFixed(2);
+    //document.getElementById('zoom-text-z').textContent = "Zoom: " + viewport.scale.toFixed(2);
 
     // 在这里，监控一个数值，画十字线
     cornerstone.setToPixelCoordinateSystem(e.detail.enabledElement, e.detail.canvasContext);

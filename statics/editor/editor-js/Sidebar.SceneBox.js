@@ -399,7 +399,7 @@ var SidebarSceneBox = function ( editor ) {
 	image_dom.alt = "场景截图";
 	image_dom.id = "myCanvas";
 	image_dom.width = 180;
-	image_dom.height = 240;
+	image_dom.height = 220;
 
 	image.dom.appendChild(image_dom);
 
@@ -577,6 +577,9 @@ var SidebarSceneBox = function ( editor ) {
 		generate_2d_model(107, 39, 30, 32, 130);
 	});
 	row.add( reset_btn );
+
+	var confirm_btn = new UI.Button("确认").setClass("confirm-button ripple-effect");
+	row.add( confirm_btn );
 
 	container.add( row );
 
