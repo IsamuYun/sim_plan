@@ -23,8 +23,8 @@ var BannerTop = function ( editor ) {
             click_flag = true;
         }
         else {
-            item_box.style["right"] = "310px";
-            scene_box.style["right"] = "310px";
+            item_box.style["right"] = "270px";
+            scene_box.style["right"] = "270px";
             sidebar.style["display"] = "";
             click_flag = false;
         }
@@ -49,19 +49,10 @@ var BannerTop = function ( editor ) {
     } );
 
 
-    var button_3 = new UI.Button( "按钮3" ).setClass( "ripple-effect" );
-    var button_4 = new UI.Button( "按钮4" ).setClass( "ripple-effect" );
     
-    var cut = new UI.Button( "按钮5" ).setClass( "ripple-effect" );
-    cut.onClick( function () {
-        
-    } );
 
 
     container.add( info_panel );
     container.add( transparency_button );
-    container.add( button_3 );
-    container.add( button_4 );
-    container.add( cut );
 	return container;
 };

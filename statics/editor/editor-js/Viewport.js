@@ -613,14 +613,71 @@ var Viewport = function ( editor ) {
 			}
 
 			if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点" ) {
-				if ( object.name === "第1点" ) {
-					G_point_list[ 0 ] = object.position;
+				var femur_object = null;
+				for (var i = 0; i < objects.length; i++) {
+					if (objects[i].name === "股骨") {
+						femur_object = objects[i];
+					}
 				}
-				if ( object.name === "第2点" ) {
-					G_point_list[ 1 ] = object.position;
+				if (femur_object == null) {
+					console.log("There is no femur");
+					return;
 				}
-				if ( object.name === "第3点" ) {
-					G_point_list[ 2 ] = object.position;
+
+				var position = object.position.clone();
+				var vector = new THREE.Vector3();
+				camera.getWorldDirection(vector);
+				raycaster.set(position, vector);
+				// 根据位移的点，尝试获取新的相交的坐标点
+				var intersects = raycaster.intersectObject(femur_object);
+				
+				var intersect_positions = [];
+				if ( intersects.length > 0 ) {
+					for (var i = 0; i < intersects.length; i++) {
+						intersect_positions.push(intersects[i].point);
+					}
+				}
+
+				if (intersect_positions.length == 0) {
+					var camera_position = camera.position.clone();
+					console.log("camera position");
+					console.log(camera_position);
+					raycaster.set(camera_position, vector);
+					var intersects = raycaster.intersectObject(femur_object);
+					if ( intersects.length > 0 ) {
+						for (var i = 0; i < intersects.length; i++) {
+							intersect_positions.push(intersects[i].point);
+						}
+					}
+				}
+
+				if (intersect_positions.length > 0) {
+					var short_index = 0;
+					for (var i = 0; i < intersect_positions.length - 1; i++) {
+						if (intersect_positions[i].distanceTo(position) <= intersect_positions[i+1].distanceTo(position)) {
+							short_index = i;
+						}
+						else {
+							short_index = i+1;
+						}
+					}
+					if ( object.name === "第1点" ) {
+						G_point_list[ 0 ] = intersect_positions[short_index];
+	
+					}
+					if ( object.name === "第2点" ) {
+						G_point_list[ 1 ] = intersect_positions[short_index];
+					}
+					if ( object.name === "第3点" ) {
+						G_point_list[ 2 ] = intersect_positions[short_index];
+					}
+					object.position.set(intersect_positions[short_index].x, intersect_positions[short_index].y, intersect_positions[short_index].z);
+					transformControls.update();
+					console.log("change position");
+				}
+				else {
+					console.log("no position?");
+					return;
 				}
 
 				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
