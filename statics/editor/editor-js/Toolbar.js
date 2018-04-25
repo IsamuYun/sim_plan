@@ -12,11 +12,6 @@ var Toolbar = function ( editor ) {
 	var femur_label = new UI.Text( "股骨" );
 	container.add( femur_label );
 
-	var progress_bar = new UI.Progress();
-	progress_bar.setId( "femur-load-progress" );
-	progress_bar.setValue( 0 );
-	container.add( progress_bar );
-
 	var femur_visible = true;
 	var femur_checkbox = new UI.Checkbox( femur_visible  ).onChange( function () {
 		femur_visible = femur_visible ? false : true;
@@ -31,15 +26,16 @@ var Toolbar = function ( editor ) {
 		editor.signals.sceneGraphChanged.dispatch();
 	} );
 	container.add( femur_checkbox );
+
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "femur-load-progress" );
+	progress_bar.setValue( 0 );
+	container.add( progress_bar );
+
 	
 	var label = new UI.Text( "盆骨" );
 	container.add( label );
 
-	var progress_bar = new UI.Progress();
-	progress_bar.setId( "pelvis-load-progress" );
-	progress_bar.setValue( 0 );
-	container.add( progress_bar );
-	
 	var pelvis_visible = true;
 	var pelvis_checkbox = new UI.Checkbox( pelvis_visible ).onChange( function() {
 		pelvis_visible = pelvis_visible ? false : true;
@@ -52,13 +48,17 @@ var Toolbar = function ( editor ) {
 	});
 	container.add( pelvis_checkbox );
 
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "pelvis-load-progress" );
+	progress_bar.setValue( 0 );
+	container.add( progress_bar );
+	
+	
+
 	var label = new UI.Text( "新髋臼杯" );
 	container.add( label );
 
-	var progress_bar = new UI.Progress();
-	progress_bar.setId( "new-acetabular-load-progress" );
-	progress_bar.setValue( 0 );
-	container.add( progress_bar );
+	
 
 	var acetabular_visible = true;
 	var acetabular_checkbox = new UI.Checkbox( acetabular_visible ).onChange( function() {
@@ -72,13 +72,13 @@ var Toolbar = function ( editor ) {
 	});
 	container.add( acetabular_checkbox );
 
-	var label = new UI.Text( "髋臼内衬" );
-	container.add( label );
-
 	var progress_bar = new UI.Progress();
-	progress_bar.setId( "acetabular-inner-load-progress" );
+	progress_bar.setId( "new-acetabular-load-progress" );
 	progress_bar.setValue( 0 );
 	container.add( progress_bar );
+
+	var label = new UI.Text( "髋臼内衬" );
+	container.add( label );
 
 	var acetabular_inner_visible = true;
 	var acetabular_inner_checkbox = new UI.Checkbox( acetabular_inner_visible ).onChange( function() {
@@ -92,13 +92,15 @@ var Toolbar = function ( editor ) {
 	});
 	container.add( acetabular_inner_checkbox );
 
-	var label = new UI.Text( "股骨柄假体" );
-	container.add( label );
-
 	var progress_bar = new UI.Progress();
-	progress_bar.setId( "femur-hip-load-progress" );
+	progress_bar.setId( "acetabular-inner-load-progress" );
 	progress_bar.setValue( 0 );
 	container.add( progress_bar );
+
+	
+
+	var label = new UI.Text( "股骨柄假体" );
+	container.add( label );
 
 	var femur_hip_visible = true;
 	var femur_hip_checkbox = new UI.Checkbox( femur_hip_visible ).onChange( function() {
@@ -112,13 +114,15 @@ var Toolbar = function ( editor ) {
 	});
 	container.add( femur_hip_checkbox );
 
-	var label = new UI.Text( "股骨头假体" );
-	container.add( label );
-
 	var progress_bar = new UI.Progress();
-	progress_bar.setId( "femur-head-load-progress" );
+	progress_bar.setId( "femur-hip-load-progress" );
 	progress_bar.setValue( 0 );
 	container.add( progress_bar );
+
+	
+
+	var label = new UI.Text( "股骨头假体" );
+	container.add( label );
 
 	var femur_head_visible = true;
 	var femur_head_checkbox = new UI.Checkbox( femur_head_visible ).onChange( function() {
@@ -131,6 +135,13 @@ var Toolbar = function ( editor ) {
 		editor.signals.sceneGraphChanged.dispatch();
 	});
 	container.add( femur_head_checkbox );
+
+	var progress_bar = new UI.Progress();
+	progress_bar.setId( "femur-head-load-progress" );
+	progress_bar.setValue( 0 );
+	container.add( progress_bar );
+
+	
 
 	return container;
 };
