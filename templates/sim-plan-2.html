@@ -19,15 +19,15 @@
 		</div>
 
 		<div id="point-1" class="zs-annotation">
-			<p><strong>第1点</strong></p>
+			<p><strong>1</strong></p>
 		</div>
 		
 		<div id="point-2" class="zs-annotation">
-			<p><strong>第2点</strong></p>
+			<p><strong>2</strong></p>
 		</div>
 
 		<div id="point-3" class="zs-annotation">
-			<p><strong>第3点</strong></p>
+			<p><strong>3</strong></p>
 		</div>
 
 		<script>
@@ -265,13 +265,14 @@
 				return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 			};
 
-			//
+			// 对切割点的判断
 			var G_clip_point_1 = false;
 			var G_clip_point_2 = false;
 			var G_clip_point_3 = false;
-
+			// 记录的切割点
 			var G_point_list = new Array();
-			
+			// 是否打开注释功能
+			var G_is_annotation = false;
 
 			var editor = new Editor();
 

@@ -8,6 +8,8 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.name = 'Camera';
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
+	// 是否开启注释功能
+	this.is_annotation = false;
 
 	var Signal = signals.Signal;
 

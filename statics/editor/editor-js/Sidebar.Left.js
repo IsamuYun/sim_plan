@@ -10,8 +10,8 @@ var SidebarLeft = function ( editor ) {
 	container.setId( 'sidebar-left' );
 
     var buttons = new UI.Panel();
-	container.add( buttons );
-
+    container.add( buttons );
+    
 	// translate / rotate / scale
 
 	var translate = new UI.Button( '移动' );
@@ -48,10 +48,10 @@ var SidebarLeft = function ( editor ) {
             }
             if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
                 object.visible = false;
-                
             }
         
         } );
+        editor.select(null);
 
         var p1_annotation = document.getElementById( "point-1" );
         p1_annotation.style["display"] = "none";
@@ -78,22 +78,36 @@ var SidebarLeft = function ( editor ) {
     comment.onClick( function() {
         updateSelectedButton( "comment" );
 
-        for ( var i = 1; i <= 3; ++i ) {
-            var point_comment = document.getElementById( "point-" + i );
-            if ( point_comment != null ) {
-                if ( point_comment.style["display"] == "none" ) {
-                    point_comment.style["display"] = "table";
+        editor.is_annotation = editor.is_annotation ? false : true;
+        
+        if ( editor.is_annotation ) {
+            for ( var i = 1; i <= 3; ++i ) {
+                var point_comment = document.getElementById( "point-" + i );
+                if ( point_comment != null ) {
+                    if ( point_comment.style["display"] == "none" ) {
+                        point_comment.style["display"] = "table";
+                    }
+                    else {
+                        point_comment.style["display"] = "none";
+                    }
                 }
-                else {
+            }
+        }
+        else {
+            for ( var i = 1; i <= 3; ++i ) {
+                var point_comment = document.getElementById( "point-" + i );
+                if ( point_comment != null ) {
                     point_comment.style["display"] = "none";
                 }
             }
         }
 
+        
+
     } );
     buttons.add( comment );
 
-    var zoom = new UI.Button( "放大" ).setClass( "Button ripple-effect" );
+    var zoom = new UI.Button( "展开" ).setClass( "Button ripple-effect" );
     zoom.onClick( function() {
         updateSelectedButton( "zoom" );
         var acetabular_cup_close_x = 0.0;

@@ -254,19 +254,18 @@ var Viewport = function ( editor ) {
 								child.visible = true;
 
 								/* */
-								var annotation = document.getElementById( "point-1" );
-								
-								var vector = G_point_list[0].clone();
-								vector.project( camera );
-								
-								vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-								vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+								if ( editor.is_annotation ) {
+									var annotation = document.getElementById( "point-1" );
+									var vector = G_point_list[0].clone();
+									vector.project( camera );
+									vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+									vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
 
-								annotation.style.top = vector.y + "px";
-								annotation.style.left = vector.x + "px";
+									annotation.style.top = vector.y + "px";
+									annotation.style.left = vector.x + "px";
 
-								annotation.style["display"] = "table";
-
+									annotation.style["display"] = "table";
+								}
 							}
 						} );
 
@@ -280,19 +279,20 @@ var Viewport = function ( editor ) {
 								child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
 								child.visible = true;
 
-								/* */
-								var annotation = document.getElementById( "point-2" );
+								if ( editor.is_annotation ) {
+									var annotation = document.getElementById( "point-2" );
 
-								var vector = G_point_list[1].clone();
-								vector.project( camera );
+									var vector = G_point_list[1].clone();
+									vector.project( camera );
 								
-								vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-								vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+									vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+									vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
 
-								annotation.style.top = vector.y + "px";
-								annotation.style.left = vector.x + "px";
+									annotation.style.top = vector.y + "px";
+									annotation.style.left = vector.x + "px";
 								
-								annotation.style["display"] = "table";
+									annotation.style["display"] = "table";
+								}
 							}
 						} );
 					}
@@ -301,18 +301,20 @@ var Viewport = function ( editor ) {
 						G_point_list[ 2 ] = intersects[ 0 ].point;
 
 						/* */
-						var annotation = document.getElementById( "point-3" );
+						if ( editor.is_annotation ) {
+							var annotation = document.getElementById( "point-3" );
 
-						var vector = G_point_list[2].clone();
-						vector.project( camera );
+							var vector = G_point_list[2].clone();
+							vector.project( camera );
 								
-						vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-						vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+							vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+							vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
 
-						annotation.style.top = vector.y + "px";
-						annotation.style.left = vector.x + "px";
+							annotation.style.top = vector.y + "px";
+							annotation.style.left = vector.x + "px";
 								
-						annotation.style["display"] = "table";
+							annotation.style["display"] = "table";
+						}
 						// 构造一个截面
 						var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
@@ -328,12 +330,10 @@ var Viewport = function ( editor ) {
 						else {
 							object.material.clippingPlanes = [plane];
 						}
-						
 
 						editor.scene.traverse( function( child ) {
 							if ( child.name === "切割预览" ) {
-                        
-								child.visible = true;
+                        		child.visible = true;
 								child.position.set(object.position.x, object.position.y, object.position.z);
 								if ( another_plane.normal.y <= 0.0 ) {
 									child.material.clippingPlanes = [plane];
