@@ -11,9 +11,9 @@ var SidebarLeft = function ( editor ) {
 
     var buttons = new UI.Panel();
     container.add( buttons );
-    
-	// translate / rotate / scale
 
+	// translate / rotate / scale
+    /*
 	var translate = new UI.Button( '移动' );
 	translate.dom.title = 'W';
     translate.dom.className = 'Button selected ripple-effect';
@@ -24,7 +24,8 @@ var SidebarLeft = function ( editor ) {
 
 	} );
     buttons.add( translate );
-    
+    */
+
     var cut = new UI.Button( '切割' );
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
@@ -207,7 +208,7 @@ var SidebarLeft = function ( editor ) {
     buttons.add( preview );
 
     function updateSelectedButton( mode ) {
-        translate.dom.classList.remove( 'selected' );
+        // translate.dom.classList.remove( 'selected' );
 		measure.dom.classList.remove( 'selected' );
         cut.dom.classList.remove( 'selected' );
         comment.dom.classList.remove( 'selected' );
@@ -233,6 +234,7 @@ var SidebarLeft = function ( editor ) {
         }
     };
     
+    /*
     signals.transformModeChanged.add( function ( mode ) {
 
 		translate.dom.classList.remove( 'selected' );
@@ -250,7 +252,7 @@ var SidebarLeft = function ( editor ) {
         }
 
     } );
-
+    */
     
     
 	return container;

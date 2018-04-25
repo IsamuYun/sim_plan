@@ -98,7 +98,12 @@ var Editor = function () {
 
 	this.selected = null;
 	this.helpers = {};
+	// 股骨
 	this.femur_helper = null;
+	// 是否开始测量
+	this.measure_begin = false;
+	this.measure_pt_1 = false;
+	this.measure_pt_2 = false;
 
 };
 

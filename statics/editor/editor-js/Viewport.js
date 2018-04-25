@@ -354,13 +354,11 @@ var Viewport = function ( editor ) {
 				}
 
 
-			} else {
-
+			} 
+			else {
 				editor.select( null );
-
 			}
 			render();
-
 		}
 
 	}
