@@ -12,6 +12,8 @@ var SidebarLeft = function ( editor ) {
     var buttons = new UI.Panel();
     container.add( buttons );
 
+    var is_expand = false;
+
 	// translate / rotate / scale
     /*
 	var translate = new UI.Button( '移动' );
@@ -72,6 +74,9 @@ var SidebarLeft = function ( editor ) {
     measure.dom.className = "Button ripple-effect";
 	measure.onClick( function () {
         updateSelectedButton( 'measure' );
+        editor.measure_begin = true;
+        editor.measure_pt_1 = false;
+        editor.measure_pt_2 = false;
 	} );
     buttons.add( measure );
 
@@ -108,85 +113,89 @@ var SidebarLeft = function ( editor ) {
     } );
     buttons.add( comment );
 
-    var zoom = new UI.Button( "展开" ).setClass( "Button ripple-effect" );
-    zoom.onClick( function() {
-        updateSelectedButton( "zoom" );
-        var acetabular_cup_close_x = 0.0;
-        var acetabular_cup_close_y = -0.98;
-        var acetabular_cup_close_z = 2.99;
+    var expand = new UI.Button( "展开" ).setClass( "Button ripple-effect" );
+    expand.onClick( function() {
+        updateSelectedButton( "expand" );
 
-        var acetabular_cup_expand_x = 0;
-        var acetabular_cup_expand_y = 3;
-        var acetabular_cup_expand_z = 2.49;
-
-        var hip_implant_close_x = -0.59;
-        var hip_implant_close_y = -4.35;
-        var hip_implant_close_z = 5.67;
-
-        var hip_implant_expand_x = -0.59;
-        var hip_implant_expand_y = -4.85;
-        var hip_implant_expand_z = 5.67;
+        is_expand = is_expand ? false : true;
+        
         var scope = this;
+        var pelvis_mesh = null;
+        var femur_mesh = null;
+        var cut_preview_mesh = null; 
+        var femur_helper = null;
+        var acetabular_mesh = null;
+        var acetabular_inner_mesh = null;
+        var hip_header_mesh = null;
+        var hip_mesh = null;
 
         editor.scene.traverse( function( child )  {
-            if ( child.name === "髋臼杯" ) {
-                if ( child.position.x == acetabular_cup_close_x ) {
-                    child.position.x = acetabular_cup_expand_x;
-                }
-                else if ( child.position.x == acetabular_cup_expand_x ) {
-                    child.position.x = acetabular_cup_close_x;
-                }
-                else {
-                    child.position.x = acetabular_cup_close_x;
-                }
-
-                if ( child.position.y == acetabular_cup_close_y ) {
-                    child.position.y = acetabular_cup_expand_y;
-                }
-                else if ( child.position.y == acetabular_cup_expand_y ) {
-                    child.position.y = acetabular_cup_close_y;
-                }
-                else {
-                    child.position.y = acetabular_cup_close_y;
-                }
-
-                if ( child.position.z == acetabular_cup_close_z ) {
-                    child.position.z = acetabular_cup_expand_z;
-                }
-                else if ( child.position.z == acetabular_cup_expand_z ) {
-                    child.position.z = acetabular_cup_close_z;
-                }
+            if (child.name === "盆骨") {
+                pelvis_mesh = child;
             }
-
-            if ( child.name === "髋关节植入体" ) {
-                if ( child.position.x == hip_implant_close_x ) {
-                    child.position.x = hip_implant_expand_x;
-                }
-                else {
-                    child.position.x = hip_implant_close_x;
-                }
-
-                if ( child.position.y == hip_implant_close_y ) {
-                    child.position.y = hip_implant_expand_y;
-                }
-                else {
-                    child.position.y = hip_implant_close_y;
-                }
-
-                if ( child.position.z == hip_implant_close_z ) {
-                    child.position.z = hip_implant_expand_z;
-                }
-                else {
-                    child.position.z = hip_implant_close_z;
-                }
+            if (child.name === "股骨") {
+                femur_mesh = child;
+            }
+            if (child.name === "切割预览") {
+                cut_preview_mesh = child;
+            }
+            if (child.name === "股骨外框") {
+                femur_helper = child;
+            }
+            if (child.name === "新髋臼杯") {
+                acetabular_mesh =  child;
+            }
+            if (child.name === "髋臼内衬") {
+                acetabular_inner_mesh = child;
+            }
+            if (child.name === "股骨头假体") {
+                hip_header_mesh =  child;
+            }
+            if (child.name === "股骨柄假体") {
+                hip_mesh = child;
             }
         });
-        editor.signals.objectChanged.dispatch( editor.selected );
+        var zero_point = new THREE.Vector3(0, 0, 0);
+        var acetabular_position = new THREE.Vector3(-6, 6, 0);
+        var acetabular_inner_position = new THREE.Vector3(-4, 4, 0);
+        var hip_header_position = new THREE.Vector3(-2, 2, 0);
+        console.log("acetabular_mesh:");
+        console.log(acetabular_mesh);
+        console.log("acetabular_inner_mesh");
+        console.log(acetabular_inner_mesh);
+        console.log("hip_header_mesh");
+        console.log(hip_header_mesh);
+        console.log("hip_mesh");
+        console.log(hip_mesh);
+
+        if ( is_expand ) {
+            pelvis_mesh.visible = false;
+            femur_mesh.visible = false;
+            femur_helper.visible = false;
+            cut_preview_mesh.visible = false;
+
+            acetabular_mesh.position.copy(acetabular_position);
+            acetabular_inner_mesh.position.copy(acetabular_inner_position);
+            hip_header_mesh.position.copy(hip_header_position);
+        }
+        else {
+            // 一切恢复原样
+            pelvis_mesh.visible = true;
+            femur_mesh.visible = true;
+            femur_helper.visible = false;
+            cut_preview_mesh.visible = false;
+            acetabular_mesh.position.copy(zero_point);
+            acetabular_inner_mesh.position.copy(zero_point);
+            hip_header_mesh.position.copy(zero_point);
+        }
+
+
+        editor.signals.sceneGraphChanged.dispatch();
 
        
 
-    } );
-    buttons.add( zoom );
+    });
+    buttons.add( expand );
 
     var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
     preview.onClick( function() {
@@ -212,7 +221,7 @@ var SidebarLeft = function ( editor ) {
 		measure.dom.classList.remove( 'selected' );
         cut.dom.classList.remove( 'selected' );
         comment.dom.classList.remove( 'selected' );
-        zoom.dom.classList.remove( "selected" );
+        expand.dom.classList.remove( "selected" );
         preview.dom.classList.remove( "selected" );
 
         switch ( mode ) {
@@ -225,8 +234,8 @@ var SidebarLeft = function ( editor ) {
             case "comment":
                 comment.dom.classList.add( "selected" );
                 break;
-            case "zoom":
-                zoom.dom.classList.add( "selected" );
+            case "expand":
+                expand.dom.classList.add( "selected" );
                 break;
             case "preview":
                 preview.dom.classList.add( "selected" );

@@ -222,38 +222,48 @@ var Viewport = function ( editor ) {
 
 	}
 
+	function handleMeasure(intersect_target) {
+		if ( !editor.measure_begin ) {
+			return;
+		}
+		if (intersect_target == null) {
+			return;
+		}
+		var intersect_point = intersect_target.point;
+		
+		if (!editor.measure_pt_1) {
+			editor.measure_pt_1 = true;
+		}
+	}
+
 	function handleClick() {
 
 		if ( onDownPosition.distanceTo( onUpPosition ) === 0 ) {
-
 			var intersects = getIntersects( onUpPosition, objects );
 
 			if ( intersects.length > 0 ) {
-
-				var object = intersects[ 0 ].object;
+				var object = intersects[0].object;
 				
 				if ( object.userData.object !== undefined ) {
-
 					// helper
-
 					editor.select( object.userData.object );
-
-				} else {
-
+				}
+				else {
 					editor.select( object );
 				}
+
+				handleMeasure( intersects[0] );
 
 				if ( object.name === "股骨" ) {
 					if ( G_clip_point_1 == true ) {
 						G_clip_point_1 = false;
 						G_clip_point_2 = true;
-						G_point_list[ 0 ] = intersects[ 0 ].point;
+						G_point_list[0] = intersects[0].point;
 						editor.scene.traverse( function( child ) {
 							if (child.name === "第1点") {
 								child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
 								child.visible = true;
 
-								/* */
 								if ( editor.is_annotation ) {
 									var annotation = document.getElementById( "point-1" );
 									var vector = G_point_list[0].clone();
@@ -299,8 +309,7 @@ var Viewport = function ( editor ) {
 					else if ( G_clip_point_3 == true ) {
 						G_clip_point_3 = false;
 						G_point_list[ 2 ] = intersects[ 0 ].point;
-
-						/* */
+						
 						if ( editor.is_annotation ) {
 							var annotation = document.getElementById( "point-3" );
 
@@ -331,7 +340,7 @@ var Viewport = function ( editor ) {
 							object.material.clippingPlanes = [plane];
 						}
 
-						editor.scene.traverse( function( child ) {
+						editor.scene.traverse(function( child ) {
 							if ( child.name === "切割预览" ) {
                         		child.visible = true;
 								child.position.set(object.position.x, object.position.y, object.position.z);
@@ -347,7 +356,7 @@ var Viewport = function ( editor ) {
 								child.visible = true;
 								child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
 							}
-						} );
+						});
                 
 					}
 

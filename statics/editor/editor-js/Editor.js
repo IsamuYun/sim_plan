@@ -530,7 +530,6 @@ Editor.prototype = {
 			// ***** Clipping setup (material): *****
 			// clippingPlanes: [ localPlane ],
 			clipShadows: true,
-			
 		});
 
 		var faker_material =  new THREE.MeshPhongMaterial( {
@@ -558,7 +557,7 @@ Editor.prototype = {
 			
 			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "股骨";
-
+			
 			geometry.computeBoundingBox();
 
 			var bb = geometry.boundingBox;
@@ -661,7 +660,7 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "新髋臼杯";
 
 			geometry.computeBoundingBox();
@@ -698,7 +697,8 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var mesh = new THREE.Mesh( geometry, material );
+			
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "髋臼内衬";
 
 			geometry.computeBoundingBox();
@@ -736,7 +736,7 @@ Editor.prototype = {
 
 		loader.load( url, function ( geometry ) {
 			
-			var mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "股骨头假体";
 
 			geometry.computeBoundingBox();
@@ -773,7 +773,8 @@ Editor.prototype = {
 		};
 
 		loader.load( url, function ( geometry ) {
-			var mesh = new THREE.Mesh( geometry, material );
+			
+			var mesh = new THREE.Mesh( geometry, material.clone() );
 			mesh.name = "股骨柄假体";
 
 			geometry.computeBoundingBox();
