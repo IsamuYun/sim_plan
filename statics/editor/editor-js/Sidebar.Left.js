@@ -74,9 +74,32 @@ var SidebarLeft = function ( editor ) {
     measure.dom.className = "Button ripple-effect";
 	measure.onClick( function () {
         updateSelectedButton( 'measure' );
-        editor.measure_begin = true;
+        editor.measure_begin = editor.measure_begin ? false : true;
         editor.measure_pt_1 = false;
-        editor.measure_pt_2 = false;
+        
+        if (!editor.measure_begin) {
+            // 删除所有测量点，测量文字
+            for (var i = 1; i <= editor.measure_count; i++) {
+                var begin_name = "measure-" + i + "-1";
+                var end_name = "measure-" + i + "-2";
+                var begin_point = null;
+                var end_point = null;
+                editor.scene.traverse(function(child) {
+                    if (child.name === begin_name) {
+                        begin_point = child;
+                    }
+                    if (child.name === end_name) {
+                        end_point = child;
+                    }
+                });
+                document.getElementById("measure-" + i).outerHTML = "";
+                editor.execute( new RemoveObjectCommand( begin_point ) );
+                editor.execute( new RemoveObjectCommand( end_point ) );
+            }
+            editor.measure_count = 0;
+            editor.signals.sceneGraphChanged.dispatch();
+        }
+
 	} );
     buttons.add( measure );
 

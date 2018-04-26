@@ -177,3 +177,21 @@
     cursor: default;
 }
 
+.zs-measure-annotation {
+	position: absolute;
+    z-index: 100;
+    margin-left: 15px;
+    margin-top: 15px;
+    padding: 1em;
+    width: 160px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: .5em;
+    font-size: 12px;
+    line-height: 1.2;
+    transition: opacity .5s;
+    transform: translate(0%, 30%);
+    display: inline-block;
+
+}
+

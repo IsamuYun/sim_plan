@@ -103,7 +103,7 @@ var Editor = function () {
 	// 是否开始测量
 	this.measure_begin = false;
 	this.measure_pt_1 = false;
-	this.measure_pt_2 = false;
+	this.measure_count = 0;
 
 };
 

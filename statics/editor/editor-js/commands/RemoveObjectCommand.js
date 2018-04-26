@@ -39,18 +39,6 @@ RemoveObjectCommand.prototype = {
 		this.parent.remove( this.object );
 		this.editor.select( this.parent );
 
-		if (this.object.name === "截面" ) {
-			this.editor.scene.traverse( function ( child ) {
-				if ( child.name === "股骨" ) {
-					child.material.clippingPlanes = [];
-				}
-				if ( child.name === "切割预览" ) {
-					child.visible = false;
-					child.material.clippingPlanes = [];
-				}
-			} );
-		}
-
 		this.editor.signals.objectRemoved.dispatch( this.object );
 		this.editor.signals.sceneGraphChanged.dispatch();
 

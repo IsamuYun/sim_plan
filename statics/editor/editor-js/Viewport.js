@@ -11,7 +11,6 @@ var Viewport = function ( editor ) {
 	container.setPosition( 'absolute' );
 
 	container.add( new Viewport.Info( editor ) );
-
 	//
 
 	var renderer = null;
@@ -21,6 +20,7 @@ var Viewport = function ( editor ) {
 	var sceneHelpers = editor.sceneHelpers;
 
 	var objects = [];
+	var measure_position = null;
 
 	// helpers
 
@@ -223,17 +223,69 @@ var Viewport = function ( editor ) {
 	}
 
 	function handleMeasure(intersect_target) {
-		if ( !editor.measure_begin ) {
+		if ( editor.measure_begin == false ) {
 			return;
 		}
 		if (intersect_target == null) {
 			return;
 		}
-		var intersect_point = intersect_target.point;
 		
-		if (!editor.measure_pt_1) {
-			editor.measure_pt_1 = true;
+		var intersect_point = intersect_target.point;
+		if (intersect_point == null) {
+			return;
 		}
+		
+		if (editor.measure_pt_1 == false) {
+			editor.measure_count++;
+			editor.measure_pt_1 = true;
+			// 创建一个点
+			var geometry = new THREE.SphereGeometry( 0.4, 64, 64 );;
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0x58D68D,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0x58D68D,
+			});
+			var point = new THREE.Mesh( geometry, material );
+			point.name = "measure-" + editor.measure_count + "-1";
+			point.visible = true;
+			point.position.copy(intersect_point);
+			editor.execute( new AddObjectCommand( point ) );
+			measure_position = intersect_point.clone();
+		}
+		else {
+			editor.measure_pt_1 = false;
+			// 创建一个点
+			var geometry = new THREE.SphereGeometry( 0.4, 64, 64 );;
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0x3498DB,
+				shininess: 80,
+				side: THREE.DoubleSide,
+				specular: 0x58D68D,
+			});
+			var point = new THREE.Mesh( geometry, material );
+			point.name = "measure-" + editor.measure_count + "-2";
+			point.visible = true;
+			point.position.copy(intersect_point);
+			editor.execute( new AddObjectCommand( point ) );
+			var distance = point.position.distanceTo(measure_position);
+
+			var measure_annotation = document.createElement("div");
+			measure_annotation.id = "measure-" + editor.measure_count;
+			measure_annotation.className = "zs-measure-annotation";
+			measure_annotation.innerHTML = "Length:" + distance;
+
+			var vector = intersect_point.clone();
+			vector.project( camera );
+			vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+			vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+
+			measure_annotation.style.top = vector.y + "px";
+			measure_annotation.style.left = vector.x + "px";
+			document.body.appendChild(measure_annotation);
+		}
+		render();
+
 	}
 
 	function handleClick() {
