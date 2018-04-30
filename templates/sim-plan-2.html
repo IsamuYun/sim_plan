@@ -51,7 +51,7 @@
 						fadeTarget.style.display = "none";
 					}
 					else {
-            			fadeTarget.style.opacity -= 0.025;
+            			fadeTarget.style.opacity -= 0.2;
         			}
     			}, 100);
 			}
@@ -66,9 +66,9 @@
             			clearInterval(fadeEffect);
 					}
 					else {
-            			fadeTarget.style.opacity -= 0.01;
+            			fadeTarget.style.opacity -= 0.2;
         			}
-    			}, 200);
+    			}, 100);
 			}
 
 
@@ -88,7 +88,7 @@
 					fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
 				}
 				if ( zs_body != null ) {
-					sleep( 3000 );
+					// sleep( 1000 );
 					zs_body.style["overflow"] = "visible";
 					
 					

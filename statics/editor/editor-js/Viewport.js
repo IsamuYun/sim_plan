@@ -192,11 +192,14 @@ var Viewport = function ( editor ) {
 			measure_position = intersect_point.clone();
 			measure_line_begin_1 = intersect_point.clone();
 			measure_line_begin_2 = measure_line_begin_1.clone();
-			if (measure_line_begin_1.z <= 4.0) {
-				measure_line_begin_2.z -= 2;
+			var origin_point = new THREE.Vector3(0, 0, 0);
+			camera.getWorldDirection( origin_point );
+			console.log( origin_point );
+			if ( origin_point.z <= 0.0 ) {
+				measure_line_begin_2.z += 2;
 			}
 			else {
-				measure_line_begin_2.z += 2;
+				measure_line_begin_2.z -= 2;
 			}
 		}
 		else {
@@ -236,11 +239,14 @@ var Viewport = function ( editor ) {
 			
 			var measure_line_end_1 = intersect_point.clone();
 			var measure_line_end_2 = measure_line_end_1.clone();
-			if (measure_line_begin_1.z <= 4.0) {
-				measure_line_end_1.z -= 2;
+			var origin_point = new THREE.Vector3(0, 0, 0);
+			camera.getWorldDirection( origin_point );
+			console.log( origin_point );
+			if ( origin_point.z <= 0.0 ) {
+				measure_line_end_1.z += 2;
 			}
 			else {
-				measure_line_end_1.z += 2;
+				measure_line_end_1.z -= 2;
 			}
 
 			var geometry = new THREE.Geometry();
@@ -653,10 +659,13 @@ var Viewport = function ( editor ) {
 				var intersect_points = [];
 				var intersect_point = null;
 				object.visible = false;
-				var intersects = getIntersects(onMovePosition, objects);
+				var intersects = getIntersects(onUpPosition, objects);
 				console.log(intersects);
 				if (intersects.length > 0) {
-					intersect_point = intersects[0].point;
+					if (intersects[0].object.name === "股骨" || intersects[0].object.name === "切割预览") {
+						intersect_point = intersects[0].point;
+					}
+					
 				}
 				var position = object.position.clone();
 				if (object.name === "第1点") {
@@ -669,7 +678,7 @@ var Viewport = function ( editor ) {
 					old_position = G_point_list[2];
 				}
 				
-				if (intersects.length > 0) {
+				if (intersect_point != null) {
 					
 					if ( object.name === "第1点" ) {
 						G_point_list[ 0 ] = intersect_point;
