@@ -33,6 +33,8 @@ var SidebarLeft = function ( editor ) {
     cut.onClick( function() {
         updateSelectedButton( "cut" );
 
+        editor.cutting_begin = editor.cutting_begin ? false : true;
+
         G_clip_point_1 = true;
         editor.scene.traverse( function ( object ) {
             if ( object.name === "股骨" ) {
@@ -82,8 +84,10 @@ var SidebarLeft = function ( editor ) {
             for (var i = 1; i <= editor.measure_count; i++) {
                 var begin_name = "measure-" + i + "-1";
                 var end_name = "measure-" + i + "-2";
+                var line_name = "measure-line-" + i; 
                 var begin_point = null;
                 var end_point = null;
+                var measure_line = null;
                 editor.scene.traverse(function(child) {
                     if (child.name === begin_name) {
                         begin_point = child;
@@ -91,10 +95,14 @@ var SidebarLeft = function ( editor ) {
                     if (child.name === end_name) {
                         end_point = child;
                     }
+                    if (child.name === line_name) {
+                        measure_line = child;
+                    }
                 });
                 document.getElementById("measure-" + i).outerHTML = "";
                 editor.execute( new RemoveObjectCommand( begin_point ) );
                 editor.execute( new RemoveObjectCommand( end_point ) );
+                editor.execute( new RemoveObjectCommand( measure_line ) );
             }
             editor.measure_count = 0;
             editor.signals.sceneGraphChanged.dispatch();

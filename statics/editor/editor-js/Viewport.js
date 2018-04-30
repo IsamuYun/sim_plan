@@ -43,6 +43,9 @@ var Viewport = function ( editor ) {
 
 	// 判定标签是否半透明
 	var sprite_behind_object = new Array();
+	// measure_line_begin
+	var measure_line_begin_1 = null;
+	var measure_line_begin_2 = null;
 
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
@@ -116,76 +119,6 @@ var Viewport = function ( editor ) {
 
 			}
 
-			// 更改geometry中的clip_plane
-			if ( object.name === "截面" ) {
-				var clip_plane = object.clone();
-
-				var vec = Array();
-				vec[0] = clip_plane.geometry.vertices[0].clone();
-				vec[1] = clip_plane.geometry.vertices[1].clone();
-				vec[2] = clip_plane.geometry.vertices[2].clone();
-
-				var axis = new THREE.Vector3( 1, 0, 0 );
-                var angle = clip_plane.rotation.x;
-                vec[0].applyAxisAngle( axis, angle );
-                vec[1].applyAxisAngle( axis, angle );
-				vec[2].applyAxisAngle( axis, angle );
-				
-				var axis_y = new THREE.Vector3( 0, 0, 1 );
-                var angle_y = clip_plane.rotation.y;
-                vec[0].applyAxisAngle( axis_y, angle_y );
-                vec[1].applyAxisAngle( axis_y, angle_y );
-                vec[2].applyAxisAngle( axis_y, angle_y );
-
-                var axis_z = new THREE.Vector3( 0, 1, 0 );
-                var angle_z = clip_plane.rotation.z;
-                vec[0].applyAxisAngle( axis_z, angle_z );
-                vec[1].applyAxisAngle( axis_z, angle_z );
-                vec[2].applyAxisAngle( axis_z, angle_z );
-
-				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0);
-				plane.setFromCoplanarPoints(vec[0], vec[1], vec[2]);
-				
-				var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0);
-				another_plane.normal.x = -plane.normal.x;
-				another_plane.normal.y = -plane.normal.y;
-				another_plane.normal.z = -plane.normal.z;
-
-				editor.scene.traverse( function( child ) {
-					if (child.name === "股骨" ) {
-						var clip_object = child;
-
-						var d1 = clip_plane.position;
-						var d2 = clip_object.position;
-
-						var d4 = new THREE.Vector3(0, 0, 0);
-						var d5 = d1.add(d4);
-						
-						another_plane.translate( d5 );
-						clip_object.material.clippingPlanes = [another_plane];
-
-						this.editor.signals.sceneGraphChanged.dispatch();
-					}
-					if ( child.name === "切割预览" ) {
-						var clip_object = child;
-						clip_object.visible = true;
-
-						var d1 = clip_plane.position;
-						var d2 = clip_object.position;
-
-						var d4 = new THREE.Vector3(0, 0, 0);
-						var d5 = d1.add(d4);
-						plane.translate( d5 );
-						clip_object.material.clippingPlanes = [plane];
-						
-						this.editor.signals.sceneGraphChanged.dispatch();
-					}
-
-				} );
-			}
-
-			
-
 		}
 
 		controls.enabled = true;
@@ -215,6 +148,9 @@ var Viewport = function ( editor ) {
 	var onUpPosition = new THREE.Vector2();
 	var onDoubleClickPosition = new THREE.Vector2();
 
+	// 鼠标移动后的坐标点
+	var onMovePosition = new THREE.Vector2();
+
 	function getMousePosition( dom, x, y ) {
 
 		var rect = dom.getBoundingClientRect();
@@ -235,6 +171,7 @@ var Viewport = function ( editor ) {
 			return;
 		}
 
+
 		if (editor.measure_pt_1 == false) {
 			editor.measure_count++;
 			editor.measure_pt_1 = true;
@@ -251,7 +188,16 @@ var Viewport = function ( editor ) {
 			point.visible = true;
 			point.position.copy(intersect_point);
 			editor.execute( new AddObjectCommand( point ) );
+			
 			measure_position = intersect_point.clone();
+			measure_line_begin_1 = intersect_point.clone();
+			measure_line_begin_2 = measure_line_begin_1.clone();
+			if (measure_line_begin_1.z <= 4.0) {
+				measure_line_begin_2.z -= 2;
+			}
+			else {
+				measure_line_begin_2.z += 2;
+			}
 		}
 		else {
 			editor.measure_pt_1 = false;
@@ -283,10 +229,149 @@ var Viewport = function ( editor ) {
 			measure_annotation.style.top = vector.y + "px";
 			measure_annotation.style.left = vector.x + "px";
 			document.body.appendChild(measure_annotation);
+
+			var material = new THREE.LineBasicMaterial({
+				color: 0x0000ff
+			});
+			
+			var measure_line_end_1 = intersect_point.clone();
+			var measure_line_end_2 = measure_line_end_1.clone();
+			if (measure_line_begin_1.z <= 4.0) {
+				measure_line_end_1.z -= 2;
+			}
+			else {
+				measure_line_end_1.z += 2;
+			}
+
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(
+				measure_line_begin_1,
+				measure_line_begin_2,
+				measure_line_end_1,
+				measure_line_end_2
+			);
+			
+			var line = new THREE.Line( geometry, material );
+			line.name = "measure-line-" + editor.measure_count;
+			editor.execute( new AddObjectCommand( line ) );
 		}
 		render();
 
 	}
+
+	function handleCutting(intersect_target) {
+		if ( editor.cutting_begin == false ) {
+			return;
+		}
+		if ( intersect_target == null ) {
+			return;
+		}
+		var object = intersect_target.object;
+		if ( object.name !== "股骨" ) {
+			return;
+		}
+		if ( G_clip_point_1 == true ) {
+			G_clip_point_1 = false;
+			G_clip_point_2 = true;
+			G_point_list[0] = intersect_target.point;
+			editor.scene.traverse(function( child ){
+				if (child.name === "第1点") {
+					child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
+					child.visible = true;
+
+					if ( editor.is_annotation ) {
+						var annotation = document.getElementById( "point-1" );
+						var vector = G_point_list[0].clone();
+						vector.project( camera );
+						vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+						vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+
+						annotation.style.top = vector.y + "px";
+						annotation.style.left = vector.x + "px";
+
+						annotation.style["display"] = "table";
+					}
+				}
+			});
+		}
+		else if ( G_clip_point_2 == true ){
+			G_clip_point_2 = false;
+			G_clip_point_3 = true;
+			G_point_list[1] = intersect_target.point;
+			editor.scene.traverse( function( child ){
+				if (child.name === "第2点") {
+					child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
+					child.visible = true;
+
+					if ( editor.is_annotation ) {
+						var annotation = document.getElementById( "point-2" );
+						var vector = G_point_list[1].clone();
+						vector.project( camera );
+						
+						vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+						vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+
+						annotation.style.top = vector.y + "px";
+						annotation.style.left = vector.x + "px";
+						
+						annotation.style["display"] = "table";
+					}
+				}
+			});
+		}
+		else if ( G_clip_point_3 == true ) {
+			G_clip_point_3 = false;
+			G_point_list[ 2 ] = intersect_target.point;
+				
+			if ( editor.is_annotation ) {
+				var annotation = document.getElementById( "point-3" );
+				var vector = G_point_list[2].clone();
+				vector.project( camera );
+						
+				vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+				vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+
+				annotation.style.top = vector.y + "px";
+				annotation.style.left = vector.x + "px";
+						
+				annotation.style["display"] = "table";
+			}
+			// 构造一个截面
+			var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+			plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
+				
+			var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
+			another_plane.normal.x = -plane.normal.x;
+			another_plane.normal.y = -plane.normal.y;
+			another_plane.normal.z = -plane.normal.z;
+			another_plane.constant = -plane.constant;
+			if ( another_plane.normal.y <= 0.0 ) {
+				object.material.clippingPlanes = [another_plane];
+			}
+			else {
+				object.material.clippingPlanes = [plane];
+			}
+
+			editor.scene.traverse(function( child ) {
+				if ( child.name === "切割预览" ) {
+					child.visible = true;
+					child.position.set(object.position.x, object.position.y, object.position.z);
+					if ( another_plane.normal.y <= 0.0 ) {
+						child.material.clippingPlanes = [plane];
+					}
+					else {
+						child.material.clippingPlanes = [another_plane];
+					}
+					
+				}
+				if ( child.name === "第3点" ) {
+					child.visible = true;
+					child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
+				}
+			});
+		}
+	}
+
 
 	function handleClick() {
 
@@ -306,115 +391,7 @@ var Viewport = function ( editor ) {
 
 				handleMeasure( intersects[0] );
 
-				if ( object.name === "股骨" ) {
-					if ( G_clip_point_1 == true ) {
-						G_clip_point_1 = false;
-						G_clip_point_2 = true;
-						G_point_list[0] = intersects[0].point;
-						editor.scene.traverse( function( child ) {
-							if (child.name === "第1点") {
-								child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
-								child.visible = true;
-
-								if ( editor.is_annotation ) {
-									var annotation = document.getElementById( "point-1" );
-									var vector = G_point_list[0].clone();
-									vector.project( camera );
-									vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-									vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-									annotation.style.top = vector.y + "px";
-									annotation.style.left = vector.x + "px";
-
-									annotation.style["display"] = "table";
-								}
-							}
-						} );
-
-					}
-					else if ( G_clip_point_2 == true ) {
-						G_clip_point_2 = false;
-						G_clip_point_3 = true;
-						G_point_list[ 1 ] = intersects[ 0 ].point;
-						editor.scene.traverse( function( child ) {
-							if (child.name === "第2点") {
-								child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
-								child.visible = true;
-
-								if ( editor.is_annotation ) {
-									var annotation = document.getElementById( "point-2" );
-
-									var vector = G_point_list[1].clone();
-									vector.project( camera );
-								
-									vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-									vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-									annotation.style.top = vector.y + "px";
-									annotation.style.left = vector.x + "px";
-								
-									annotation.style["display"] = "table";
-								}
-							}
-						} );
-					}
-					else if ( G_clip_point_3 == true ) {
-						G_clip_point_3 = false;
-						G_point_list[ 2 ] = intersects[ 0 ].point;
-						
-						if ( editor.is_annotation ) {
-							var annotation = document.getElementById( "point-3" );
-
-							var vector = G_point_list[2].clone();
-							vector.project( camera );
-								
-							vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-							vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-							annotation.style.top = vector.y + "px";
-							annotation.style.left = vector.x + "px";
-								
-							annotation.style["display"] = "table";
-						}
-						// 构造一个截面
-						var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
-						plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
-						
-						var another_plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
-						another_plane.normal.x = -plane.normal.x;
-						another_plane.normal.y = -plane.normal.y;
-						another_plane.normal.z = -plane.normal.z;
-						another_plane.constant = -plane.constant;
-						if ( another_plane.normal.y <= 0.0 ) {
-							object.material.clippingPlanes = [another_plane];
-						}
-						else {
-							object.material.clippingPlanes = [plane];
-						}
-
-						editor.scene.traverse(function( child ) {
-							if ( child.name === "切割预览" ) {
-                        		child.visible = true;
-								child.position.set(object.position.x, object.position.y, object.position.z);
-								if ( another_plane.normal.y <= 0.0 ) {
-									child.material.clippingPlanes = [plane];
-								}
-								else {
-									child.material.clippingPlanes = [another_plane];
-								}
-								
-							}
-							if ( child.name === "第3点" ) {
-								child.visible = true;
-								child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
-							}
-						});
-                
-					}
-
-				}
-
-
+				handleCutting( intersects[0] );
 			} 
 			else {
 				editor.select( null );
@@ -439,7 +416,7 @@ var Viewport = function ( editor ) {
 
 		var array = getMousePosition( container.dom, event.clientX, event.clientY );
 		onUpPosition.fromArray( array );
-
+		onMovePosition.fromArray(array);
 		handleClick();
 
 		document.removeEventListener( 'mouseup', onMouseUp, false );
@@ -674,36 +651,36 @@ var Viewport = function ( editor ) {
 				var femur_object = null;
 				var preview_object = null;
 				var intersect_points = [];
+				var intersect_point = null;
 				object.visible = false;
-				var intersects = getIntersects( onUpPosition, objects );
-				for (var i = 0; i < intersects.length; i++) {
-					
-					if (intersects[i].object.name === "股骨") {
-						intersect_points.push(intersects[i].point);
-						break;
-					}
-					if (intersects[i].object.name === "切割预览") {
-						intersect_points.push(intersects[i].point);
-						break;
-					}
+				var intersects = getIntersects(onMovePosition, objects);
+				console.log(intersects);
+				if (intersects.length > 0) {
+					intersect_point = intersects[0].point;
 				}
-				object.visible = true;;
 				var position = object.position.clone();
-
-				if (intersect_points.length > 0) {
-					var short_index = 0;
-					console.log(intersect_points);
+				if (object.name === "第1点") {
+					old_position = G_point_list[0];
+				}
+				if (object.name === "第2点") {
+					old_position = G_point_list[1];
+				}
+				if (object.name === "第3点") {
+					old_position = G_point_list[2];
+				}
+				
+				if (intersects.length > 0) {
 					
 					if ( object.name === "第1点" ) {
-						G_point_list[ 0 ] = intersect_points[short_index];
+						G_point_list[ 0 ] = intersect_point;
 					}
 					if ( object.name === "第2点" ) {
-						G_point_list[ 1 ] = intersect_points[short_index];
+						G_point_list[ 1 ] = intersect_point;
 					}
 					if ( object.name === "第3点" ) {
-						G_point_list[ 2 ] = intersect_points[short_index];
+						G_point_list[ 2 ] = intersect_point;
 					}
-					object.position.copy(intersect_points[short_index]);
+					object.position.copy(intersect_point);
 					//transformControls.update();
 					console.log("change position");
 				}
@@ -721,7 +698,7 @@ var Viewport = function ( editor ) {
 					// transformControls.update();
 					console.log("recover position");
 				}
-
+				object.visible = true;
 				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 				plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
 				
