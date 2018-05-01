@@ -312,8 +312,8 @@ select {
 	}
 	
 	#sidebar-left button.selected {
-		background: #4FC3F7;
-		color: #FFFFFF;
+		color: #4FC3F7;
+		background: #FFFFFF;
 	}
 
 #sidebar-item-box {

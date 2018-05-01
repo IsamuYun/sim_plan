@@ -68,8 +68,7 @@ var Viewport = function ( editor ) {
 		render();
 	} );
 
-	transformControls.addEventListener( 'mouseDown', function () {
-
+	transformControls.addEventListener('mouseDown', function () {
 		var object = transformControls.object;
 
 		objectPositionOnDown = object.position.clone();
@@ -77,52 +76,35 @@ var Viewport = function ( editor ) {
 		objectScaleOnDown = object.scale.clone();
 
 		controls.enabled = false;
+	});
 
-	} );
 	transformControls.addEventListener( 'mouseUp', function () {
 
 		var object = transformControls.object;
 
 		if ( object !== undefined ) {
-
 			switch ( transformControls.getMode() ) {
-
 				case 'translate':
-
 					if ( ! objectPositionOnDown.equals( object.position ) ) {
-
 						editor.execute( new SetPositionCommand( object, object.position, objectPositionOnDown ) );
-
 					}
-
 					break;
 
 				case 'rotate':
-
 					if ( ! objectRotationOnDown.equals( object.rotation ) ) {
-
 						editor.execute( new SetRotationCommand( object, object.rotation, objectRotationOnDown ) );
-
 					}
-
 					break;
 
 				case 'scale':
-
 					if ( ! objectScaleOnDown.equals( object.scale ) ) {
-
 						editor.execute( new SetScaleCommand( object, object.scale, objectScaleOnDown ) );
-
 					}
-
 					break;
-
 			}
-
 		}
 
 		controls.enabled = true;
-
 	} );
 
 	sceneHelpers.add( transformControls );
@@ -401,6 +383,7 @@ var Viewport = function ( editor ) {
 			} 
 			else {
 				editor.select( null );
+				editor.closeMeasureInfo();
 			}
 			render();
 		}

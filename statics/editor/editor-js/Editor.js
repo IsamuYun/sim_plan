@@ -8,8 +8,7 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.name = 'Camera';
 	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
-	// 是否开启注释功能
-	this.is_annotation = false;
+	
 
 	var Signal = signals.Signal;
 
@@ -108,9 +107,43 @@ var Editor = function () {
 	// 是否开始切割
 	this.cutting_begin = false;
 
+	// 是否开启注释功能
+	this.is_annotation = false;
+
 };
 
 Editor.prototype = {
+
+	clearMeasureInfo: function () {
+		for (var i = 1; i <= this.measure_count; i++) {
+			var measure_annotation = document.getElementById("measure-" + i);
+			if (measure_annotation != null) {
+				measure_annotation.outerHTML = "";
+			}
+		}
+	},
+
+	closeMeasureInfo: function () {
+		for (var i = 1; i <= this.measure_count; i++) {
+			var measure_annotation = document.getElementById("measure-" + i);
+			if (measure_annotation != null) {
+				if (measure_annotation.style.display == "none") {
+					measure_annotation.style.display = "inline-block";
+				}
+				else {
+					measure_annotation.style.display = "none";
+				}
+			}
+		}
+	},
+
+	clearExtraSetting: function () {
+		this.cutting_begin = false;
+		this.measure_begin = false;
+		this.measure_pt_1 = false;
+		this.measure_count = 0;
+		this.is_annotation = false;
+	},
 
 	setTheme: function ( value ) {
 
@@ -465,6 +498,8 @@ Editor.prototype = {
 
 	},
 
+	
+
 	clear: function () {
 
 		this.history.clear();
@@ -477,9 +512,7 @@ Editor.prototype = {
 		var objects = this.scene.children;
 
 		while ( objects.length > 0 ) {
-
 			this.removeObject( objects[ 0 ] );
-
 		}
 
 		this.geometries = {};
@@ -488,6 +521,10 @@ Editor.prototype = {
 		this.scripts = {};
 
 		this.deselect();
+
+		// 清除所有的测量长度信息
+		this.clearMeasureInfo();
+		this.clearExtraSetting();
 
 		var light = new THREE.AmbientLight( 0xFFFFFF, 0.38 ); // soft white light
 		light.name = "环境光";

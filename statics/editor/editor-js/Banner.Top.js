@@ -9,10 +9,14 @@ var BannerTop = function ( editor ) {
 	container.setId( 'banner-top' );
     
     var click_flag = false;
+    var info_status = false;
+    var transparency_status = false;
 
     var info_panel = new UI.Button( "CT" );
     info_panel.setClass( "ripple-effect" );
     info_panel.onClick( function () {
+        info_status = info_status ? false : true;
+        updateSelectedButton("info", info_status);
         var item_box = document.getElementById( "sidebar-item-box" );
         var scene_box = document.getElementById( "sidebar-scene-box" );
         var sidebar = document.getElementById( "sidebar-ct-box" );
@@ -33,6 +37,8 @@ var BannerTop = function ( editor ) {
 
     var transparency_button = new UI.Button( "半透明" ).setClass( "ripple-effect" );
     transparency_button.onClick( function() {
+        transparency_status = transparency_status ? false : true;
+        updateSelectedButton("transparency", transparency_status);
         editor.scene.traverse( function( child ) {
             if ( child.name === "股骨" || child.name === "盆骨" ) {
                 if ( child.material.opacity == 0.4 && child.material.transparent == true ) {
@@ -48,7 +54,24 @@ var BannerTop = function ( editor ) {
         });
     } );
 
+    function updateSelectedButton( mode, status ) {
+        info_panel.dom.classList.remove( 'selected' );
+        transparency_button.dom.classList.remove( 'selected' );
 
+        switch ( mode ) {
+            case "info":
+                if (status == true) {
+                    info_panel.dom.classList.add( "selected" );
+                }
+                
+                break;
+            case "transparency":
+                if (status == true) {
+                    transparency_button.dom.classList.add( "selected" );
+                }
+                break;
+        }
+    };
     
 
 

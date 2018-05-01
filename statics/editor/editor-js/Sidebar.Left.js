@@ -14,26 +14,16 @@ var SidebarLeft = function ( editor ) {
 
     var is_expand = false;
 
-	// translate / rotate / scale
-    /*
-	var translate = new UI.Button( '移动' );
-	translate.dom.title = 'W';
-    translate.dom.className = 'Button selected ripple-effect';
-    translate.dom.textContent = "移动";
-	translate.onClick( function () {
-
-		signals.transformModeChanged.dispatch( 'translate' );
-
-	} );
-    buttons.add( translate );
-    */
-
     var cut = new UI.Button( '切割' );
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
 
         editor.cutting_begin = editor.cutting_begin ? false : true;
+        // 将其它状态都关闭
+        is_expand = false;
+        editor.measure_begin = false;
+        editor.is_annotation = false;
 
         G_clip_point_1 = true;
         editor.scene.traverse( function ( object ) {
@@ -99,10 +89,22 @@ var SidebarLeft = function ( editor ) {
                         measure_line = child;
                     }
                 });
-                document.getElementById("measure-" + i).outerHTML = "";
-                editor.execute( new RemoveObjectCommand( begin_point ) );
-                editor.execute( new RemoveObjectCommand( end_point ) );
-                editor.execute( new RemoveObjectCommand( measure_line ) );
+                var measure_annotation = document.getElementById("measure-" + i);
+                if (measure_annotation != null) {
+                    measure_annotation.outerHTML = "";
+                }
+                if ( begin_point != null ) {
+                    editor.execute( new RemoveObjectCommand( begin_point ) );
+                }
+                if ( end_point != null ) {
+                    editor.execute( new RemoveObjectCommand( end_point ) );
+                }
+                if ( measure_line != null ) {
+                    editor.execute( new RemoveObjectCommand( measure_line ) );
+                }
+                
+                
+                
             }
             editor.measure_count = 0;
             editor.signals.sceneGraphChanged.dispatch();

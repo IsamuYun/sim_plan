@@ -11,12 +11,12 @@
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
 		<link href="static/css/editor-zs.css" rel="stylesheet" />
 		<link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
-		
+		<!--
 		<div id="preloader">
 			<div id="status">
 				<object class="preloader" data="static/img/logo/main_loader.html"></object>
 			</div>
-		</div>
+		</div>-->
 
 		<div id="point-1" class="zs-annotation">
 			<p><strong>1</strong></p>
@@ -79,13 +79,13 @@
 				var zs_preloader = document.getElementById( "preloader" );
 				var zs_body = document.getElementById( "zs-sim-plan-body" );
 				if ( zs_status != null ) {
-					fadeOutSlowEffect( zs_status ); // will first fade out the loading animation
+					//fadeOutSlowEffect( zs_status ); // will first fade out the loading animation
 					//sleep( 15000 );
 				}
 				
 				if ( zs_preloader != null ) {
-					//sleep( 30000 );
-					fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
+					// sleep( 30000 );
+					// fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
 				}
 				if ( zs_body != null ) {
 					// sleep( 1000 );
