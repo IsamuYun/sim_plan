@@ -200,11 +200,11 @@ var Viewport = function ( editor ) {
 			point.position.copy(intersect_point);
 			editor.execute( new AddObjectCommand( point ) );
 			var distance = point.position.distanceTo(measure_position);
-
+			distance = Math.round(distance * 1000) / 1000;
 			var measure_annotation = document.createElement("div");
 			measure_annotation.id = "measure-" + editor.measure_count;
 			measure_annotation.className = "zs-measure-annotation";
-			measure_annotation.innerHTML = "Length:" + distance;
+			measure_annotation.innerHTML = "Distance: " + distance + " mm";
 
 			var vector = intersect_point.clone();
 			vector.project( camera );

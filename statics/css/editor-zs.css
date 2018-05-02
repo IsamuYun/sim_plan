@@ -183,7 +183,7 @@
     margin-left: 15px;
     margin-top: 15px;
     padding: 1em;
-    width: 160px;
+    width: 120px;
     color: #fff;
     background: rgba(0, 0, 0, 0.7);
     border-radius: .5em;
@@ -192,6 +192,5 @@
     transition: opacity .5s;
     transform: translate(0%, 30%);
     display: inline-block;
-
 }
 

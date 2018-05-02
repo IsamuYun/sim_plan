@@ -109,6 +109,10 @@ var Editor = function () {
 
 	// 是否开启注释功能
 	this.is_annotation = false;
+	// 扩展功能
+	this.is_explod = false;
+	// 切割预览
+	this.is_preview = false;
 
 };
 

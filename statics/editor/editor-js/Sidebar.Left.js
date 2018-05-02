@@ -12,20 +12,11 @@ var SidebarLeft = function ( editor ) {
     var buttons = new UI.Panel();
     container.add( buttons );
 
-    var is_expand = false;
+    function recoverCutting() {
+        G_clip_point_1 = false;
+        G_clip_point_2 = false;
+        G_clip_point_3 = false;
 
-    var cut = new UI.Button( '切割' );
-    cut.dom.className = "Button ripple-effect";
-    cut.onClick( function() {
-        updateSelectedButton( "cut" );
-
-        editor.cutting_begin = editor.cutting_begin ? false : true;
-        // 将其它状态都关闭
-        is_expand = false;
-        editor.measure_begin = false;
-        editor.is_annotation = false;
-
-        G_clip_point_1 = true;
         editor.scene.traverse( function ( object ) {
             if ( object.name === "股骨" ) {
                 var femur = object;
@@ -56,7 +47,16 @@ var SidebarLeft = function ( editor ) {
         p3_annotation.style["display"] = "none";
 
         editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    var cut = new UI.Button( '切割' );
+    cut.dom.className = "Button ripple-effect";
+    cut.onClick( function() {
+        updateSelectedButton( "cut" );
         
+        recoverCutting();
+
+        G_clip_point_1 = true;
     } );
     
     buttons.add( cut );
@@ -66,10 +66,8 @@ var SidebarLeft = function ( editor ) {
     measure.dom.className = "Button ripple-effect";
 	measure.onClick( function () {
         updateSelectedButton( 'measure' );
-        editor.measure_begin = editor.measure_begin ? false : true;
-        editor.measure_pt_1 = false;
         
-        if (!editor.measure_begin) {
+        if ( !editor.measure_begin ) {
             // 删除所有测量点，测量文字
             for (var i = 1; i <= editor.measure_count; i++) {
                 var begin_name = "measure-" + i + "-1";
@@ -116,8 +114,6 @@ var SidebarLeft = function ( editor ) {
     var comment = new UI.Button( '注释' ).setClass( "Button ripple-effect" );
     comment.onClick( function() {
         updateSelectedButton( "comment" );
-
-        editor.is_annotation = editor.is_annotation ? false : true;
         
         if ( editor.is_annotation ) {
             for ( var i = 1; i <= 3; ++i ) {
@@ -149,8 +145,6 @@ var SidebarLeft = function ( editor ) {
     var expand = new UI.Button( "展开" ).setClass( "Button ripple-effect" );
     expand.onClick( function() {
         updateSelectedButton( "expand" );
-
-        is_expand = is_expand ? false : true;
         
         var scope = this;
         var pelvis_mesh = null;
@@ -201,7 +195,7 @@ var SidebarLeft = function ( editor ) {
         console.log("hip_mesh");
         console.log(hip_mesh);
 
-        if ( is_expand ) {
+        if ( editor.is_explod ) {
             pelvis_mesh.visible = false;
             femur_mesh.visible = false;
             femur_helper.visible = false;
@@ -231,27 +225,33 @@ var SidebarLeft = function ( editor ) {
     buttons.add( expand );
 
     var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
-    preview.onClick( function() {
+    preview.onClick( function(){
         updateSelectedButton( "preview" );
-   
+
         editor.scene.traverse( function ( child ) {
             if ( child.name == "切割预览" ) {
-                if (child.visible === true) {
-                    child.visible = false;
+                if ( editor.is_preview ) {
+                    child.visible = true;
+                    /*
+                    if ( child.material.clippingPlanes == null || child.material.clippingPlanes == [] ) {
+                        child.visible = false;
+                    }
+                    else {
+                        
+                    }
+                    */
                 }
                 else {
-                    child.visible = true;
+                    child.visible = false;
                 }
                 editor.signals.sceneGraphChanged.dispatch();
             }
         } );
-
     } );
     buttons.add( preview );
 
     function updateSelectedButton( mode ) {
-        // translate.dom.classList.remove( 'selected' );
-		measure.dom.classList.remove( 'selected' );
+        measure.dom.classList.remove( 'selected' );
         cut.dom.classList.remove( 'selected' );
         comment.dom.classList.remove( 'selected' );
         expand.dom.classList.remove( "selected" );
@@ -259,43 +259,65 @@ var SidebarLeft = function ( editor ) {
 
         switch ( mode ) {
             case "measure":
-                measure.dom.classList.add( "selected" );
+                editor.measure_begin = editor.measure_begin ? false : true;
+                if ( editor.measure_begin ) {
+                    measure.dom.classList.add( "selected" );
+                }
+                editor.is_annotation = false;
+                editor.cutting_begin = false;
+                editor.is_explod = false;
+                editor.is_preview = false;
+
+                editor.measure_pt_1 = false;
+                recoverCutting();
                 break;
             case "cut":
-                cut.dom.classList.add( "selected" );
+                editor.cutting_begin = editor.cutting_begin ? false : true;
+                if ( editor.cutting_begin ) {
+                    cut.dom.classList.add( "selected" );
+                }
+                editor.is_annotation = false;
+                editor.measure_begin = false;
+                editor.measure_pt_1 = false;
+                editor.is_explod = false;
+                editor.is_preview = false;
                 break;
             case "comment":
-                comment.dom.classList.add( "selected" );
+                editor.is_annotation = editor.is_annotation ? false : true;
+                if ( editor.is_annotation ) {
+                    comment.dom.classList.add( "selected" );
+                }
+                editor.cutting_begin = false;
+                editor.measure_begin = false;
+                editor.measure_pt_1 = false;
+                editor.is_explod = false;
+                editor.is_preview = false;
+                recoverCutting();
                 break;
             case "expand":
-                expand.dom.classList.add( "selected" );
+                editor.is_explod = editor.is_explod ? false : true;
+                if ( editor.is_explod ) {
+                    expand.dom.classList.add( "selected" );
+                }
+                editor.cutting_begin = false;
+                editor.measure_begin = false;
+                editor.measure_pt_1 = false;
+                editor.is_preview = false;
+                recoverCutting();
                 break;
             case "preview":
-                preview.dom.classList.add( "selected" );
+                editor.is_preview = editor.is_preview ? false : true;
+                if ( editor.is_preview ) {
+                    preview.dom.classList.add( "selected" );
+                }
+                editor.cutting_begin = false;
+                editor.measure_begin = false;
+                editor.measure_pt_1 = false;
+                editor.is_explod = false;
+                recoverCutting();
                 break;
         }
     };
-    
-    /*
-    signals.transformModeChanged.add( function ( mode ) {
-
-		translate.dom.classList.remove( 'selected' );
-		measure.dom.classList.remove( 'selected' );
-        cut.dom.classList.remove( 'selected' );
-        comment.dom.classList.remove( 'selected' );
-        zoom.dom.classList.remove( "selected" );
-        preview.dom.classList.remove( "selected" );
-
-		switch ( mode ) {
-        	case 'translate': translate.dom.classList.add( 'selected' ); break;
-			//case 'rotate': rotate.dom.classList.add( 'selected' ); break;
-            // case 'scale': scale.dom.classList.add( 'selected' ); break;
-           
-        }
-
-    } );
-    */
-    
     
 	return container;
 
