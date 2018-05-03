@@ -25,13 +25,6 @@ var SidebarLeft = function ( editor ) {
         } );
         editor.select(null);
 
-        var p1_annotation = document.getElementById( "point-1" );
-        p1_annotation.style["display"] = "none";
-        var p2_annotation = document.getElementById( "point-2" );
-        p2_annotation.style["display"] = "none";
-        var p3_annotation = document.getElementById( "point-3" );
-        p3_annotation.style["display"] = "none";
-
         editor.signals.sceneGraphChanged.dispatch();
     }
 
@@ -61,13 +54,6 @@ var SidebarLeft = function ( editor ) {
         
         } );
         editor.select(null);
-
-        var p1_annotation = document.getElementById( "point-1" );
-        p1_annotation.style["display"] = "none";
-        var p2_annotation = document.getElementById( "point-2" );
-        p2_annotation.style["display"] = "none";
-        var p3_annotation = document.getElementById( "point-3" );
-        p3_annotation.style["display"] = "none";
 
         editor.signals.sceneGraphChanged.dispatch();
     };
@@ -131,8 +117,13 @@ var SidebarLeft = function ( editor ) {
                     child.visible = false;
                 }
                 else {
-                    if (child.material.chippingPlanes == null || child.material.chippingPlanes.length == 0) {
-                        child.visible = false;
+                    if (child.material.chippingPlanes != null ) {
+                        if (child.material.chippingPlanes.length == 0) {
+                            child.visible = false;
+                        }
+                        else {
+                            child.visible = false;
+                        }
                     }
                     else {
                         child.visible = true;

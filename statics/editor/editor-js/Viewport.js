@@ -44,6 +44,7 @@ var Viewport = function ( editor ) {
 	// measure_line_begin
 	var measure_line_begin_1 = null;
 	var measure_line_begin_2 = null;
+	var measure_behind_object = null;
 
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
@@ -213,7 +214,6 @@ var Viewport = function ( editor ) {
 			measure_line_begin_2 = measure_line_begin_1.clone();
 			var origin_point = new THREE.Vector3(0, 0, 0);
 			camera.getWorldDirection( origin_point );
-			console.log( origin_point );
 			if ( origin_point.z <= 0.0 ) {
 				measure_line_begin_2.z += 2;
 			}
@@ -244,11 +244,36 @@ var Viewport = function ( editor ) {
 			measure_annotation.className = "zs-measure-annotation";
 			measure_annotation.innerHTML = "Distance: " + distance + " mm";
 
-			var vector = intersect_point.clone();
+			var vector = measure_line_begin_1.clone();
 			vector.project( camera );
+
 			vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
 			vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
 
+			/*
+			var vector_1 = intersect_point.clone();
+			vector_1.project( camera );
+			var vector_2 = measure_line_begin_1.clone();
+			vector_2.project( camera );
+
+			var pos_x = vector_1.x - ((vector_1.x - vector_2.x) / 2);
+			var pos_y = vector_1.y - ((vector_1.y - vector_2.y) / 2);
+
+			console.log("pos_x: " + pos_x + ", pos_y: " + pos_y);
+			
+
+
+			pos_x = Math.round( (pos_x / 2) * (container.dom.offsetWidth / window.devicePixelRatio) + (container.dom.offsetWidth - 180) / 2 );
+			if (pos_y > 0) {
+				pos_y = Math.round( (0.08 + pos_y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) + (container.dom.offsetHeight - 100) / 2 );
+			}
+			else {
+				pos_y = Math.round( (0.05 + pos_y / 2 ) * (container.dom.offsetHeight / window.devicePixelRatio) + (container.dom.offsetHeight) / 2 );
+
+			}
+			
+			console.log("pos_x: " + pos_x + ", pos_y: " + pos_y);
+			*/
 			measure_annotation.style.top = vector.y + "px";
 			measure_annotation.style.left = vector.x + "px";
 			document.body.appendChild(measure_annotation);
@@ -261,7 +286,6 @@ var Viewport = function ( editor ) {
 			var measure_line_end_2 = measure_line_end_1.clone();
 			var origin_point = new THREE.Vector3(0, 0, 0);
 			camera.getWorldDirection( origin_point );
-			console.log( origin_point );
 			if ( origin_point.z <= 0.0 ) {
 				measure_line_end_1.z += 2;
 			}
@@ -304,7 +328,7 @@ var Viewport = function ( editor ) {
 				if (child.name === "第1点") {
 					child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
 					child.visible = true;
-
+					/*
 					if ( editor.is_annotation ) {
 						var annotation = document.getElementById( "point-1" );
 						var vector = G_point_list[0].clone();
@@ -317,6 +341,7 @@ var Viewport = function ( editor ) {
 
 						annotation.style["display"] = "table";
 					}
+					*/
 				}
 			});
 		}
@@ -328,7 +353,7 @@ var Viewport = function ( editor ) {
 				if (child.name === "第2点") {
 					child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
 					child.visible = true;
-
+					/*
 					if ( editor.is_annotation ) {
 						var annotation = document.getElementById( "point-2" );
 						var vector = G_point_list[1].clone();
@@ -342,13 +367,14 @@ var Viewport = function ( editor ) {
 						
 						annotation.style["display"] = "table";
 					}
+					*/
 				}
 			});
 		}
 		else if ( G_clip_point_3 == true ) {
 			G_clip_point_3 = false;
 			G_point_list[ 2 ] = intersect_target.point;
-				
+			/*
 			if ( editor.is_annotation ) {
 				var annotation = document.getElementById( "point-3" );
 				var vector = G_point_list[2].clone();
@@ -362,6 +388,7 @@ var Viewport = function ( editor ) {
 						
 				annotation.style["display"] = "table";
 			}
+			*/
 			// 构造一个截面
 			var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 			plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
@@ -907,41 +934,33 @@ var Viewport = function ( editor ) {
 
 	// 更新三个标签框的位置
 	function updateAnnotationOpacity() {
-		var femur_position = new THREE.Vector3( 0, 0, 0 );
+		var measure_position = new THREE.Vector3( 0, 0, 0 );
 		
 		editor.scene.traverse( function ( child ) {
-			if ( child.name === "股骨" ) {
-				femur_position = child.position.clone();;
+			if ( child.name === "measure-1-1" ) {
+				measure_position = child.position.clone();;
 			}
 		});
-		var femur_distance = camera.position.distanceTo( femur_position );
-
-		for (var i = 0; i < G_point_list.length; ++i) {
-			var point_distance = camera.position.distanceTo( G_point_list[i] );
-			sprite_behind_object[i] = point_distance > femur_distance;
-		}
-		
+		var distance = camera.position.distanceTo( measure_position );
+		var point_distance = camera.position.distanceTo( new THREE.Vector3( 0, 0, 0 ) );
+		measure_behind_object = point_distance > distance;
 	}
 
 	function updateScreenPosition() {
-		for ( var i = 0; i < G_point_list.length; ++i ) {
-			var annotation = document.getElementById( "point-" + (i + 1) );
-			if (annotation === null) {
-				break;
-			}
-			var canvas = renderer.domElement;
-			var vector = G_point_list[i].clone();
-			vector.project( camera );
-
-			vector.x = Math.round( (0.5 + vector.x / 2) * ((canvas.width - 300) / window.devicePixelRatio) );
-			vector.y = Math.round( (0.5 - vector.y / 2) * (canvas.height / window.devicePixelRatio) );
-
-			annotation.style.top = vector.y + "px";
-			annotation.style.left = vector.x + "px";
-			annotation.style.opacity = sprite_behind_object[i] ? 0.25 : 1;
-
+		var annotation = document.getElementById( "measure-annotation-1" );
+		if (annotation === null) {
+			return;
 		}
-		
+		var canvas = renderer.domElement;
+		var vector = measure_line_begin_1.clone();
+		vector.project( camera );
+
+		vector.x = Math.round( (0.5 + vector.x / 2) * ((canvas.width - 300) / window.devicePixelRatio) );
+		vector.y = Math.round( (0.5 - vector.y / 2) * (canvas.height / window.devicePixelRatio) );
+
+		annotation.style.top = vector.y + "px";
+		annotation.style.left = vector.x + "px";
+		annotation.style.opacity = measure_behind_object ? 1 : 0.35;
 	}
 
 	return container;
