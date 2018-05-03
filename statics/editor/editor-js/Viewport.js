@@ -9,10 +9,9 @@ var Viewport = function ( editor ) {
 	var container = new UI.Panel();
 	container.setId( 'viewport' );
 	container.setPosition( 'absolute' );
-
-	container.add( new Viewport.Info( editor ) );
-	//
-
+	// Viewport.Info 2018年5月2日关闭
+	// container.add( new Viewport.Info( editor ) );
+	
 	var renderer = null;
 
 	var camera = editor.camera;
@@ -26,7 +25,6 @@ var Viewport = function ( editor ) {
 
 	var grid = new THREE.GridHelper( 100, 100 );
 	//sceneHelpers.add( grid );
-
 	
 	var box = new THREE.Box3();
 
@@ -140,6 +138,43 @@ var Viewport = function ( editor ) {
 
 	}
 
+	function removeMeasureInfo() {
+		var begin_name = "measure-1-1";
+        var end_name = "measure-1-2";
+        var line_name = "measure-line-1"; 
+        var begin_point = null;
+        var end_point = null;
+        var measure_line = null;
+		
+		editor.scene.traverse(function(child) {
+            if (child.name === begin_name) {
+                begin_point = child;
+            }
+            if (child.name === end_name) {
+                end_point = child;
+            }
+            if (child.name === line_name) {
+                measure_line = child;
+            }
+        });
+        var measure_annotation = document.getElementById("measure-annotation-1");
+        if (measure_annotation != null) {
+            measure_annotation.outerHTML = "";
+        }
+        if ( begin_point != null ) {
+            editor.execute( new RemoveObjectCommand( begin_point ) );
+        }
+        if ( end_point != null ) {
+            editor.execute( new RemoveObjectCommand( end_point ) );
+        }
+        if ( measure_line != null ) {
+            editor.execute( new RemoveObjectCommand( measure_line ) );
+		}
+		editor.measure_count = 0;
+		editor.measure_pt_1 = false;
+	}
+
+
 	function handleMeasure(intersect_target) {
 		if ( editor.measure_begin == false ) {
 			return;
@@ -153,12 +188,14 @@ var Viewport = function ( editor ) {
 			return;
 		}
 
+		
 
 		if (editor.measure_pt_1 == false) {
+			removeMeasureInfo();
 			editor.measure_count++;
 			editor.measure_pt_1 = true;
 			// 创建一个点
-			var geometry = new THREE.SphereGeometry( 0.4, 64, 64 );;
+			var geometry = new THREE.SphereGeometry( 0.2, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
 				color: 0x58D68D,
 				shininess: 80,
@@ -166,7 +203,7 @@ var Viewport = function ( editor ) {
 				specular: 0x58D68D,
 			});
 			var point = new THREE.Mesh( geometry, material );
-			point.name = "measure-" + editor.measure_count + "-1";
+			point.name = "measure-1-1";
 			point.visible = true;
 			point.position.copy(intersect_point);
 			editor.execute( new AddObjectCommand( point ) );
@@ -187,7 +224,7 @@ var Viewport = function ( editor ) {
 		else {
 			editor.measure_pt_1 = false;
 			// 创建一个点
-			var geometry = new THREE.SphereGeometry( 0.4, 64, 64 );;
+			var geometry = new THREE.SphereGeometry( 0.2, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
 				color: 0x3498DB,
 				shininess: 80,
@@ -195,14 +232,15 @@ var Viewport = function ( editor ) {
 				specular: 0x58D68D,
 			});
 			var point = new THREE.Mesh( geometry, material );
-			point.name = "measure-" + editor.measure_count + "-2";
+			point.name = "measure-1-2";
 			point.visible = true;
 			point.position.copy(intersect_point);
 			editor.execute( new AddObjectCommand( point ) );
 			var distance = point.position.distanceTo(measure_position);
+			distance = distance * 10;
 			distance = Math.round(distance * 1000) / 1000;
 			var measure_annotation = document.createElement("div");
-			measure_annotation.id = "measure-" + editor.measure_count;
+			measure_annotation.id = "measure-annotation-1";
 			measure_annotation.className = "zs-measure-annotation";
 			measure_annotation.innerHTML = "Distance: " + distance + " mm";
 
@@ -240,7 +278,7 @@ var Viewport = function ( editor ) {
 			);
 			
 			var line = new THREE.Line( geometry, material );
-			line.name = "measure-line-" + editor.measure_count;
+			line.name = "measure-line-1";
 			editor.execute( new AddObjectCommand( line ) );
 		}
 		render();

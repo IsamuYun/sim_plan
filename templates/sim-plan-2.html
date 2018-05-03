@@ -11,23 +11,11 @@
 		<link id="theme" href="static/css/editor-light.css" rel="stylesheet" />
 		<link href="static/css/editor-zs.css" rel="stylesheet" />
 		<link type="text/css" rel="stylesheet" href="static/font/font-awesome/fontawesome-all.css" />
-		<!--
+		
 		<div id="preloader">
 			<div id="status">
 				<object class="preloader" data="static/img/logo/main_loader.html"></object>
 			</div>
-		</div>-->
-
-		<div id="point-1" class="zs-annotation">
-			<p><strong>1</strong></p>
-		</div>
-		
-		<div id="point-2" class="zs-annotation">
-			<p><strong>2</strong></p>
-		</div>
-
-		<div id="point-3" class="zs-annotation">
-			<p><strong>3</strong></p>
 		</div>
 
 		<script>
@@ -71,7 +59,6 @@
     			}, 100);
 			}
 
-
 			window.onload = function() {
 				"use strict";
     			// makes sure the whole site is loaded
@@ -79,13 +66,13 @@
 				var zs_preloader = document.getElementById( "preloader" );
 				var zs_body = document.getElementById( "zs-sim-plan-body" );
 				if ( zs_status != null ) {
-					//fadeOutSlowEffect( zs_status ); // will first fade out the loading animation
+					fadeOutSlowEffect( zs_status ); // will first fade out the loading animation
 					//sleep( 15000 );
 				}
 				
 				if ( zs_preloader != null ) {
 					// sleep( 30000 );
-					// fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
+					fadeOutEffect( zs_preloader ); // will fade out the white DIV that covers the website.
 				}
 				if ( zs_body != null ) {
 					// sleep( 1000 );
@@ -336,15 +323,11 @@
 
 				} );
 
-				//
-
 				var timeout;
 				
 				function saveState( scene ) {
 					if ( editor.config.getKey( 'autosave' ) === false ) {
-
 						return;
-
 					}
 
 					clearTimeout( timeout );
@@ -518,38 +501,38 @@
 			*/
 
 			var rippleEffect = (function() {
-        function rippleEffect(event) {
-           var time = 2000;
-           var self = this;
-           var rect = self.getBoundingClientRect();
-            var x = event.clientX - rect.left;
-              var y = event.clientY - rect.top;
-            var circle = document.createElement("div");
-           
-           circle.style.top = y + "px";
-           circle.style.left = x + "px";
-           circle.className = "ripple animate";
-           self.appendChild(circle);
+        		function rippleEffect(event) {
+           		var time = 2000;
+           		var self = this;
+           		var rect = self.getBoundingClientRect();
+            	var x = event.clientX - rect.left;
+              	var y = event.clientY - rect.top;
+            	var circle = document.createElement("div");
+			
+           		circle.style.top = y + "px";
+           		circle.style.left = x + "px";
+           		circle.className = "ripple animate";
+           		self.appendChild(circle);
+			
+           		setTimeout(function() {
+              		self.removeChild(circle);
+           		}, time);
+        	}
      
-           setTimeout(function() {
-              self.removeChild(circle);
-           }, time);
-        }
-     
-        var targets = document.getElementsByClassName("ripple-effect");
-        var l = targets.length;
+        	var targets = document.getElementsByClassName("ripple-effect");
+        	var l = targets.length;
         
-        for ( var i = 0; i < l; i++) {
-           targets[i].addEventListener('mousedown', rippleEffect, false);
-        }   
-     }());
+        	for ( var i = 0; i < l; i++) {
+           		targets[i].addEventListener('mousedown', rippleEffect, false);
+        	}   
+     	}());
 
 		</script>
 
-	<!--这里添加CT盒子的代码-->
+		<!--CT Box的代码-->
 
-	<div id="sidebar-ct-box">
-		<div id="zs-image-box-x" class="zs-image-box"> 
+		<div id="sidebar-ct-box">
+			<div id="zs-image-box-x" class="zs-image-box"> 
 			<div id="dicom-image-x" class="cornerstone-enabled-image" style="width: 256px; height: 256px; position: absolute;"></div>
 			<div class="mr-bottom-right">
 				<div id="slice-text-x">Image:</div>
@@ -569,7 +552,6 @@
 			<p class="slider-bar">
 				<label>A</label>
 				<input type="range" id="slice-range-y"  value="0" step="1" min="1" max="100" />
-				
 			</p>
 		</div>
 

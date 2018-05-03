@@ -119,25 +119,46 @@ var Editor = function () {
 Editor.prototype = {
 
 	clearMeasureInfo: function () {
-		for (var i = 1; i <= this.measure_count; i++) {
-			var measure_annotation = document.getElementById("measure-" + i);
-			if (measure_annotation != null) {
-				measure_annotation.outerHTML = "";
-			}
+		var measure_annotation = document.getElementById("measure-annotation-1");
+		if (measure_annotation != null) {
+			measure_annotation.outerHTML = "";
 		}
 	},
 
 	closeMeasureInfo: function () {
-		for (var i = 1; i <= this.measure_count; i++) {
-			var measure_annotation = document.getElementById("measure-" + i);
-			if (measure_annotation != null) {
-				if (measure_annotation.style.display == "none") {
-					measure_annotation.style.display = "inline-block";
-				}
-				else {
-					measure_annotation.style.display = "none";
-				}
+		var measure_annotation = document.getElementById("measure-annotation-1");
+		if (measure_annotation != null) {
+			if (measure_annotation.style.display == "none") {
+				measure_annotation.style.display = "inline-block";
 			}
+			else {
+					measure_annotation.style.display = "none";
+			}
+		}
+		var measure_point_1 = null;
+		var measure_point_2 = null;
+		var measure_line = null;
+
+		editor.scene.traverse(function(child) {
+			if (child.name === "measure-1-1") {
+				measure_point_1 = child;
+			}
+			if (child.name === "measure-1-2") {
+				measure_point_2 = child;
+			}
+			if (child.name === "measure-line-1") {
+				measure_line = child;
+			}
+		});
+
+		if (measure_point_1 != null) {
+			measure_point_1.visible = measure_point_1.visible ? false : true;
+		}
+		if (measure_line != null) {
+			measure_line.visible = measure_line.visible ? false : true;
+		}
+		if (measure_point_2 != null) {
+			measure_point_2.visible = measure_point_2.visible ? false : true;
 		}
 	},
 

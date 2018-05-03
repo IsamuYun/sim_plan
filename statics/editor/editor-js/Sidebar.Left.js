@@ -12,6 +12,29 @@ var SidebarLeft = function ( editor ) {
     var buttons = new UI.Panel();
     container.add( buttons );
 
+    function clearClipPoint() {
+        G_clip_point_1 = false;
+        G_clip_point_2 = false;
+        G_clip_point_3 = false;
+
+        editor.scene.traverse( function ( object ) {
+            if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
+                object.visible = false;
+            }
+        
+        } );
+        editor.select(null);
+
+        var p1_annotation = document.getElementById( "point-1" );
+        p1_annotation.style["display"] = "none";
+        var p2_annotation = document.getElementById( "point-2" );
+        p2_annotation.style["display"] = "none";
+        var p3_annotation = document.getElementById( "point-3" );
+        p3_annotation.style["display"] = "none";
+
+        editor.signals.sceneGraphChanged.dispatch();
+    }
+
     function recoverCutting() {
         G_clip_point_1 = false;
         G_clip_point_2 = false;
@@ -49,6 +72,43 @@ var SidebarLeft = function ( editor ) {
         editor.signals.sceneGraphChanged.dispatch();
     };
 
+    function clearMeasure() {
+        var begin_name = "measure-1-1";
+        var end_name = "measure-1-2";
+        var line_name = "measure-line-1"; 
+        var begin_point = null;
+        var end_point = null;
+        var measure_line = null;
+            
+        editor.scene.traverse(function(child) {
+            if (child.name === begin_name) {
+                begin_point = child;
+            }
+            if (child.name === end_name) {
+                end_point = child;
+            }
+            if (child.name === line_name) {
+                measure_line = child;
+            }
+        });
+        var measure_annotation = document.getElementById("measure-annotation-1");
+        if (measure_annotation != null) {
+            measure_annotation.outerHTML = "";
+        }
+        if ( begin_point != null ) {
+            editor.execute( new RemoveObjectCommand( begin_point ) );
+        }
+        if ( end_point != null ) {
+            editor.execute( new RemoveObjectCommand( end_point ) );
+        }
+        if ( measure_line != null ) {
+            editor.execute( new RemoveObjectCommand( measure_line ) );
+        }
+        editor.measure_count = 0;
+        editor.measure_pt_1 = false;
+        editor.signals.sceneGraphChanged.dispatch();
+    }
+
     var cut = new UI.Button( '切割' );
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
@@ -60,6 +120,29 @@ var SidebarLeft = function ( editor ) {
     } );
     
     buttons.add( cut );
+
+    var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
+    preview.onClick( function(){
+        updateSelectedButton( "preview" );
+
+        editor.scene.traverse( function ( child ) {
+            if ( child.name == "切割预览" ) {
+                if ( editor.is_preview ) {
+                    child.visible = false;
+                }
+                else {
+                    if (child.material.chippingPlanes == null || child.material.chippingPlanes.length == 0) {
+                        child.visible = false;
+                    }
+                    else {
+                        child.visible = true;
+                    }
+                }
+                editor.signals.sceneGraphChanged.dispatch();
+            }
+        } );
+    } );
+    buttons.add( preview );
     
     var measure = new UI.Button( '测量' );
     measure.dom.title = 'E';
@@ -68,44 +151,7 @@ var SidebarLeft = function ( editor ) {
         updateSelectedButton( 'measure' );
         
         if ( !editor.measure_begin ) {
-            // 删除所有测量点，测量文字
-            for (var i = 1; i <= editor.measure_count; i++) {
-                var begin_name = "measure-" + i + "-1";
-                var end_name = "measure-" + i + "-2";
-                var line_name = "measure-line-" + i; 
-                var begin_point = null;
-                var end_point = null;
-                var measure_line = null;
-                editor.scene.traverse(function(child) {
-                    if (child.name === begin_name) {
-                        begin_point = child;
-                    }
-                    if (child.name === end_name) {
-                        end_point = child;
-                    }
-                    if (child.name === line_name) {
-                        measure_line = child;
-                    }
-                });
-                var measure_annotation = document.getElementById("measure-" + i);
-                if (measure_annotation != null) {
-                    measure_annotation.outerHTML = "";
-                }
-                if ( begin_point != null ) {
-                    editor.execute( new RemoveObjectCommand( begin_point ) );
-                }
-                if ( end_point != null ) {
-                    editor.execute( new RemoveObjectCommand( end_point ) );
-                }
-                if ( measure_line != null ) {
-                    editor.execute( new RemoveObjectCommand( measure_line ) );
-                }
-                
-                
-                
-            }
-            editor.measure_count = 0;
-            editor.signals.sceneGraphChanged.dispatch();
+            clearMeasure();
         }
 
 	} );
@@ -120,7 +166,7 @@ var SidebarLeft = function ( editor ) {
                 var point_comment = document.getElementById( "point-" + i );
                 if ( point_comment != null ) {
                     if ( point_comment.style["display"] == "none" ) {
-                        point_comment.style["display"] = "table";
+                        point_comment.style["display"] = "none";
                     }
                     else {
                         point_comment.style["display"] = "none";
@@ -224,31 +270,7 @@ var SidebarLeft = function ( editor ) {
     });
     buttons.add( expand );
 
-    var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
-    preview.onClick( function(){
-        updateSelectedButton( "preview" );
-
-        editor.scene.traverse( function ( child ) {
-            if ( child.name == "切割预览" ) {
-                if ( editor.is_preview ) {
-                    child.visible = true;
-                    /*
-                    if ( child.material.clippingPlanes == null || child.material.clippingPlanes == [] ) {
-                        child.visible = false;
-                    }
-                    else {
-                        
-                    }
-                    */
-                }
-                else {
-                    child.visible = false;
-                }
-                editor.signals.sceneGraphChanged.dispatch();
-            }
-        } );
-    } );
-    buttons.add( preview );
+   
 
     function updateSelectedButton( mode ) {
         measure.dom.classList.remove( 'selected' );
@@ -281,6 +303,7 @@ var SidebarLeft = function ( editor ) {
                 editor.measure_pt_1 = false;
                 editor.is_explod = false;
                 editor.is_preview = false;
+                clearMeasure();
                 break;
             case "comment":
                 editor.is_annotation = editor.is_annotation ? false : true;
@@ -293,6 +316,7 @@ var SidebarLeft = function ( editor ) {
                 editor.is_explod = false;
                 editor.is_preview = false;
                 recoverCutting();
+                clearMeasure();
                 break;
             case "expand":
                 editor.is_explod = editor.is_explod ? false : true;
@@ -304,6 +328,7 @@ var SidebarLeft = function ( editor ) {
                 editor.measure_pt_1 = false;
                 editor.is_preview = false;
                 recoverCutting();
+                clearMeasure();
                 break;
             case "preview":
                 editor.is_preview = editor.is_preview ? false : true;
@@ -314,7 +339,8 @@ var SidebarLeft = function ( editor ) {
                 editor.measure_begin = false;
                 editor.measure_pt_1 = false;
                 editor.is_explod = false;
-                recoverCutting();
+                clearClipPoint();
+                clearMeasure();
                 break;
         }
     };

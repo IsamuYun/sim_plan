@@ -55,17 +55,18 @@ var BannerTop = function ( editor ) {
     } );
 
     function updateSelectedButton( mode, status ) {
-        info_panel.dom.classList.remove( 'selected' );
-        transparency_button.dom.classList.remove( 'selected' );
-
+        
+        
         switch ( mode ) {
             case "info":
+                info_panel.dom.classList.remove( 'selected' );
                 if (status == true) {
                     info_panel.dom.classList.add( "selected" );
                 }
                 
                 break;
             case "transparency":
+                transparency_button.dom.classList.remove( 'selected' );
                 if (status == true) {
                     transparency_button.dom.classList.add( "selected" );
                 }
