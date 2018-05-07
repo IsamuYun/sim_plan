@@ -196,12 +196,12 @@ var Viewport = function ( editor ) {
 			editor.measure_count++;
 			editor.measure_pt_1 = true;
 			// 创建一个点
-			var geometry = new THREE.SphereGeometry( 0.2, 64, 64 );;
+			var geometry = new THREE.SphereGeometry( 0.25, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0x58D68D,
+				color: 0xF7FE2E,
 				shininess: 80,
 				side: THREE.DoubleSide,
-				specular: 0x58D68D,
+				specular: 0xF2F2F2,
 			});
 			var point = new THREE.Mesh( geometry, material );
 			point.name = "measure-1-1";
@@ -224,12 +224,12 @@ var Viewport = function ( editor ) {
 		else {
 			editor.measure_pt_1 = false;
 			// 创建一个点
-			var geometry = new THREE.SphereGeometry( 0.2, 64, 64 );;
+			var geometry = new THREE.SphereGeometry( 0.25, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0x3498DB,
+				color: 0xFE642E,
 				shininess: 80,
 				side: THREE.DoubleSide,
-				specular: 0x58D68D,
+				specular: 0xF2F2F2,
 			});
 			var point = new THREE.Mesh( geometry, material );
 			point.name = "measure-1-2";
@@ -452,7 +452,6 @@ var Viewport = function ( editor ) {
 			}
 			render();
 		}
-
 	}
 
 	function onMouseDown( event ) {
@@ -691,8 +690,6 @@ var Viewport = function ( editor ) {
 
 		if ( editor.selected === object ) {
 
-			
-
 			if ( object.name === "股骨" ) {
 				editor.scene.traverse( function ( child ) {
 					if ( child.name === "切割预览" ) {
@@ -707,15 +704,44 @@ var Viewport = function ( editor ) {
 				var intersect_points = [];
 				var intersect_point = null;
 				object.visible = false;
-				var intersects = getIntersects(onUpPosition, objects);
+				var position = object.position.clone();
+				var point_raycaster = new THREE.Raycaster();
+				var origin_point = new THREE.Vector3(0, 0, 0);
+				camera.getWorldDirection( origin_point );
+				console.log( "world direction:");
+				console.log( origin_point );
+				
+				if ( origin_point.x <= 0.0 ) {
+					position.x +=  0.45;
+				}
+				else {
+					position.x -=  0.45;
+				}
+				if ( origin_point.y <= 0.0 ) {
+					position.y +=  0.45;
+				}
+				else {
+					position.y -=  0.45;
+				}
+				if ( origin_point.z <= 0.0 ) {
+					position.z += 1.80;
+				}
+				else {
+					position.z -= 1.80;
+				}
+
+				point_raycaster.set( position, origin_point );
+
+				var intersects = point_raycaster.intersectObjects( objects );
 				console.log(intersects);
 				if (intersects.length > 0) {
+					
 					if (intersects[0].object.name === "股骨" || intersects[0].object.name === "切割预览") {
 						intersect_point = intersects[0].point;
 					}
 					
 				}
-				var position = object.position.clone();
+				
 				if (object.name === "第1点") {
 					old_position = G_point_list[0];
 				}
@@ -742,7 +768,7 @@ var Viewport = function ( editor ) {
 					console.log("change position");
 				}
 				else {
-					// 恢复到之前的坐标
+					/*
 					if ( object.name === "第1点" ) {
 						object.position.copy(G_point_list[0]);
 					}
@@ -752,8 +778,62 @@ var Viewport = function ( editor ) {
 					if ( object.name === "第3点" ) {
 						object.position.copy(G_point_list[2]);
 					}
-					// transformControls.update();
+					*/
 					console.log("recover position");
+					if ( origin_point.x <= 0.0 ) {
+						position.x +=  0.50;
+					}
+					else {
+						position.x -=  0.50;
+					}
+					if ( origin_point.y <= 0.0 ) {
+						position.y +=  0.50;
+					}
+					else {
+						position.y -=  0.50;
+					}
+					if ( origin_point.z <= 0.0 ) {
+						position.z += 6.00;
+					}
+					else {
+						position.z -= 6.00;
+					}
+					point_raycaster.set( position, origin_point );
+
+					var intersects = point_raycaster.intersectObjects( objects );
+					console.log(intersects);
+					if (intersects.length > 0) {
+						if (intersects[0].object.name === "股骨" || intersects[0].object.name === "切割预览") {
+							intersect_point = intersects[0].point;
+						}
+					}
+					if (intersect_point != null) {
+					
+						if ( object.name === "第1点" ) {
+							G_point_list[ 0 ] = intersect_point;
+						}
+						if ( object.name === "第2点" ) {
+							G_point_list[ 1 ] = intersect_point;
+						}
+						if ( object.name === "第3点" ) {
+							G_point_list[ 2 ] = intersect_point;
+						}
+						object.position.copy(intersect_point);
+						console.log("change position again");
+					}
+					else {
+						console.log("no point to hook.");
+						
+						if ( object.name === "第1点" ) {
+							object.position.copy(G_point_list[0]);
+						}
+						if ( object.name === "第2点" ) {
+							object.position.copy(G_point_list[1]);
+						}
+						if ( object.name === "第3点" ) {
+							object.position.copy(G_point_list[2]);
+						}
+					}
 				}
 				object.visible = true;
 				var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
@@ -785,9 +865,10 @@ var Viewport = function ( editor ) {
 					}
 				} );
 			}
-
+			
 			selectionBox.setFromObject( object );
 			transformControls.update();
+			
 		}
 
 		if ( object instanceof THREE.PerspectiveCamera ) {

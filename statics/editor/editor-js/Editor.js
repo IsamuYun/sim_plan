@@ -866,7 +866,7 @@ Editor.prototype = {
 		}, onFemurHipLoadProgress);
 		
 		// 增加第一点和第二点，将它们设为隐身
-		var geometry = new THREE.SphereGeometry( 0.3, 64, 64 );;
+		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
 		var p1_material = new THREE.MeshPhongMaterial( {
 			color: 0x58D68D,
 			shininess: 80,
@@ -878,7 +878,7 @@ Editor.prototype = {
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
 
-		var geometry = new THREE.SphereGeometry( 0.3, 64, 64 );;
+		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
 		var p2_material = new THREE.MeshPhongMaterial( {
 			color: 0x3498DB,
 			shininess: 80,
@@ -890,7 +890,7 @@ Editor.prototype = {
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
 
-		var geometry = new THREE.SphereGeometry( 0.3, 64, 64 );;
+		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
 		var p3_material = new THREE.MeshPhongMaterial( {
 			color: 0xAF7AC5,
 			shininess: 80,
