@@ -407,7 +407,7 @@ var SidebarSceneBox = function ( editor ) {
 
 	
 	var slider_row = new UI.Row();
-	slider_row.add( new UI.Text("A: ").setClass("row-title"));
+	slider_row.add( new UI.Text("A").setClass("row-title"));
 	var slider_area = new UI.Div().setClass("slider");
 	
 	var a_index = 5;
@@ -421,6 +421,7 @@ var SidebarSceneBox = function ( editor ) {
 	slider_bar_dom.onchange = change_slider_a;
 	slider_area.dom.appendChild( slider_bar_dom );
 	slider_row.add(slider_area);
+	
 
 	// 数据盒子
 	var number_box_area = new UI.Div().setClass("input-box");
@@ -434,11 +435,11 @@ var SidebarSceneBox = function ( editor ) {
 	number_box.onchange = change_box_a;
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
-
+	slider_row.add(new UI.Text("mm").setClass("unit-text"));
 	container.add( slider_row );
 
 	var slider_row = new UI.Row();
-	slider_row.add( new UI.Text("B: ").setClass("row-title"));
+	slider_row.add( new UI.Text("B").setClass("row-title"));
 	
 	var slider_area = new UI.Div().setClass("slider");
 	var slider_bar_dom = document.createElement( "input" );
@@ -464,11 +465,11 @@ var SidebarSceneBox = function ( editor ) {
 	number_box.onchange = change_box;
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
-
+	slider_row.add(new UI.Text("mm").setClass("unit-text"));
 	container.add( slider_row );
 
 	var slider_row = new UI.Row();
-	slider_row.add( new UI.Text("C: ").setClass("row-title"));
+	slider_row.add( new UI.Text("C").setClass("row-title"));
 
 	var slider_area = new UI.Div().setClass("slider");
 	var slider_bar_dom = document.createElement( "input" );
@@ -494,12 +495,12 @@ var SidebarSceneBox = function ( editor ) {
 	number_box.onchange = change_box;
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
-	
+	slider_row.add(new UI.Text("mm").setClass("unit-text"));
 	container.add( slider_row );
 
 	
 	var slider_row = new UI.Row();
-	slider_row.add( new UI.Text("D: ").setClass("row-title"));
+	slider_row.add( new UI.Text("D").setClass("row-title"));
 	var slider_area = new UI.Div().setClass("slider");
 
 	var slider_bar_dom = document.createElement( "input" );
@@ -525,12 +526,12 @@ var SidebarSceneBox = function ( editor ) {
 	number_box.onchange = change_box;
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
-
+	slider_row.add(new UI.Text("mm").setClass("unit-text"));
 
 	container.add( slider_row );
 
 	var row = new UI.Row();
-	row.add( new UI.Text("Alpha:").setClass("row-title"));
+	row.add( new UI.Text("Alpha").setClass("row-title"));
 	var area = new UI.Div().setClass("slider");
 
 	var slider_bar = document.createElement( "input" );
@@ -543,6 +544,7 @@ var SidebarSceneBox = function ( editor ) {
 	slider_bar.onchange = change_slider_alpha;
 	area.dom.appendChild( slider_bar );
 	row.add( area );
+	
 
 	var number_box_area = new UI.Div().setClass("input-box");
 	var number_box = document.createElement( "input" );
@@ -555,7 +557,7 @@ var SidebarSceneBox = function ( editor ) {
 	number_box.onchange = change_box_alpha;
 	number_box_area.dom.appendChild( number_box );
 	row.add( number_box_area );
-
+	row.add(new UI.Text("°").setClass("unit-text"));
 	container.add( row );
 
 	var row = new UI.Row();
