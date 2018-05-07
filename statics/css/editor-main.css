@@ -214,31 +214,35 @@ textarea, input { outline: none; } /* osx */
 
 progress {
 	background-color: #E6E6E6;
-	color: #1734CC;
+	color: #00BFFF;
 	border: 0;
-	height: 16px;
-	width: 100px;
-	border-radius: 6px;
-	margin: 3px;
+	height: 10px;
+	width: 72px;
+	border-radius: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 progress::-webkit-progress-bar {
 	border: 0;
-	height: 16px;
-	width: 100px;
-	border-radius: 6px;
-	background: #E6E6E6;
+	height: 10px;
+	width: 72px;
+	border-radius: 5px;
+    background: #E6E6E6;
+    /*margin-left: 4px;
+    margin-right: 4px;*/
 }
 
 progress::-webkit-progress-value {
-	border-radius: 6px;
-	background: #4FC3F7;
-	
+	border-radius: 5px;
+    background: #B5B5B5;
+   
 }
 
 progress::-webkit-progress-inner-element {
-	border-radius: 6px;
-	background: #4FC3F7;
+	border-radius: 5px;
+    background: #B5B5B5;
+    
 }
 
 
@@ -269,12 +273,14 @@ progress::-webkit-progress-inner-element {
     background-position: center;
     margin: -50px 0 0 -50px*/
 }
+
 .preloader {
     height: 100%;
     width: 100%;
 /*    margin-top: -20px;
     margin-left: -20px*/
 }
+
 .preloader:before {
     content: "";
     display: block;
@@ -289,6 +295,7 @@ progress::-webkit-progress-inner-element {
     border-top: 2px solid transparent;
     border-radius: 100%
 }
+
 .preloader>.icon {
     position: absolute;
     top: 50%;

@@ -8,7 +8,41 @@ var Toolbar = function ( editor ) {
 
 	var container = new UI.Panel();
 	container.setId( 'toolbar' );
-	
+
+	var label = new UI.Text( "全选" ).setPadding( "8px" );
+	container.add( label );
+
+	var select_all = true;
+	var select_all_checkbox = new UI.Checkbox( select_all ).onChange( function() {
+		select_all = select_all ? false : true;
+		editor.scene.traverse( function(child) {
+			if (child.name === "股骨") {
+				child.visible = select_all;
+			}
+			if (child.name === "切割预览" ) {
+				child.visible = false;
+			}
+			if (child.name === "盆骨") {
+				child.visible = select_all;
+			}
+			if (child.name === "新髋臼杯") {
+				child.visible = select_all;
+			}
+			if (child.name === "髋臼内衬") {
+				child.visible = select_all;
+			}
+			if (child.name === "股骨柄假体") {
+				child.visible = select_all;
+			}
+			if (child.name === "股骨头假体") {
+				child.visible = select_all;
+			}
+		});
+		editor.signals.sceneGraphChanged.dispatch();
+	})
+	select_all_checkbox.setWidth( "20px" );
+	container.add( select_all_checkbox );
+
 	var femur_label = new UI.Text( "股骨" );
 	container.add( femur_label );
 
