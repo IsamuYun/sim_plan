@@ -405,8 +405,6 @@ select {
 	font-weight: normal;
 }
 
-
-
 #sidebar-scene-box {
 	position: absolute;
 	right: 270px;
@@ -578,6 +576,7 @@ select {
   	border: 0.6px solid #010001;
   	transition: 0.2s;
 }
+
 #sidebar-scene-box input[type=range]::-moz-range-thumb {
 	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
 	border: 0px solid #000000;
@@ -587,6 +586,7 @@ select {
 	background: #dcffff;
 	cursor: pointer;
 }
+
 #sidebar-scene-box input[type=range]::-ms-track {
 	width: 100%;
   height: 4.3px;

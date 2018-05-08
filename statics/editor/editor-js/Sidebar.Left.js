@@ -95,7 +95,8 @@ var SidebarLeft = function ( editor ) {
         editor.signals.sceneGraphChanged.dispatch();
     }
 
-    var cut = new UI.Button( '切割' );
+    var cut = new UI.Button( '' );
+    cut.dom.innerHTML = "切<br />割";
     cut.dom.className = "Button ripple-effect";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
@@ -107,7 +108,8 @@ var SidebarLeft = function ( editor ) {
     
     buttons.add( cut );
 
-    var preview = new UI.Button( "预览" ).setClass( "Button ripple-effect" );
+    var preview = new UI.Button( "" ).setClass( "Button ripple-effect" );
+    preview.dom.innerHTML = "预<br />览";
     preview.onClick( function(){
         updateSelectedButton( "preview" );
 
@@ -135,7 +137,8 @@ var SidebarLeft = function ( editor ) {
     } );
     buttons.add( preview );
     
-    var measure = new UI.Button( '测量' );
+    var measure = new UI.Button( '' );
+    measure.dom.innerHTML = "测<br />量";
     measure.dom.title = 'E';
     measure.dom.className = "Button ripple-effect";
 	measure.onClick( function () {
@@ -148,38 +151,43 @@ var SidebarLeft = function ( editor ) {
 	} );
     buttons.add( measure );
 
-    var comment = new UI.Button( '注释' ).setClass( "Button ripple-effect" );
+    var comment = new UI.Button( '' ).setClass( "Button ripple-effect" );
+    comment.dom.innerHTML = "注<br />释";
     comment.onClick( function() {
         updateSelectedButton( "comment" );
-        
-        if ( editor.is_annotation ) {
-            for ( var i = 1; i <= 3; ++i ) {
-                var point_comment = document.getElementById( "point-" + i );
-                if ( point_comment != null ) {
-                    if ( point_comment.style["display"] == "none" ) {
-                        point_comment.style["display"] = "none";
+        var annotation_count = editor.annotation_count;
+        for (var i = 0; i <= annotation_count; i++) {
+            var annotation_point = null;
+            var annotation_dialog = null;
+            editor.scene.traverse(function(child) {
+                if (child.name === ("annotation-point-" + i)) {
+                    if (editor.is_annotation) {
+                        child.visible = true;
                     }
                     else {
-                        point_comment.style["display"] = "none";
+                        child.visible = false;
                     }
                 }
-            }
-        }
-        else {
-            for ( var i = 1; i <= 3; ++i ) {
-                var point_comment = document.getElementById( "point-" + i );
-                if ( point_comment != null ) {
-                    point_comment.style["display"] = "none";
+            });
+            annotation_dialog = document.getElementById("annotation-dialog-" + i);
+            if (annotation_dialog != null) {
+                if (editor.is_annotation) {
+                    annotation_dialog.style["display"] = "inline-block";
+                }
+                else {
+                    annotation_dialog.style["display"] = "none";
                 }
             }
         }
+        editor.signals.sceneGraphChanged.dispatch();
 
         
 
     } );
     buttons.add( comment );
 
-    var expand = new UI.Button( "展开" ).setClass( "Button ripple-effect" );
+    var expand = new UI.Button( "" ).setClass( "Button ripple-effect" );
+    expand.dom.innerHTML = "展<br />开";
     expand.onClick( function() {
         updateSelectedButton( "expand" );
         

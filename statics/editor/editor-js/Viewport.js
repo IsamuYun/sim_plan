@@ -189,8 +189,6 @@ var Viewport = function ( editor ) {
 			return;
 		}
 
-		
-
 		if (editor.measure_pt_1 == false) {
 			removeMeasureInfo();
 			editor.measure_count++;
@@ -272,14 +270,13 @@ var Viewport = function ( editor ) {
 
 			}
 			
-			console.log("pos_x: " + pos_x + ", pos_y: " + pos_y);
 			*/
 			measure_annotation.style.top = vector.y + "px";
 			measure_annotation.style.left = vector.x + "px";
 			document.body.appendChild(measure_annotation);
 
 			var material = new THREE.LineBasicMaterial({
-				color: 0x0000ff
+				color: 0x0000FF
 			});
 			
 			var measure_line_end_1 = intersect_point.clone();
@@ -328,20 +325,6 @@ var Viewport = function ( editor ) {
 				if (child.name === "第1点") {
 					child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
 					child.visible = true;
-					/*
-					if ( editor.is_annotation ) {
-						var annotation = document.getElementById( "point-1" );
-						var vector = G_point_list[0].clone();
-						vector.project( camera );
-						vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-						vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-						annotation.style.top = vector.y + "px";
-						annotation.style.left = vector.x + "px";
-
-						annotation.style["display"] = "table";
-					}
-					*/
 				}
 			});
 		}
@@ -353,42 +336,13 @@ var Viewport = function ( editor ) {
 				if (child.name === "第2点") {
 					child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
 					child.visible = true;
-					/*
-					if ( editor.is_annotation ) {
-						var annotation = document.getElementById( "point-2" );
-						var vector = G_point_list[1].clone();
-						vector.project( camera );
-						
-						vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-						vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-						annotation.style.top = vector.y + "px";
-						annotation.style.left = vector.x + "px";
-						
-						annotation.style["display"] = "table";
-					}
-					*/
 				}
 			});
 		}
 		else if ( G_clip_point_3 == true ) {
 			G_clip_point_3 = false;
 			G_point_list[ 2 ] = intersect_target.point;
-			/*
-			if ( editor.is_annotation ) {
-				var annotation = document.getElementById( "point-3" );
-				var vector = G_point_list[2].clone();
-				vector.project( camera );
-						
-				vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-				vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
-
-				annotation.style.top = vector.y + "px";
-				annotation.style.left = vector.x + "px";
-						
-				annotation.style["display"] = "table";
-			}
-			*/
+			
 			// 构造一个截面
 			var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 			plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
@@ -425,6 +379,48 @@ var Viewport = function ( editor ) {
 		}
 	}
 
+	function handleAnnotation(intersect_target) {
+		if (editor.is_annotation === false ) {
+			return;
+		}
+		if (intersect_target == null) {
+			return;
+		}
+		var intersect_point = intersect_target.point;
+		if (intersect_point == null) {
+			return;
+		}
+		editor.annotation_count++;
+		var annotation_count = editor.annotation_count;
+
+		var geometry = new THREE.SphereGeometry( 0.25, 64, 64 );;
+		var material = new THREE.MeshPhongMaterial({
+			color: 0xFF8000,
+			shininess: 60,
+			side: THREE.DoubleSide,
+			specular: 0xFFFFFF,
+		});
+		var point = new THREE.Mesh( geometry, material );
+		point.name = "annotation-point-" + annotation_count;
+		point.visible = true;
+		point.position.copy(intersect_point);
+		editor.execute( new AddObjectCommand( point ) );
+
+		// 创建对话框
+		var annotation_dialog = new AnnotationDialog(editor);
+
+		var vector = intersect_point.clone();
+		vector.project( camera );
+
+		vector.x = Math.round( (1.4 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
+		vector.y = Math.round( (1.1 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+
+		annotation_dialog.dom.style.top = vector.y + "px";
+		annotation_dialog.dom.style.left = vector.x + "px";
+
+		document.body.appendChild(annotation_dialog.dom);
+
+	}
 
 	function handleClick() {
 
@@ -445,6 +441,8 @@ var Viewport = function ( editor ) {
 				handleMeasure( intersects[0] );
 
 				handleCutting( intersects[0] );
+
+				handleAnnotation( intersects[0] );
 			} 
 			else {
 				editor.select( null );
@@ -512,7 +510,7 @@ var Viewport = function ( editor ) {
 			var intersect = intersects[ 0 ];
 
 			var select_object = intersects[0].object;
-			// outlinePass.selectedObjects = select_object;
+			
 			if ( select_object.name === "股骨" ) {
 				if ( editor.femur_helper != null ) {
 					editor.femur_helper.visible = true;
@@ -644,10 +642,8 @@ var Viewport = function ( editor ) {
 			box.setFromObject( object );
 
 			if ( box.isEmpty() === false ) {
-
 				selectionBox.setFromObject( object );
 				selectionBox.visible = true;
-
 			}
 
 			transformControls.attach( object );

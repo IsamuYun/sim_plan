@@ -109,6 +109,7 @@ var Editor = function () {
 
 	// 是否开启注释功能
 	this.is_annotation = false;
+	this.annotation_count = 0;
 	// 扩展功能
 	this.is_explod = false;
 	// 切割预览
@@ -132,7 +133,7 @@ Editor.prototype = {
 				measure_annotation.style.display = "inline-block";
 			}
 			else {
-					measure_annotation.style.display = "none";
+				measure_annotation.style.display = "none";
 			}
 		}
 		var measure_point_1 = null;
@@ -168,6 +169,7 @@ Editor.prototype = {
 		this.measure_pt_1 = false;
 		this.measure_count = 0;
 		this.is_annotation = false;
+		this.annotation_count = 0;
 	},
 
 	setTheme: function ( value ) {
