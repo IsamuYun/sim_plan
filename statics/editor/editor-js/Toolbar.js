@@ -9,7 +9,7 @@ var Toolbar = function ( editor ) {
 	var container = new UI.Panel();
 	container.setId( 'toolbar' );
 
-	var label = new UI.Text( "全选" ).setPadding( "8px" );
+	var label = new UI.Text( "全选" );
 	container.add( label );
 
 	var select_all = true;

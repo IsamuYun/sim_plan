@@ -22,6 +22,8 @@ from handlers.upload.file_receive import POSTHandler
 
 from handlers.unit_test import UnitTestHandler
 
+from handlers.generator import GeneratorHandler
+
 url = [
     (r'/', IndexHandler),
     (r"/login", LoginHandler),
@@ -34,5 +36,6 @@ url = [
     (r"/register", AccountRegisterHandler),
     (r"/upload", POSTHandler),
     (r"/test", UnitTestHandler),
+    (r"/generator", GeneratorHandler)
 ]
 
