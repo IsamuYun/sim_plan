@@ -249,7 +249,7 @@ select {
 	top: 20%;
 	bottom: 0;
 	width: 40px;
-	height: 400px;
+	height: 550px;
 	background: transparent;
 	overflow: auto;
 	/*
@@ -287,9 +287,7 @@ select {
 		padding: 0;
 		margin: 0;
 		width: 40px;
-		/* 为6个按钮临时减少高度 */
-		/*height: 110px;*/
-		height: 80px;
+		height: 110px;
 
 		line-height: 20px;
 		

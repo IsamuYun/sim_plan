@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="13px" viewBox="0 0 22 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD-Copy-3" transform="translate(-10.000000, -304.000000)">
+            <g id="Group-2" transform="translate(10.000000, 305.000000)">
+                <path d="M0,5.74063039 C3.71096183,1.91354346 7.39533798,2.34343179e-16 11.0531284,0 C14.7109189,0 18.3598761,1.91354346 22,5.74063039 C18.3775855,9.58634677 14.7286283,11.509205 11.0531284,11.509205 C7.37762855,11.509205 3.69325241,9.58634677 0,5.74063039 Z" id="Path-6-Copy" stroke="#4FC3F7"></path>
+                <path d="M11,9.5 C12.9329966,9.5 14.5,7.93299662 14.5,6 C14.5,5.11969085 14.1744067,4.29144428 13.5956829,3.65209724 C12.9358352,2.92312832 12.0025573,2.5 11,2.5 C9.06700338,2.5 7.5,4.06700338 7.5,6 C7.5,7.93299662 9.06700338,9.5 11,9.5 Z" id="Oval-2-Copy" stroke="#4FC3F7"></path>
+                <circle id="Oval-3-Copy" fill="#4FC3F7" cx="11" cy="6" r="1"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
