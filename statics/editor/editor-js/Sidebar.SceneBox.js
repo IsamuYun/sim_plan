@@ -3,6 +3,7 @@
  */
 
 var SidebarSceneBox = function ( editor ) {
+	
 	var a_limit_list = [97, 99, 101, 103, 105, 107, 109, 111, 113, 115, 117, 119];
 	
 	var b_limit_list = [[31, 34, 36, 39, 42, 44, 37, 40, 42, 45, 48, 50], // 97
@@ -580,7 +581,132 @@ var SidebarSceneBox = function ( editor ) {
 	});
 	row.add( reset_btn );
 
+	function postAjax(url, data, success) {
+		var params = typeof data == 'string' ? data : Object.keys(data).map(
+				function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+			).join('&');
+	
+		var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+		xhr.open('POST', url);
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
+		};
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.send(params);
+		return xhr;
+	}
+
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+		  if ((new Date().getTime() - start) > milliseconds){
+			break;
+		  }
+		}
+	  }
+
 	var confirm_btn = new UI.Button("确认").setClass("confirm-button ripple-effect");
+	confirm_btn.onClick(function() {
+		var A = document.getElementById("A-Number");
+		var B = document.getElementById("B-Number");
+		var C = document.getElementById("C-Number");
+		var D = document.getElementById("D-Number");
+		var Alpha = document.getElementById("Alpha-Number");
+		var a_value = 107;
+		var b_value = 39;
+		var c_value = 30;
+		var d_value = 32;
+		var alpha_value = 130;
+		if (A != null) {
+			a_value = A.value;
+		}
+		if (B != null) {
+			b_value = B.value;
+		}
+		if (C != null) {
+			c_value = C.value;
+		}
+		if (D != null) {
+			d_value = D.value;
+		}
+		if (Alpha != null) {
+			alpha_value = Alpha.value;
+		}
+		var url = "./generator";
+		var post_param = "A=" + a_value + "&B=" + b_value + "&C=" + c_value + "&D=" + d_value + "&Alpha=" + alpha_value;
+
+		postAjax(url, post_param, function(data) {
+			console.log(data);
+			
+		});
+		sleep(500);
+		// 重新载入物体
+		// 载入股骨柄假体
+		var implant_object = null;
+		editor.scene.traverse( function ( child ) {
+			if (child.name == "股骨柄假体") {
+				implant_object = child;
+				implant_object.visible = false;
+			}
+		});
+		if (implant_object != null) {
+			editor.execute(new RemoveObjectCommand(implant_object));
+		}
+		sleep(100);
+		editor.signals.sceneGraphChanged.dispatch();
+
+		const host_name = window.location.origin;
+		const folder_name = "/static/models/";
+
+		var url = host_name + folder_name + "股骨柄假体.stl";
+		var loader = new THREE.STLLoader();
+
+		var onFemurHipLoadProgress = function (e) {
+			var percentage = Math.round((e.loaded / e.total * 100));
+			var progress_bar = document.getElementById( "femur-hip-load-progress" );
+			progress_bar.value = percentage;
+		};
+
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xFFFFFF,
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0xB9B9B9,
+			// ***** Clipping setup (material): *****
+			clipShadows: true,
+		});
+
+		loader.load( url, function ( geometry ) {
+			
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = "股骨柄假体";
+
+			geometry.computeBoundingBox();
+
+			var bb = geometry.boundingBox;
+			// 计算得出以毫米为单位的计量
+			var object3DWidth  = bb.max.x - bb.min.x;
+			var object3DHeight = bb.max.y - bb.min.y;
+			var object3DDepth  = bb.max.z - bb.min.z;
+
+			var scale_x = 0.0;
+			
+			if (object3DWidth > 0 && object3DWidth < 10) {
+				scale_x = 0.5;
+			}
+			else {
+				scale_x = 0.1;
+			}
+			mesh.scale.set( scale_x, scale_x, scale_x );
+			mesh.rotation.set ( -(Math.PI / 2), 0, 0 );
+			
+			editor.execute( new AddObjectCommand( mesh ) );
+			
+		}, onFemurHipLoadProgress);
+
+		editor.signals.sceneGraphChanged.dispatch();
+	});
 	row.add( confirm_btn );
 
 	container.add( row );

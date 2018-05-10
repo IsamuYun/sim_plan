@@ -38,6 +38,23 @@ var Toolbar = function ( editor ) {
 				child.visible = select_all;
 			}
 		});
+		femur_checkbox.setValue(select_all);
+		femur_visible = select_all;
+		pelvis_checkbox.setValue(select_all);
+		pelvis_visible = select_all;
+		acetabular_checkbox.setValue(select_all);
+		acetabular_visible = select_all;
+		acetabular_inner_checkbox.setValue(select_all);
+		acetabular_inner_visible = select_all;
+		femur_hip_checkbox.setValue(select_all);
+		femur_hip_visible = select_all;
+
+		femur_head_checkbox.setValue(select_all);
+		femur_head_visible = select_all;
+
+
+
+
 		editor.signals.sceneGraphChanged.dispatch();
 	})
 	select_all_checkbox.setWidth( "20px" );

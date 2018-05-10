@@ -13,7 +13,7 @@ class GeneratorHandler(tornado.web.RequestHandler):
         alpha = self.get_argument("Alpha")
         alpha = float(alpha)
         mesh = generate_model(A, B, C, D, alpha)
-        mesh.export(file_dir + "test.stl")
+        mesh.export(file_dir + "股骨柄假体.stl")
 
     def post(self):
         file_dir = os.path.join(os.path.dirname(__file__), "../statics/models/")
@@ -24,4 +24,4 @@ class GeneratorHandler(tornado.web.RequestHandler):
         alpha = self.get_argument("Alpha")
         alpha = float(alpha)
         mesh = generate_model(A, B, C, D, alpha)
-        mesh.export(file_dir + "test.stl")
+        mesh.export(file_dir + "股骨柄假体.stl")
