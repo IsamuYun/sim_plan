@@ -284,7 +284,7 @@ select {
 		color: #FFFFFF;
 		background: #4FC3F7;
 		border: 0;
-		padding: 0;
+		padding-top: 24px;
 		margin: 0;
 		width: 40px;
 		height: 110px;
@@ -312,6 +312,66 @@ select {
 	#sidebar-left button.selected {
 		color: #4FC3F7;
 		background: #FFFFFF;
+	}
+
+	#sidebar-left button.cut-blue {
+		background: url("../img/icons/cut_white.svg") no-repeat;
+		background-color: #4FC3F7;
+		background-position: top 10px left 5px;
+	}
+
+	#sidebar-left button.cut-white {
+		background: url("../img/icons/cut_blue.svg") no-repeat;
+		background-color: #FFFFFF;
+		background-position: top 10px left 5px;
+	}
+
+	#sidebar-left button.measure-blue {
+		background: url("../img/icons/measure_white.svg") no-repeat;
+		background-color: #4FC3F7;
+		background-position: top 10px left 10px;
+	}
+
+	#sidebar-left button.measure-white {
+		background: url("../img/icons/measure_blue.svg") no-repeat;
+		background-color: #FFFFFF;
+		background-position: top 10px left 10px;
+	}
+
+	#sidebar-left button.annotation-blue {
+		background: url("../img/icons/annotation_white.svg") no-repeat;
+		background-color: #4FC3F7;
+		background-position: top 15px left 10px;
+	}
+
+	#sidebar-left button.annotation-white {
+		background: url("../img/icons/annotation_blue.svg") no-repeat;
+		background-color: #FFFFFF;
+		background-position: top 15px left 10px;
+	}
+
+	#sidebar-left button.explod-blue {
+		background: url("../img/icons/explod_white.svg") no-repeat;
+		background-color: #4FC3F7;
+		background-position: top 15px left 10px;
+	}
+
+	#sidebar-left button.explod-white {
+		background: url("../img/icons/explod_blue.svg") no-repeat;
+		background-color: #FFFFFF;
+		background-position: top 15px left 10px;
+	}
+
+	#sidebar-left button.preview-blue {
+		background: url("../img/icons/preview_white.svg") no-repeat;
+		background-color: #4FC3F7;
+		background-position: top 15px left 10px;
+	}
+
+	#sidebar-left button.preview-white {
+		background: url("../img/icons/preview_blue.svg") no-repeat;
+		background-color: #FFFFFF;
+		background-position: top 15px left 10px;
 	}
 
 #sidebar-item-box {

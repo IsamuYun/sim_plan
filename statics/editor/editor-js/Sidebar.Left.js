@@ -97,7 +97,7 @@ var SidebarLeft = function ( editor ) {
 
     var cut = new UI.Button( '' );
     cut.dom.innerHTML = "切<br />割";
-    cut.dom.className = "Button ripple-effect";
+    cut.dom.className = "Button ripple-effect cut-blue";
     cut.onClick( function() {
         updateSelectedButton( "cut" );
         
@@ -108,7 +108,7 @@ var SidebarLeft = function ( editor ) {
     
     buttons.add( cut );
 
-    var preview = new UI.Button( "" ).setClass( "Button ripple-effect" );
+    var preview = new UI.Button( "" ).setClass( "Button ripple-effect preview-blue" );
     preview.dom.innerHTML = "预<br />览";
     preview.onClick( function(){
         updateSelectedButton( "preview" );
@@ -140,7 +140,7 @@ var SidebarLeft = function ( editor ) {
     var measure = new UI.Button( '' );
     measure.dom.innerHTML = "测<br />量";
     measure.dom.title = 'E';
-    measure.dom.className = "Button ripple-effect";
+    measure.dom.className = "Button ripple-effect measure-blue";
 	measure.onClick( function () {
         updateSelectedButton( 'measure' );
         
@@ -151,7 +151,7 @@ var SidebarLeft = function ( editor ) {
 	} );
     buttons.add( measure );
 
-    var comment = new UI.Button( '' ).setClass( "Button ripple-effect" );
+    var comment = new UI.Button( '' ).setClass( "Button ripple-effect annotation-blue" );
     comment.dom.innerHTML = "注<br />释";
     comment.onClick( function() {
         updateSelectedButton( "comment" );
@@ -186,7 +186,7 @@ var SidebarLeft = function ( editor ) {
     } );
     buttons.add( comment );
 
-    var expand = new UI.Button( "" ).setClass( "Button ripple-effect" );
+    var expand = new UI.Button( "" ).setClass( "Button ripple-effect explod-blue" );
     expand.dom.innerHTML = "展<br />开";
     expand.onClick( function() {
         updateSelectedButton( "expand" );
@@ -273,29 +273,50 @@ var SidebarLeft = function ( editor ) {
 
     function updateSelectedButton( mode ) {
         measure.dom.classList.remove( 'selected' );
-        cut.dom.classList.remove( 'selected' );
-        comment.dom.classList.remove( 'selected' );
-        expand.dom.classList.remove( "selected" );
-        preview.dom.classList.remove( "selected" );
-
+        measure.dom.classList.remove("measure-white");
+        measure.dom.classList.add("measure-blue");
+        cut.dom.classList.remove('selected');
+        cut.dom.classList.remove('cut-white');
+        cut.dom.classList.add('cut-blue');
+        comment.dom.classList.remove('selected');
+        comment.dom.classList.remove('annotation-white');
+        comment.dom.classList.add('annotation-blue');
+        expand.dom.classList.remove("selected");
+        expand.dom.classList.remove("explod-white");
+        expand.dom.classList.add("explod-blue");
+        preview.dom.classList.remove("selected");
+        preview.dom.classList.remove("preview-white");
+        preview.dom.classList.add("preview-blue");
+        
         switch ( mode ) {
             case "measure":
                 editor.measure_begin = editor.measure_begin ? false : true;
                 if ( editor.measure_begin ) {
-                    measure.dom.classList.add( "selected" );
+                    measure.dom.classList.remove("measure-blue");
+                    measure.dom.classList.add("selected");
+                    measure.dom.classList.add("measure-white");
+                }
+                else {
+                    measure.dom.classList.remove("measure-white");
+                    measure.dom.classList.add("measure-blue");
                 }
                 editor.is_annotation = false;
                 editor.cutting_begin = false;
                 editor.is_explod = false;
                 editor.is_preview = false;
-
                 editor.measure_pt_1 = false;
                 recoverCutting();
                 break;
             case "cut":
                 editor.cutting_begin = editor.cutting_begin ? false : true;
                 if ( editor.cutting_begin ) {
-                    cut.dom.classList.add( "selected" );
+                    cut.dom.classList.remove('cut-blue');
+                    cut.dom.classList.add("selected");
+                    cut.dom.classList.add("cut-white");
+                }
+                else {
+                    cut.dom.classList.remove('cut-white');
+                    cut.dom.classList.add("cut-blue");
                 }
                 editor.is_annotation = false;
                 editor.measure_begin = false;
@@ -307,7 +328,13 @@ var SidebarLeft = function ( editor ) {
             case "comment":
                 editor.is_annotation = editor.is_annotation ? false : true;
                 if ( editor.is_annotation ) {
-                    comment.dom.classList.add( "selected" );
+                    comment.dom.classList.remove( 'annotation-blue' );
+                    comment.dom.classList.add("selected");
+                    comment.dom.classList.add("annotation-white");
+                }
+                else {
+                    comment.dom.classList.remove( 'annotation-white' );
+                    comment.dom.classList.add("annotation-blue");
                 }
                 editor.cutting_begin = false;
                 editor.measure_begin = false;
@@ -320,7 +347,13 @@ var SidebarLeft = function ( editor ) {
             case "expand":
                 editor.is_explod = editor.is_explod ? false : true;
                 if ( editor.is_explod ) {
-                    expand.dom.classList.add( "selected" );
+                    expand.dom.classList.remove("explod-blue");
+                    expand.dom.classList.add("selected");
+                    expand.dom.classList.add("explod-white");
+                }
+                else {
+                    expand.dom.classList.remove("explod-white");
+                    expand.dom.classList.add("explod-blue");
                 }
                 editor.cutting_begin = false;
                 editor.measure_begin = false;
@@ -332,7 +365,13 @@ var SidebarLeft = function ( editor ) {
             case "preview":
                 editor.is_preview = editor.is_preview ? false : true;
                 if ( editor.is_preview ) {
-                    preview.dom.classList.add( "selected" );
+                    preview.dom.classList.remove("preview-blue");
+                    preview.dom.classList.add("selected");
+                    preview.dom.classList.add("preview-white");
+                }
+                else {
+                    preview.dom.classList.remove("preview-white");
+                    preview.dom.classList.add("preview-blue");
                 }
                 editor.cutting_begin = false;
                 editor.measure_begin = false;
