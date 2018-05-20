@@ -239,7 +239,7 @@
 		lineZGeometry.addAttribute( 'position', new THREE.Float32BufferAttribute( [ 0, 0, 0,  0, 0, 1 ], 3 ) );
 
 		this.handleGizmos = {
-
+			/*
 			X: [
 				[ new THREE.Mesh( arrowGeometry, new GizmoMaterial( { color: 0xff0000 } ) ), [ 0.5, 0, 0 ], [ 0, 0, - Math.PI / 2 ] ],
 				[ new THREE.Line( lineXGeometry, new GizmoLineMaterial( { color: 0xff0000 } ) ) ]
@@ -254,11 +254,11 @@
 				[ new THREE.Mesh( arrowGeometry, new GizmoMaterial( { color: 0x0000ff } ) ), [ 0, 0, 0.5 ], [ Math.PI / 2, 0, 0 ] ],
 				[ new THREE.Line( lineZGeometry, new GizmoLineMaterial( { color: 0x0000ff } ) ) ]
 			],
-
+			*/
 			XYZ: [
-				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.1, 0 ), new GizmoMaterial( { color: 0xFFFFFF, opacity: 0.25 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
+				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.12, 0 ), new GizmoMaterial( { color: 0xFFFFFF, opacity: 0.35 } ) ), [ 0, 0, 0 ], [ 0, 0, 0 ] ]
 			],
-			
+			/*
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xffff00, opacity: 0.25 } ) ), [ 0.15, 0.15, 0 ] ]
 			],
@@ -270,10 +270,11 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.29, 0.29 ), new GizmoMaterial( { color: 0xff00ff, opacity: 0.25 } ) ), [ 0.15, 0, 0.15 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
+			*/
 		};
 
 		this.pickerGizmos = {
-
+			/*
 			X: [
 				[ new THREE.Mesh( new THREE.CylinderBufferGeometry( 0.2, 0, 1, 4, 1, false ), pickerMaterial ), [ 0.6, 0, 0 ], [ 0, 0, - Math.PI / 2 ] ]
 			],
@@ -285,11 +286,11 @@
 			Z: [
 				[ new THREE.Mesh( new THREE.CylinderBufferGeometry( 0.2, 0, 1, 4, 1, false ), pickerMaterial ), [ 0, 0, 0.6 ], [ Math.PI / 2, 0, 0 ] ]
 			],
-
+			*/
 			XYZ: [
-				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.2, 0 ), pickerMaterial ) ]
+				[ new THREE.Mesh( new THREE.OctahedronGeometry( 0.24, 0 ), pickerMaterial ) ]
 			],
-			
+			/*
 			XY: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0.2, 0 ] ]
 			],
@@ -301,14 +302,14 @@
 			XZ: [
 				[ new THREE.Mesh( new THREE.PlaneBufferGeometry( 0.4, 0.4 ), pickerMaterial ), [ 0.2, 0, 0.2 ], [ - Math.PI / 2, 0, 0 ] ]
 			]
-			
+			*/
 		};
 
 		this.setActivePlane = function ( axis, eye ) {
 
 			var tempMatrix = new THREE.Matrix4();
 			eye.applyMatrix4( tempMatrix.getInverse( tempMatrix.extractRotation( this.planes[ "XY" ].matrixWorld ) ) );
-
+			/*
 			if ( axis === "X" ) {
 
 				this.activePlane = this.planes[ "XY" ];
@@ -332,15 +333,15 @@
 				if ( Math.abs( eye.x ) > Math.abs( eye.y ) ) this.activePlane = this.planes[ "YZ" ];
 
 			}
-
+			*/
 			if ( axis === "XYZ" ) this.activePlane = this.planes[ "XYZE" ];
-
+			/*
 			if ( axis === "XY" ) this.activePlane = this.planes[ "XY" ];
 
 			if ( axis === "YZ" ) this.activePlane = this.planes[ "YZ" ];
 
 			if ( axis === "XZ" ) this.activePlane = this.planes[ "XZ" ];
-
+			*/
 		};
 
 		this.init();

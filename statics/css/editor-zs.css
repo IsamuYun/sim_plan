@@ -194,3 +194,214 @@
     display: inline-block;
 }
 
+/* 顶部菜单栏 */
+#banner-top {
+	position: absolute;
+	left: calc(50% - 150px);
+	top: 5%;
+	bottom: 0;
+	width: auto;
+	height: fit-content;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.0);
+	transform: translateX(-50%);
+	box-shadow: none;
+}
+	
+#banner-top * {
+	vertical-align: middle;
+}
+	
+#banner-top button {
+	color: #FFFFFF;
+	background: #4FC3F7;
+	padding: 0px;
+	margin: 0px;
+	margin-left: 10px;
+	width: 55px;
+	height: 40px;
+	text-transform: uppercase;
+	cursor: pointer;
+	outline: none;
+	font-size: 14px;
+	text-shadow: 0 0 3px #ffffff55;
+	transition: 0.2s;
+	
+}
+	
+#banner-top button:hover {
+	box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.38);
+}
+	
+#banner-top button.selected {
+	background-color: #FFFFFF;
+	color: #4FC3F7;
+}
+
+#banner-top button.ct-blue {
+    background: url("../img/icons/banner/CT_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 55px 40px;
+    color: #FFFFFF;
+}
+
+#banner-top button.ct-white {
+    background: url("../img/icons/banner/CT_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 55px 40px;
+    color: #4FC3F7;
+}
+
+#banner-top button.transparency-blue {
+	background: url("../img/icons/banner/transparency_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 55px 40px;
+    color: #FFFFFF;
+}
+
+#banner-top button.transparency-white {
+	background: url("../img/icons/banner/transparency_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 55px 40px;
+    color: #4FC3F7;
+}
+
+#banner-top button.view-default {
+	background: url("../img/icons/banner/view_default.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 55px 40px;
+	color: #FFFFFF;
+	font-size: 8px !important; 
+
+}
+
+#banner-top button.front-view-blue {
+	background: url("../img/icons/banner/front_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.front-view-white {
+	background: url("../img/icons/banner/front_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.back-view-blue {
+	background: url("../img/icons/banner/back_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.back-view-white {
+	background: url("../img/icons/banner/back_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.left-view-blue {
+	background: url("../img/icons/banner/left_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.left-view-white {
+	background: url("../img/icons/banner/left_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.right-view-blue {
+	background: url("../img/icons/banner/right_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.right-view-white {
+	background: url("../img/icons/banner/right_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.top-view-blue {
+	background: url("../img/icons/banner/top_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.top-view-white {
+	background: url("../img/icons/banner/top_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.bottom-view-blue {
+	background: url("../img/icons/banner/bottom_view_blue.png") no-repeat;
+	background-color: #4FC3F7;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #FFFFFF;
+	margin: 0;
+	width: 40px;
+}
+
+#banner-top button.bottom-view-white {
+	background: url("../img/icons/banner/bottom_view_white.png") no-repeat;
+	background-color: #FFFFFF;
+	background-position: top 0px left 0px;
+	background-size: 40px 40px;
+	color: #4FC3F7;
+	margin: 0;
+	width: 40px;
+}
+
+
+
+
+
+

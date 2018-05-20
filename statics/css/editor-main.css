@@ -392,10 +392,13 @@ progress::-webkit-progress-inner-element {
 .zs-annotation {
     position: absolute;
     z-index: 1;
-    margin-left: 15px;
+    margin: 0;
+    padding: 0;
+    /*margin-left: 15px;
     margin-top: 15px;
-    padding: 1em;
-    width: 120px;
+    padding: 1em;*/
+    width: 115px;
+    height: 110px;
     color: #fff;
     background: rgba(0, 0, 0, 0.7);
     border-radius: .5em;
@@ -404,4 +407,45 @@ progress::-webkit-progress-inner-element {
     transition: opacity .5s;
     transform: translate(0%, 30%);
     display: inline-block;
+
 }
+
+.zs-annotation .text-area {
+    width: 100px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.zs-annotation .title {
+    margin: 0;
+    padding: 0;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+.zs-annotation .confirm {
+    position: absolute;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 0px;
+    margin-top: 3px;
+    width: 50px;
+    height: 24px;
+    left: 0;
+}
+
+.zs-annotation .cancel {
+    position: absolute;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 0px;
+    margin-top: 3px;
+    width: 50px;
+    height: 24px;
+    left: 55px;
+}
+

@@ -6,7 +6,7 @@ var Editor = function () {
 
 	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
 	this.DEFAULT_CAMERA.name = 'Camera';
-	this.DEFAULT_CAMERA.position.set( 20, 10, 20 );
+	this.DEFAULT_CAMERA.position.set( 0, 0, 30 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 	
 
@@ -115,6 +115,14 @@ var Editor = function () {
 	// 切割预览
 	this.is_preview = false;
 
+	//// 顶部按钮表
+	// CT图是否显示
+	this.ct_box = false;
+	// 半透明
+	this.bone_transparency = false;
+	// 试图模式
+	this.view_mode_change = false;
+	this.view_mode_type = 1;	// 具有1 - 6
 };
 
 Editor.prototype = {
@@ -170,6 +178,13 @@ Editor.prototype = {
 		this.measure_count = 0;
 		this.is_annotation = false;
 		this.annotation_count = 0;
+	},
+
+	clearTopBannerSetting: function () {
+		this.ct_box = false;
+		this.bone_transparency = false;
+		this.view_mode_change = false;
+		this.view_mode_type = 1;
 	},
 
 	setTheme: function ( value ) {
@@ -461,8 +476,6 @@ Editor.prototype = {
 			return;
 		}
 
-		
-
 		var uuid = null;
 
 		if ( object !== null ) {
@@ -525,8 +538,6 @@ Editor.prototype = {
 
 	},
 
-	
-
 	clear: function () {
 
 		this.history.clear();
@@ -552,6 +563,7 @@ Editor.prototype = {
 		// 清除所有的测量长度信息
 		this.clearMeasureInfo();
 		this.clearExtraSetting();
+		this.clearTopBannerSetting();
 
 		var light = new THREE.AmbientLight( 0xFFFFFF, 0.38 ); // soft white light
 		light.name = "环境光";

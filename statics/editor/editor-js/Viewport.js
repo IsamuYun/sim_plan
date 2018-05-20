@@ -411,12 +411,52 @@ var Viewport = function ( editor ) {
 
 		var vector = intersect_point.clone();
 		vector.project( camera );
+		
+		vector.x = Math.round( ( 0.5 + vector.x / 2 ) * (container.dom.offsetWidth / window.devicePixelRatio) );
+		vector.y = Math.round( ( 0.5 - vector.y / 2 ) * (container.dom.offsetHeight / window.devicePixelRatio) );
+		
+		var num = annotation_count %  2;
+		
+		var top_pos = 0;
+		var left_pos = 0;
+		// 奇数，左边
+		if (num == 0) {
+			top_pos = vector.y - 30;
+			if (top_pos <= 20) {
+				top_pos = 20;
+			}
+			else if (top_pos >= (container.dom.offsetHeight - 120)  / window.devicePixelRatio) {
+				top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
+			}
 
-		vector.x = Math.round( (1.4 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
-		vector.y = Math.round( (1.1 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
+			left_pos = vector.x + 15;
+			if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
+				left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
+			}
+			else if (left_pos <= 0) {
+				left_pos = 0;
+			}
+		}
+		else {
+			top_pos = vector.y - 30;
+			if (top_pos <= 20) {
+				top_pos = 20;
+			}
+			else if (top_pos >= (container.dom.offsetHeight - 120)  / window.devicePixelRatio) {
+				top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
+			}
 
-		annotation_dialog.dom.style.top = vector.y + "px";
-		annotation_dialog.dom.style.left = vector.x + "px";
+			left_pos = vector.x - 135;
+			if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
+				left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
+			}
+			else if (left_pos <= 0) {
+				left_pos = 0;
+			}
+		}
+
+		annotation_dialog.dom.style.top = top_pos + "px";
+		annotation_dialog.dom.style.left = left_pos + "px";
 
 		document.body.appendChild(annotation_dialog.dom);
 
