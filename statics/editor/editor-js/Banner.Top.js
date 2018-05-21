@@ -159,7 +159,7 @@ var BannerTop = function ( editor ) {
         updateViewMode("left");
 
         new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x - 40.0;
+        new_pos.x = middle_point.x - 50.0;
         new_pos.y = middle_point.y;
         new_pos.z = middle_point.z;
         new_rotation = new THREE.Vector3(0, 0, 0);
@@ -181,7 +181,7 @@ var BannerTop = function ( editor ) {
         updateViewMode("right");
 
         new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x + 40.0;
+        new_pos.x = middle_point.x + 50.0;
         new_pos.y = middle_point.y;
         new_pos.z = middle_point.z;
         new_rotation = new THREE.Vector3(0, 0, 0);
@@ -204,7 +204,7 @@ var BannerTop = function ( editor ) {
 
         new_up = new THREE.Vector3(0, 1, 0);
         new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y + 50;
+        new_pos.y = middle_point.y + 40;
         new_pos.z = middle_point.z - 30;
         new_rotation = new THREE.Vector3(0, 0, 0);
 
@@ -225,7 +225,7 @@ var BannerTop = function ( editor ) {
 
         new_up = new THREE.Vector3(0, 1, 0);
         new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y - 50.0;
+        new_pos.y = middle_point.y - 40.0;
         new_pos.z = middle_point.z - 30;
         new_rotation = new THREE.Vector3(0, 0, 0);
 
