@@ -81,6 +81,8 @@
 					
 				}
 				
+				var sidebar = document.getElementById( "sidebar-ct-box" );
+				sidebar.style["display"] = "none";
 			};
 		</script>
 
@@ -206,7 +208,7 @@
 		<script src="static/editor/editor-js/Sidebar.History.js"></script>
 		<script src="static/editor/editor-js/Toolbar.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Left.js"></script>
-		<script src="static/editor/editor-js/Sidebar.ItemBox.js"></script>
+		<!--<script src="static/editor/editor-js/Sidebar.ItemBox.js"></script>-->
 		<script src="static/editor/editor-js/Sidebar.SceneBox.js"></script>
 		<script src="static/editor/editor-js/Banner.Top.js"></script>
 		<script src="static/editor/editor-js/Annotation.Dialog.js"></script>
@@ -286,8 +288,8 @@
 			var sidebar_left = new SidebarLeft( editor );
 			document.body.appendChild( sidebar_left.dom );
 
-			var sidebar_item_box = new SidebarItemBox( editor );
-			document.body.appendChild( sidebar_item_box.dom );
+			//var sidebar_item_box = new SidebarItemBox( editor );
+			//document.body.appendChild( sidebar_item_box.dom );
 
 			var sidebar_scene_box = new SidebarSceneBox( editor );
 			document.body.appendChild( sidebar_scene_box.dom );

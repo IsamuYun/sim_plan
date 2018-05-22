@@ -15,23 +15,20 @@ var BannerTop = function ( editor ) {
         
         updateSelectedButton("ct_box", editor.ct_box);
         
-        var item_box = document.getElementById( "sidebar-item-box" );
         var scene_box = document.getElementById( "sidebar-scene-box" );
         var sidebar = document.getElementById( "sidebar-ct-box" );
 
-        if (item_box == null || scene_box == null || sidebar == null) {
+        if (scene_box == null || sidebar == null) {
             return;
         }
 
         if ( editor.ct_box == true ) {
-            item_box.style["right"] = "10px";
-            scene_box.style["right"] = "10px";
-            sidebar.style["display"] = "none";
-        }
-        else {
-            item_box.style["right"] = "270px";
             scene_box.style["right"] = "270px";
             sidebar.style["display"] = "";
+        }
+        else {
+            scene_box.style["right"] = "10px";
+            sidebar.style["display"] = "none";
         }
         
     } );

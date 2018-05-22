@@ -544,7 +544,7 @@ var Viewport = function ( editor ) {
 		onDoubleClickPosition.fromArray( array );
 
 		var intersects = getIntersects( onDoubleClickPosition, objects );
-
+		return;
 		if ( intersects.length > 0 ) {
 
 			var intersect = intersects[ 0 ];
@@ -563,7 +563,9 @@ var Viewport = function ( editor ) {
 				}
 			}
 			else {
-				editor.femur_helper.visible = false;
+				if ( editor.femur_helper != null ) {
+					editor.femur_helper.visible = false;
+				}
 			}
 
 			signals.objectFocused.dispatch( intersect.object );

@@ -58,6 +58,35 @@ var SidebarSceneBox = function ( editor ) {
 		context.strokeStyle = "#000000";
 	};
 
+	// 根据控件，修改文字数值
+	function change_text_value() {
+		
+		var box_a = document.getElementById("A-Number");
+		var box_b = document.getElementById("B-Number");
+		var box_c = document.getElementById("C-Number");
+		var box_d = document.getElementById("D-Number");
+		var box_alpha = document.getElementById("Alpha-Number");
+
+		var text_a = document.getElementById("a-text-value");
+		var text_b = document.getElementById("b-text-value");
+		var text_c = document.getElementById("c-text-value");
+		var text_d = document.getElementById("d-text-value");
+		var text_alpha = document.getElementById("alpha-text-value");
+
+		if (box_a == null || box_b == null || box_c == null || box_d == null || box_alpha == null) {
+			return;
+		}
+		if (text_a == null || text_b == null || text_c == null || text_d == null || text_alpha == null) {
+			return;
+		}
+		text_a.innerHTML = box_a.value;
+		text_b.innerHTML = box_b.value;
+		text_c.innerHTML = box_c.value;
+		text_d.innerHTML = box_d.value;
+		text_alpha.innerHTML = box_alpha.value + "°";
+
+	}
+
 	var change_slider_a = function( event ) {
 		redraw();
 		var slider_a = document.getElementById("A");
@@ -119,7 +148,7 @@ var SidebarSceneBox = function ( editor ) {
 		
 		console.log(a_num + ", " +  b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
-		
+		change_text_value();
 	};
 
 	var change_box_a = function( event ) {
@@ -183,7 +212,7 @@ var SidebarSceneBox = function ( editor ) {
 		console.log(a_num + ", " +  b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
 
-		
+		change_text_value();
 	};
 
 	var get_model_value = function ( event ) {
@@ -216,6 +245,7 @@ var SidebarSceneBox = function ( editor ) {
 		
 		console.log(a_num + ", " +  b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
+		change_text_value();
 	};
 
 	var change_slider_alpha = function(event) {
@@ -244,6 +274,7 @@ var SidebarSceneBox = function ( editor ) {
 		
 		console.log(a_num + ", " +  b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
+		change_text_value();
 	};
 
 	var change_box = function(event) {
@@ -355,6 +386,7 @@ var SidebarSceneBox = function ( editor ) {
 
 		console.log(a_num + ", " + b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
+		change_text_value();
 
 	}
 
@@ -383,6 +415,7 @@ var SidebarSceneBox = function ( editor ) {
 
 		console.log(a_num + ", " + b_num + ", " + c_num + ", " + d_num + ", " + alpha_num);
 		generate_2d_model(a_num, b_num, c_num, d_num, alpha_num);
+		change_text_value();
 	}
 
     var signals = editor.signals;
@@ -391,9 +424,58 @@ var SidebarSceneBox = function ( editor ) {
 	container.setId( 'sidebar-scene-box' );
 	
 	var titleRow = new UI.Row().setClass();
-	titleRow.add( new UI.Text( "场景" ).setClass( "title" ) );
-
+	titleRow.add( new UI.Text( "假体" ).setClass( "title" ) );
 	container.add( titleRow );
+	
+	// 
+	var contentPanel = new UI.Panel().setClass( "content" );
+    var typeRow = new UI.Row();
+    typeRow.add( new UI.Text("类型").setClass( "td-header" ) );
+    typeRow.add( new UI.Text("假体").setClass( "td-content" ) );
+    contentPanel.add( typeRow );
+
+    var xinghaoRow = new UI.Row();
+    xinghaoRow.add( new UI.Text("型号").setClass( "td-header" ) );
+    xinghaoRow.add( new UI.Text("嵌入式双螺旋 置换").setClass( "td-content" ) );
+    contentPanel.add( xinghaoRow );
+
+    var sizeRow = new UI.Row();
+	sizeRow.add( new UI.Text("尺寸").setClass("td-header"));
+	var size_panel = new UI.Div().setClass("td-content");
+	size_panel.add(new UI.Text("A").setClass("text-value"));
+	var a_value = new UI.Text("107").setId("a-text-value").setClass("text-value");
+	size_panel.add(a_value);
+	size_panel.add(new UI.Text("B").setClass("text-value"));
+	var b_value = new UI.Text("39").setId("b-text-value").setClass("text-value");
+	size_panel.add(b_value);
+	
+	size_panel.add(new UI.Text("C").setClass("text-value"));
+	var c_value = new UI.Text("30").setId("c-text-value").setClass("text-value");
+	size_panel.add(c_value);
+
+	size_panel.add(new UI.Text("D").setClass("text-value"));
+	var d_value = new UI.Text("32").setId("d-text-value").setClass("text-value");
+	size_panel.add(d_value);
+	sizeRow.add(size_panel);
+	contentPanel.add( sizeRow );
+	
+	var alpha_row = new UI.Row();
+	alpha_row.add(new UI.Text("").setClass("td-header"));
+
+	var alpha_title = new UI.Text("Alpha").setClass("text-value");
+	var panel = new UI.Div().setClass("td-content");
+	var alpha_value = new UI.Text("130°").setClass("text-value");
+	alpha_value.setId("alpha-text-value");
+	panel.add(alpha_title);
+	panel.add(alpha_value);
+	alpha_row.add(panel);
+	contentPanel.add(alpha_row);
+
+
+	container.add( contentPanel );
+	
+	
+	
 	var image = new UI.Div();
 
 	var image_dom = document.createElement( "canvas" );
@@ -422,7 +504,6 @@ var SidebarSceneBox = function ( editor ) {
 	slider_bar_dom.onchange = change_slider_a;
 	slider_area.dom.appendChild( slider_bar_dom );
 	slider_row.add(slider_area);
-	
 
 	// 数据盒子
 	var number_box_area = new UI.Div().setClass("input-box");
@@ -575,9 +656,10 @@ var SidebarSceneBox = function ( editor ) {
 		document.getElementById("C-Number").value = 30;
 		document.getElementById("D-Number").value = 32;
 		document.getElementById("Alpha-Number").value = 130;
-
+		change_text_value();
 		redraw();
 		generate_2d_model(107, 39, 30, 32, 130);
+		
 	});
 	row.add( reset_btn );
 
