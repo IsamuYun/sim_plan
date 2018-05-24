@@ -94,6 +94,20 @@ var SidebarLeft = function ( editor ) {
         editor.measure_pt_1 = false;
         editor.signals.sceneGraphChanged.dispatch();
     }
+    var cut_tips = "选中股骨上的三个点进行切割";
+    var preview_tips = "预览切割的效果";
+    var measure_tips = "测量两点之间的距离";
+    var annotation_tips = "添加额外的描述信息";
+    var explod_tips = "展开假体组织";
+
+    function display_tips(tips) {
+        var tip = document.getElementById("tip-message");
+        if (tip == null) {
+            return;
+        } 
+        tip.style["display"] = "inline-block";
+        tip.innerHTML = tips;
+    }
 
     var cut = new UI.Button( '' );
     cut.dom.innerHTML = "切<br />割";
@@ -104,7 +118,12 @@ var SidebarLeft = function ( editor ) {
         recoverCutting();
 
         G_clip_point_1 = true;
+
+        display_tips(cut_tips);
     } );
+    cut.onMouseOver( function() {
+        display_tips(cut_tips);
+    });
     
     buttons.add( cut );
 
@@ -134,7 +153,12 @@ var SidebarLeft = function ( editor ) {
                 editor.signals.sceneGraphChanged.dispatch();
             }
         } );
+
+        display_tips(preview_tips);
     } );
+    preview.onMouseOver(function() {
+        display_tips(preview_tips);
+    });
     buttons.add( preview );
     
     var measure = new UI.Button( '' );
@@ -147,8 +171,11 @@ var SidebarLeft = function ( editor ) {
         if ( !editor.measure_begin ) {
             clearMeasure();
         }
-
-	} );
+        display_tips(measure_tips);
+    } );
+    measure.onMouseOver(function() {
+        display_tips(measure_tips);
+    });
     buttons.add( measure );
 
     var comment = new UI.Button( '' ).setClass( "Button ripple-effect annotation-blue" );
@@ -180,10 +207,11 @@ var SidebarLeft = function ( editor ) {
             }
         }
         editor.signals.sceneGraphChanged.dispatch();
-
-        
-
+        display_tips(annotation_tips);
     } );
+    comment.onMouseOver(function() {
+        display_tips(annotation_tips);
+    });
     buttons.add( comment );
 
     var expand = new UI.Button( "" ).setClass( "Button ripple-effect explod-blue" );
@@ -231,15 +259,7 @@ var SidebarLeft = function ( editor ) {
         var acetabular_position = new THREE.Vector3(-6, 6, 0);
         var acetabular_inner_position = new THREE.Vector3(-4, 4, 0);
         var hip_header_position = new THREE.Vector3(-2, 2, 0);
-        console.log("acetabular_mesh:");
-        console.log(acetabular_mesh);
-        console.log("acetabular_inner_mesh");
-        console.log(acetabular_inner_mesh);
-        console.log("hip_header_mesh");
-        console.log(hip_header_mesh);
-        console.log("hip_mesh");
-        console.log(hip_mesh);
-
+        
         if ( editor.is_explod ) {
             pelvis_mesh.visible = false;
             femur_mesh.visible = false;
@@ -261,14 +281,64 @@ var SidebarLeft = function ( editor ) {
             hip_header_mesh.position.copy(zero_point);
         }
 
-
         editor.signals.sceneGraphChanged.dispatch();
-
-       
-
+        display_tips(explod_tips);
+    });
+    expand.onMouseOver(function() {
+        display_tips(explod_tips);
     });
     buttons.add( expand );
 
+    function reoverExplod() {
+        var pelvis_mesh = null;
+        var femur_mesh = null;
+        var cut_preview_mesh = null; 
+        var acetabular_mesh = null;
+        var acetabular_inner_mesh = null;
+        var hip_header_mesh = null;
+        var hip_mesh = null;
+
+        editor.scene.traverse( function( child )  {
+            if (child.name === "盆骨") {
+                pelvis_mesh = child;
+            }
+            if (child.name === "股骨") {
+                femur_mesh = child;
+            }
+            if (child.name === "切割预览") {
+                cut_preview_mesh = child;
+            }
+            
+            if (child.name === "新髋臼杯") {
+                acetabular_mesh =  child;
+            }
+            if (child.name === "髋臼内衬") {
+                acetabular_inner_mesh = child;
+            }
+            if (child.name === "股骨头假体") {
+                hip_header_mesh =  child;
+            }
+            if (child.name === "股骨柄假体") {
+                hip_mesh = child;
+            }
+        });
+        var zero_point = new THREE.Vector3(0, 0, 0);
+        
+        if (pelvis_mesh == null || femur_mesh == null || cut_preview_mesh == null || acetabular_mesh == null || 
+            acetabular_inner_mesh == null || hip_header_mesh == null) {
+            return;
+        }
+
+        // 一切恢复原样
+        pelvis_mesh.visible = true;
+        femur_mesh.visible = true;
+        cut_preview_mesh.visible = false;
+        acetabular_mesh.position.copy(zero_point);
+        acetabular_inner_mesh.position.copy(zero_point);
+        hip_header_mesh.position.copy(zero_point);
+        
+        editor.signals.sceneGraphChanged.dispatch();
+    };
    
 
     function updateSelectedButton( mode ) {
@@ -306,6 +376,7 @@ var SidebarLeft = function ( editor ) {
                 editor.is_preview = false;
                 editor.measure_pt_1 = false;
                 recoverCutting();
+                reoverExplod();
                 break;
             case "cut":
                 editor.cutting_begin = editor.cutting_begin ? false : true;
@@ -324,6 +395,7 @@ var SidebarLeft = function ( editor ) {
                 editor.is_explod = false;
                 editor.is_preview = false;
                 clearMeasure();
+                reoverExplod();
                 break;
             case "comment":
                 editor.is_annotation = editor.is_annotation ? false : true;
@@ -343,6 +415,7 @@ var SidebarLeft = function ( editor ) {
                 editor.is_preview = false;
                 recoverCutting();
                 clearMeasure();
+                reoverExplod();
                 break;
             case "expand":
                 editor.is_explod = editor.is_explod ? false : true;
@@ -379,6 +452,7 @@ var SidebarLeft = function ( editor ) {
                 editor.is_explod = false;
                 clearClipPoint();
                 clearMeasure();
+                reoverExplod();
                 break;
         }
     };

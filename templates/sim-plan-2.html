@@ -77,12 +77,19 @@
 				if ( zs_body != null ) {
 					// sleep( 1000 );
 					zs_body.style["overflow"] = "visible";
-					
-					
 				}
 				
 				var sidebar = document.getElementById( "sidebar-ct-box" );
 				sidebar.style["display"] = "none";
+				
+				
+				var tip_bar = document.getElementById("tip-message");
+				var fadeTipBar = setInterval(function () {
+        			if (tip_bar != null) {
+						tip_bar.style["display"] = "none";
+					}
+				}, 5000);
+				
 			};
 		</script>
 
@@ -531,6 +538,8 @@
 
 		</script>
 
+		<div id="tip-message"></div>
+
 		<!--CT Box的代码-->
 
 		<div id="sidebar-ct-box">
@@ -542,7 +551,6 @@
 			<p class="slider-bar">
 				<label>R</label>
 				<input type="range" id="slice-range-x"  value="0" step="1" min="1" max="100" />
-				
 			</p>
 		</div>
 
@@ -565,12 +573,9 @@
 			<p class="slider-bar">
 				<label>S</label>
 				<input type="range" id="slice-range-z"  value="0" step="1" min="1" max="100" />
-				
 			</p>
 		</div>
 	</div>
-
-	
 
 	<script type="text/javascript" src="static/js/cornerstone.min.js" ></script>
 	<script type="text/javascript" src="static/js/cornerstoneMath.js"></script>
