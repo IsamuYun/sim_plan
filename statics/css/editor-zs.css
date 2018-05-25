@@ -197,10 +197,10 @@
 /* 顶部菜单栏 */
 #banner-top {
 	position: absolute;
-	left: calc(50% - 150px);
+	left: calc(50% - 10px);
 	top: 5%;
 	bottom: 0;
-	width: auto;
+	width: 480px;
 	height: fit-content;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.0);
@@ -243,7 +243,7 @@
 	background-color: #4FC3F7;
 	background-position: top 0px left 0px;
 	background-size: 55px 40px;
-    color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 #banner-top button.ct-white {
@@ -259,7 +259,7 @@
 	background-color: #4FC3F7;
 	background-position: top 0px left 0px;
 	background-size: 55px 40px;
-    color: #FFFFFF;
+	color: #FFFFFF;
 }
 
 #banner-top button.transparency-white {
@@ -271,13 +271,12 @@
 }
 
 #banner-top button.view-default {
-	background: url("../img/icons/banner/view_default.png") no-repeat;
+	background: url("../img/icons/banner/view.png") no-repeat;
 	background-color: #4FC3F7;
 	background-position: top 0px left 0px;
 	background-size: 55px 40px;
 	color: #FFFFFF;
 	font-size: 8px !important; 
-
 }
 
 #banner-top button.front-view-blue {
@@ -338,6 +337,7 @@
 	color: #4FC3F7;
 	margin: 0;
 	width: 40px;
+	left: 10px;
 }
 
 #banner-top button.right-view-blue {

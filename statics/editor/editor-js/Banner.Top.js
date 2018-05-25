@@ -6,7 +6,7 @@ var BannerTop = function ( editor ) {
     var signals = editor.signals;
 
 	var container = new UI.Panel();
-	container.setId( 'banner-top' );
+	container.setId("banner-top");
     
     var ct_box = new UI.Button( "CT" );
     ct_box.setClass( "ripple-effect ct-blue" );
@@ -52,7 +52,7 @@ var BannerTop = function ( editor ) {
         });
     } );
 
-    var view_mode_button = new UI.Button("视 图").setClass("ripple-effect view-default");
+    var view_mode_button = new UI.Button("").setClass("ripple-effect view-default");
     view_mode_button.onClick(function() {
         editor.view_mode_change = editor.view_mode_change ? false : true;
         if (editor.view_mode_change) {
@@ -97,6 +97,8 @@ var BannerTop = function ( editor ) {
         }
     });
 
+    
+
     container.add(ct_box);
     container.add(transparency_button);
     container.add(view_mode_button);
@@ -107,7 +109,7 @@ var BannerTop = function ( editor ) {
     var new_rotation = new THREE.Vector3(0, 0, 0);
 
     // 1. 前 2. 后 3.左 4.右 5.上 6.下
-    var front_view_button = new UI.Button("").setClass("ripple-effect front-view-blue");
+    var front_view_button = new UI.Button("").setClass("ripple-effect front-view-blue").setId("front-view-icon");
     front_view_button.setDisplay("none");
     front_view_button.onClick(function() {
         updateViewMode("front");
@@ -127,7 +129,7 @@ var BannerTop = function ( editor ) {
     });
     container.add(front_view_button);
 
-    var back_view_button = new UI.Button("").setClass("ripple-effect back-view-blue");
+    var back_view_button = new UI.Button("").setClass("ripple-effect back-view-blue").setId("back-view-icon");
     back_view_button.setDisplay("none");
     back_view_button.onClick(function() {
         updateViewMode("back");
@@ -150,7 +152,7 @@ var BannerTop = function ( editor ) {
     });
     container.add(back_view_button);
 
-    var left_view_button = new UI.Button("").setClass("ripple-effect left-view-blue");
+    var left_view_button = new UI.Button("").setClass("ripple-effect left-view-blue").setId("left-view-icon");
     left_view_button.setDisplay("none");
     left_view_button.onClick(function() {
         updateViewMode("left");
@@ -172,7 +174,7 @@ var BannerTop = function ( editor ) {
     });
     container.add(left_view_button);
 
-    var right_view_button = new UI.Button("").setClass("ripple-effect right-view-blue");
+    var right_view_button = new UI.Button("").setClass("ripple-effect right-view-blue").setId("right-view-icon");
     right_view_button.setDisplay("none");
     right_view_button.onClick(function() {
         updateViewMode("right");
@@ -194,7 +196,7 @@ var BannerTop = function ( editor ) {
     });
     container.add(right_view_button);
 
-    var top_view_button = new UI.Button("").setClass("ripple-effect top-view-blue");
+    var top_view_button = new UI.Button("").setClass("ripple-effect top-view-blue").setId("top-view-icon");
     top_view_button.setDisplay("none");
     top_view_button.onClick(function() {
         updateViewMode("top");
@@ -215,7 +217,7 @@ var BannerTop = function ( editor ) {
     });
     container.add(top_view_button);
 
-    var bottom_view_button = new UI.Button("").setClass("ripple-effect bottom-view-blue");
+    var bottom_view_button = new UI.Button("").setClass("ripple-effect bottom-view-blue").setId("bottom-view-icon");
     bottom_view_button.setDisplay("none");
     bottom_view_button.onClick(function() {
         updateViewMode("bottom");

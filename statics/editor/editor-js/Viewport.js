@@ -462,8 +462,33 @@ var Viewport = function ( editor ) {
 
 	}
 
-	function handleClick() {
+	function closeViewIconTab() {
+		
+		
+		var front_view = document.getElementById("front-view-icon");
+		var back_view = document.getElementById("back-view-icon");
+		var left_view = document.getElementById("left-view-icon");
+		var right_view = document.getElementById("right-view-icon");
+		var top_view = document.getElementById("top-view-icon");
+		var bottom_view = document.getElementById("bottom-view-icon");
 
+		if (front_view == null || back_view == null || left_view == null 
+			|| right_view == null || top_view == null || bottom_view == null ) {
+			return;
+		}
+
+		editor.view_mode_change = editor.view_mode_change ? false : true;
+
+		front_view.style["display"] = "none";
+		back_view.style["display"] = "none";
+		left_view.style["display"] = "none";
+		right_view.style["display"] = "none";
+		top_view.style["display"] = "none";
+		bottom_view.style["display"] = "none";
+	}
+
+	function handleClick() {
+		closeViewIconTab();
 		if ( onDownPosition.distanceTo( onUpPosition ) === 0 ) {
 			var intersects = getIntersects( onUpPosition, objects );
 
