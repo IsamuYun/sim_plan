@@ -100,7 +100,7 @@ select {
 
 	#menubar .zs-logo {
 		background: url("../img/logo/zs-logo.png") no-repeat;
-		background-position: top 3px left 3px;
+		background-position: top 2px left 2px;
 		background-size: 60px 32px;
 		margin: 0;
 		
@@ -123,6 +123,7 @@ select {
 			width: 150px;
 			max-height: calc(100% - 80px);
 			overflow: auto;
+			z-index: 100;
 		}
 
 		#menubar .menu:hover .options {

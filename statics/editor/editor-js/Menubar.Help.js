@@ -1,5 +1,5 @@
 /**
- * @author mrdoob / http://mrdoob.com/
+ * @author Isamu 20180528
  */
 
 Menubar.Help = function ( editor ) {
@@ -9,33 +9,29 @@ Menubar.Help = function ( editor ) {
 
 	var title = new UI.Panel();
 	title.setClass( 'title' );
-	title.setTextContent( 'Help' );
+	title.setTextContent( '帮助' );
 	container.add( title );
 
 	var options = new UI.Panel();
 	options.setClass( 'options' );
 	container.add( options );
 
-	// Source code
+	// 帮助
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( 'Source code' );
+	option.setTextContent( '帮助' );
 	option.onClick( function () {
-
-		window.open( 'https://github.com/mrdoob/three.js/tree/master/editor', '_blank' )
 
 	} );
 	options.add( option );
 
-	// About
+	// 关于
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( 'About' );
+	option.setTextContent( '关于' );
 	option.onClick( function () {
-
-		window.open( 'http://threejs.org', '_blank' );
 
 	} );
 	options.add( option );

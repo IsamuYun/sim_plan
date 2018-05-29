@@ -2,6 +2,12 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
+var left_cut;
+var left_preview;
+var left_measure;
+var left_annotation;
+var left_explod;
+
 var SidebarLeft = function ( editor ) {
 
     var signals = editor.signals;
@@ -108,11 +114,7 @@ var SidebarLeft = function ( editor ) {
         tip.style["display"] = "inline-block";
         tip.innerHTML = tips;
     }
-
-    var cut = new UI.Button( '' );
-    cut.dom.innerHTML = "切<br />割";
-    cut.dom.className = "Button ripple-effect cut-blue";
-    cut.onClick( function() {
+    left_cut = function() {
         updateSelectedButton( "cut" );
         
         recoverCutting();
@@ -120,16 +122,20 @@ var SidebarLeft = function ( editor ) {
         G_clip_point_1 = true;
 
         display_tips(cut_tips);
+    };
+
+    var cut = new UI.Button( '' );
+    cut.dom.innerHTML = "切<br />割";
+    cut.dom.className = "Button ripple-effect cut-blue";
+    cut.onClick( function() {
+        left_cut();
     } );
     cut.onMouseOver( function() {
         display_tips(cut_tips);
     });
-    
     buttons.add( cut );
 
-    var preview = new UI.Button( "" ).setClass( "Button ripple-effect preview-blue" );
-    preview.dom.innerHTML = "预<br />览";
-    preview.onClick( function(){
+    left_preview = function() {
         updateSelectedButton( "preview" );
 
         editor.scene.traverse( function ( child ) {
@@ -155,32 +161,40 @@ var SidebarLeft = function ( editor ) {
         } );
 
         display_tips(preview_tips);
+    };
+
+    var preview = new UI.Button( "" ).setClass( "Button ripple-effect preview-blue" );
+    preview.dom.innerHTML = "预<br />览";
+    preview.onClick( function(){
+        left_preview();
     } );
     preview.onMouseOver(function() {
         display_tips(preview_tips);
     });
     buttons.add( preview );
-    
-    var measure = new UI.Button( '' );
-    measure.dom.innerHTML = "测<br />量";
-    measure.dom.title = 'E';
-    measure.dom.className = "Button ripple-effect measure-blue";
-	measure.onClick( function () {
+
+    left_measure = function() {
         updateSelectedButton( 'measure' );
         
         if ( !editor.measure_begin ) {
             clearMeasure();
         }
         display_tips(measure_tips);
+    };
+    
+    var measure = new UI.Button( '' );
+    measure.dom.innerHTML = "测<br />量";
+    measure.dom.title = 'E';
+    measure.dom.className = "Button ripple-effect measure-blue";
+	measure.onClick( function () {
+        left_measure();
     } );
     measure.onMouseOver(function() {
         display_tips(measure_tips);
     });
     buttons.add( measure );
-
-    var comment = new UI.Button( '' ).setClass( "Button ripple-effect annotation-blue" );
-    comment.dom.innerHTML = "注<br />释";
-    comment.onClick( function() {
+    
+    left_annotation = function() {
         updateSelectedButton( "comment" );
         var annotation_count = editor.annotation_count;
         for (var i = 0; i <= annotation_count; i++) {
@@ -208,15 +222,19 @@ var SidebarLeft = function ( editor ) {
         }
         editor.signals.sceneGraphChanged.dispatch();
         display_tips(annotation_tips);
+    };
+
+    var comment = new UI.Button( '' ).setClass( "Button ripple-effect annotation-blue" );
+    comment.dom.innerHTML = "注<br />释";
+    comment.onClick( function() {
+        left_annotation();
     } );
     comment.onMouseOver(function() {
         display_tips(annotation_tips);
     });
     buttons.add( comment );
 
-    var expand = new UI.Button( "" ).setClass( "Button ripple-effect explod-blue" );
-    expand.dom.innerHTML = "展<br />开";
-    expand.onClick( function() {
+    left_explod = function() {
         updateSelectedButton( "expand" );
         
         var scope = this;
@@ -283,6 +301,12 @@ var SidebarLeft = function ( editor ) {
 
         editor.signals.sceneGraphChanged.dispatch();
         display_tips(explod_tips);
+    };
+
+    var expand = new UI.Button( "" ).setClass( "Button ripple-effect explod-blue" );
+    expand.dom.innerHTML = "展<br />开";
+    expand.onClick( function() {
+        left_explod();
     });
     expand.onMouseOver(function() {
         display_tips(explod_tips);

@@ -186,8 +186,10 @@
 		<script src="static/editor/editor-js/Menubar.Add.js"></script>
 		<script src="static/editor/editor-js/Menubar.Play.js"></script>
 		<script src="static/editor/editor-js/Menubar.Examples.js"></script>
+		<script src="static/editor/editor-js/Menubar.Tool.js"></script>
 		<script src="static/editor/editor-js/Menubar.Help.js"></script>
 		<script src="static/editor/editor-js/Menubar.Status.js"></script>
+		<script src="static/editor/editor-js/Menubar.ViewMode.js"></script>
 		<script src="static/editor/editor-js/Sidebar.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Scene.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Project.js"></script>
@@ -298,9 +300,6 @@
 
 			var sidebar_scene_box = new SidebarSceneBox( editor );
 			document.body.appendChild( sidebar_scene_box.dom );
-
-			// var sidebar_ct_box = new SidebarCTBox( editor );
-			// document.body.appendChild( sidebar_ct_box.dom );
 
 			var banner = new BannerTop( editor );
 			document.body.appendChild( banner.dom );

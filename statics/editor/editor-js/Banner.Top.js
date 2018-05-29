@@ -1,6 +1,15 @@
 /**
- * @author mrdoob / http://mrdoob.com/
+ * @author Isamu 20180529
  */
+
+var banner_ct;
+var banner_transparency;
+var banner_front_view;
+var banner_back_view;
+var banner_left_view;
+var banner_right_view;
+var banner_top_view;
+var banner_bottom_view;
 
 var BannerTop = function ( editor ) {
     var signals = editor.signals;
@@ -8,9 +17,7 @@ var BannerTop = function ( editor ) {
 	var container = new UI.Panel();
 	container.setId("banner-top");
     
-    var ct_box = new UI.Button( "CT" );
-    ct_box.setClass( "ripple-effect ct-blue" );
-    ct_box.onClick( function () {
+    banner_ct = function() {
         editor.ct_box = editor.ct_box ? false : true;
         
         updateSelectedButton("ct_box", editor.ct_box);
@@ -30,11 +37,9 @@ var BannerTop = function ( editor ) {
             scene_box.style["right"] = "10px";
             sidebar.style["display"] = "none";
         }
-        
-    } );
+    };
 
-    var transparency_button = new UI.Button( "半透明" ).setClass("ripple-effect transparency-blue");
-    transparency_button.onClick( function() {
+    banner_transparency = function() {
         editor.bone_transparency = editor.bone_transparency ? false : true;
         updateSelectedButton("transparency", editor.bone_transparency);
         editor.scene.traverse( function( child ) {
@@ -50,6 +55,123 @@ var BannerTop = function ( editor ) {
             }
             editor.signals.sceneGraphChanged.dispatch();
         });
+    };
+
+    banner_front_view = function() {
+        updateViewMode("front");
+        
+        new_pos.x = middle_point.x;
+        new_pos.y = middle_point.y;
+        new_pos.z = middle_point.z;
+        new_up = new THREE.Vector3(0, 1, 0);
+        
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        editor.camera.rotation.copy(new_rotation);
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    banner_back_view = function() {
+        updateViewMode("back");
+        new_up = new THREE.Vector3(0, 1, 0);
+        new_pos.x = middle_point.x;
+        new_pos.y = middle_point.y;
+        new_pos.z = middle_point.z - 60.0;
+        new_rotation = new THREE.Vector3(0, 0, 0);
+
+        
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        editor.camera.rotation.copy(new_rotation);
+
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    banner_left_view = function() {
+        updateViewMode("left");
+
+        new_up = new THREE.Vector3(0, 1, 0);
+        new_pos.x = middle_point.x - 40.0;
+        new_pos.y = middle_point.y;
+        new_pos.z = middle_point.z;
+        new_rotation = new THREE.Vector3(0, 0, 0);
+
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        editor.camera.rotation.copy(new_rotation);
+
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    banner_right_view = function() {
+        updateViewMode("right");
+
+        new_up = new THREE.Vector3(0, 1, 0);
+        new_pos.x = middle_point.x + 40.0;
+        new_pos.y = middle_point.y;
+        new_pos.z = middle_point.z;
+        new_rotation = new THREE.Vector3(0, 0, 0);
+
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        editor.camera.rotation.copy(new_rotation);
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    banner_top_view = function() {
+        updateViewMode("top");
+
+        new_up = new THREE.Vector3(0, 1, 0);
+        new_pos.x = middle_point.x;
+        new_pos.y = middle_point.y + 40;
+        new_pos.z = middle_point.z - 30;
+        new_rotation = new THREE.Vector3(0, 0, 0);
+
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        editor.camera.rotation.copy(new_rotation);
+
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    banner_bottom_view = function() {
+        updateViewMode("bottom");
+
+        new_up = new THREE.Vector3(0, 1, 0);
+        new_pos.x = middle_point.x;
+        new_pos.y = middle_point.y - 40.0;
+        new_pos.z = middle_point.z - 30;
+        new_rotation = new THREE.Vector3(0, 0, 0);
+
+        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
+        editor.camera.up.copy(new_up);
+        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        editor.camera.rotation.copy(new_rotation);
+
+
+        editor.signals.sceneGraphChanged.dispatch();
+    };
+
+    var ct_box = new UI.Button( "CT" );
+    ct_box.setClass( "ripple-effect ct-blue" );
+    ct_box.onClick( function () {
+        banner_ct();
+    } );
+
+    var transparency_button = new UI.Button( "半透明" ).setClass("ripple-effect transparency-blue");
+    transparency_button.onClick( function() {
+        banner_transparency();
     } );
 
     var view_mode_button = new UI.Button("").setClass("ripple-effect view-default");
@@ -112,130 +234,42 @@ var BannerTop = function ( editor ) {
     var front_view_button = new UI.Button("").setClass("ripple-effect front-view-blue").setId("front-view-icon");
     front_view_button.setDisplay("none");
     front_view_button.onClick(function() {
-        updateViewMode("front");
-        
-        new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y;
-        new_pos.z = middle_point.z;
-        new_up = new THREE.Vector3(0, 1, 0);
-        
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-        editor.camera.rotation.copy(new_rotation);
-
-        editor.signals.sceneGraphChanged.dispatch();
+        banner_front_view();
     });
     container.add(front_view_button);
 
     var back_view_button = new UI.Button("").setClass("ripple-effect back-view-blue").setId("back-view-icon");
     back_view_button.setDisplay("none");
     back_view_button.onClick(function() {
-        updateViewMode("back");
-        new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y;
-        new_pos.z = middle_point.z - 60.0;
-        new_rotation = new THREE.Vector3(0, 0, 0);
-
-        
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        editor.camera.rotation.copy(new_rotation);
-
-
-        editor.signals.sceneGraphChanged.dispatch();
-        
-
+        banner_back_view();
     });
     container.add(back_view_button);
 
     var left_view_button = new UI.Button("").setClass("ripple-effect left-view-blue").setId("left-view-icon");
     left_view_button.setDisplay("none");
     left_view_button.onClick(function() {
-        updateViewMode("left");
-
-        new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x - 40.0;
-        new_pos.y = middle_point.y;
-        new_pos.z = middle_point.z;
-        new_rotation = new THREE.Vector3(0, 0, 0);
-
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        editor.camera.rotation.copy(new_rotation);
-
-
-        editor.signals.sceneGraphChanged.dispatch();
-
+        banner_left_view();
     });
     container.add(left_view_button);
 
     var right_view_button = new UI.Button("").setClass("ripple-effect right-view-blue").setId("right-view-icon");
     right_view_button.setDisplay("none");
     right_view_button.onClick(function() {
-        updateViewMode("right");
-
-        new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x + 40.0;
-        new_pos.y = middle_point.y;
-        new_pos.z = middle_point.z;
-        new_rotation = new THREE.Vector3(0, 0, 0);
-
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        editor.camera.rotation.copy(new_rotation);
-
-
-        editor.signals.sceneGraphChanged.dispatch();
-
+        banner_right_view();
     });
     container.add(right_view_button);
 
     var top_view_button = new UI.Button("").setClass("ripple-effect top-view-blue").setId("top-view-icon");
     top_view_button.setDisplay("none");
     top_view_button.onClick(function() {
-        updateViewMode("top");
-
-        new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y + 40;
-        new_pos.z = middle_point.z - 30;
-        new_rotation = new THREE.Vector3(0, 0, 0);
-
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        editor.camera.rotation.copy(new_rotation);
-
-
-        editor.signals.sceneGraphChanged.dispatch();
+        banner_top_view();
     });
     container.add(top_view_button);
 
     var bottom_view_button = new UI.Button("").setClass("ripple-effect bottom-view-blue").setId("bottom-view-icon");
     bottom_view_button.setDisplay("none");
     bottom_view_button.onClick(function() {
-        updateViewMode("bottom");
-
-        new_up = new THREE.Vector3(0, 1, 0);
-        new_pos.x = middle_point.x;
-        new_pos.y = middle_point.y - 40.0;
-        new_pos.z = middle_point.z - 30;
-        new_rotation = new THREE.Vector3(0, 0, 0);
-
-        editor.camera.position.set(new_pos.x, new_pos.y, new_pos.z);
-        editor.camera.up.copy(new_up);
-        editor.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        editor.camera.rotation.copy(new_rotation);
-
-
-        editor.signals.sceneGraphChanged.dispatch();
-
+        banner_bottom_view();
     });
     container.add(bottom_view_button);
 
@@ -250,7 +284,6 @@ var BannerTop = function ( editor ) {
                 else {
                     ct_box.dom.classList.add("ct-blue");
                 }
-                
                 break;
             case "transparency":
                 transparency_button.dom.classList.remove("transparency-blue");
@@ -331,8 +364,6 @@ var BannerTop = function ( editor ) {
                 break;
         }
     }
-    
-    
     
     return container;
 };
