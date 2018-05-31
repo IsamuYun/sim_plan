@@ -19,7 +19,7 @@ var Menubar = function ( editor ) {
 	//  container.add( new Menubar.Play( editor ) );
 	//  container.add( new Menubar.View( editor ) ); // VR Mode
 	container.add( new Menubar.ViewMode( editor ) );
-	container.add( new Menubar.Help( editor ) );
+	// container.add( new Menubar.Help( editor ) );
 
 	// container.add( new Menubar.Status( editor ) ); // 右侧的autosave标记和版本标记
 

@@ -2,7 +2,7 @@
 	position: absolute;
 	right: 0;
 	top: 32px;
-	width: 260px;
+	width: 280px;
 	height: 840px;
 
 	background: #FCFCFC;
@@ -32,6 +32,32 @@
 	margin-bottom: 0;
 }
 
+#sidebar-ct-box .mr-half-fullscreen {
+	position: absolute;
+	top: 8px;
+	right: 16px;
+	width: 32px;
+	height: 32px;
+	background: url("../img/icons/ct-box/icon_half_fullscreen.png") no-repeat;
+	background-position: top 0px left 0px;
+	background-size: 32px 32px;
+	margin: 0;
+	padding: 0;
+}
+
+#sidebar-ct-box .mr-half-close {
+	position: absolute;
+	top: 8px;
+	right: 16px;
+	width: 32px;
+	height: 32px;
+	background: url("../img/icons/ct-box/icon_close.png") no-repeat;
+	background-position: top 0px left 0px;
+	background-size: 32px 32px;
+	margin: 0;
+	padding: 0;
+}
+
 
 #sidebar-ct-box .mr-bottom-right {
 	position: absolute; 
@@ -49,8 +75,7 @@
 	padding: 0;
 }
 
-
-#sidebar-ct-box label {
+#sidebar-ct-box .title {
 	position: absolute;
 	left: 0;
 	bottom: 0;
@@ -58,6 +83,16 @@
 	width: 20px;
 	height: 20px;
 	padding-left: 4px;
+}
+
+#sidebar-ct-box .slider-text {
+	position: absolute;
+	left: 190px;
+	bottom: 0;
+	border: 0;
+	width: 65px;
+	height: 20px;
+	text-align: right;
 }
 
 .zs-image-box {
@@ -71,7 +106,7 @@
 
 .zs-image-box input[type=range] {
 	-webkit-appearance: none;
-	width: 85%;
+	width: 160px;
 	margin-left: 24px;
 }
 
@@ -81,7 +116,7 @@
 
 .zs-image-box input[type=range]::-webkit-slider-runnable-track {
 	left: 30px;
-	width: 85%;
+	width: 160px;
   	height: 4.3px;
   	cursor: pointer;
   	/*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
@@ -109,7 +144,7 @@
 }
 
 .zs-image-box input[type=range]::-moz-range-track {
-	width: 85%;
+	width: 160px;
   	height: 4.3px;
   	cursor: pointer;
   	box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -128,7 +163,7 @@
 	cursor: pointer;
 }
 .zs-image-box input[type=range]::-ms-track {
-	width: 85%;
+	width: 160px;
 	height: 4.3px;
 	cursor: pointer;
 	background: transparent;
@@ -226,7 +261,6 @@
 	font-size: 14px;
 	text-shadow: 0 0 3px #ffffff55;
 	transition: 0.2s;
-	
 }
 	
 #banner-top button:hover {

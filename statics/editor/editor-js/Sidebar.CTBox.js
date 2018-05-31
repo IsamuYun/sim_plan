@@ -124,7 +124,6 @@ function onImageRenderedX(e) {
     context.lineTo(512, coord_x_y);
 
     context.stroke();
-
 };
 
 image_x.addEventListener('cornerstoneimagerendered', onImageRenderedX);
@@ -138,15 +137,12 @@ function onNewImageX(e) {
     var slider = document.getElementById('slice-range-x');
     slider.value = new_image_index;
     
-
     // Populate the current slice span
     var currentValueSpan = document.getElementById("slice-text-x");
-    currentValueSpan.textContent = "Image: " + (new_image_index + 1) + "/" + image_url_x.length;
-
+    currentValueSpan.textContent = (new_image_index + 1) + "/" + image_url_x.length;
 }
 
 image_x.addEventListener('cornerstonenewimage', onNewImageX);
-
 
 function selectImageX(event) {
     var targetElement = document.getElementById("dicom-image-x");
@@ -202,8 +198,6 @@ function selectImageX(event) {
 var slice_range_x = document.getElementById('slice-range-x');
 slice_range_x.addEventListener("input", selectImageX);
 
-
-
 // Enable the dicomImage element and the mouse inputs
 cornerstone.enable(image_x);
 cornerstoneTools.mouseInput.enable(image_x);
@@ -221,7 +215,6 @@ cornerstone.loadImage(image_url_x[stack_x.currentImageIdIndex]).then(function(im
     cornerstoneTools.wwwc.activate(image_x, 1);
     // cornerstoneTools.zoomWheel.activate(image_x);
     cornerstoneTools.pan.activate(image_x, 4);
-
 });
 
 /* 定义 Y 和 Z */
@@ -261,7 +254,7 @@ function onNewImageY(e) {
 
     // Populate the current slice span
     var currentValueSpan = document.getElementById("slice-text-y");
-    currentValueSpan.textContent = "Image: " + (new_image_index + 1) + "/" + image_url_y.length;
+    currentValueSpan.textContent =  (new_image_index + 1) + "/" + image_url_y.length;
 
 }
 
@@ -307,7 +300,6 @@ function selectImageY(event) {
             cornerstoneTools.wwwc.activate(image_y, 1);
             // cornerstoneTools.zoomWheel.activate(image_y);
             cornerstoneTools.pan.activate(image_y, 4);
-
         });
     }
 }
@@ -336,14 +328,8 @@ cornerstone.loadImage(image_url_y[stack_y.currentImageIdIndex]).then(function(im
 
 });
 
-
-
-
-
 /* image-y over */
-
 const image_z = document.getElementById('dicom-image-z');
-
 
 /*该函数似乎是在图像显示之后*/
 function onImageRenderedZ(e) {
@@ -381,7 +367,7 @@ function onNewImageZ(e) {
 
     // Populate the current slice span
     var currentValueSpan = document.getElementById("slice-text-z");
-    currentValueSpan.textContent = "Image: " + (new_image_index + 1) + "/" + image_url_z.length;
+    currentValueSpan.textContent = (new_image_index + 1) + "/" + image_url_z.length;
 }
 
 image_z.addEventListener('cornerstonenewimage', onNewImageZ);
@@ -451,3 +437,99 @@ cornerstone.loadImage(image_url_z[stack_z.currentImageIdIndex]).then(function(im
     cornerstoneTools.pan.activate(image_z, 4);
     
 });
+
+var change_flag = false;
+function change_size(image, image_parent, box) {
+    console.log(event);
+    if (image == null) {
+        return;
+    }
+    var ct_box = document.getElementById("sidebar-ct-box");
+    if (ct_box == null) {
+        return;
+    }
+    var image_box = document.getElementById(image);
+    if (image_box == null) {
+        console.log("can not get image.");
+        return;
+    }
+
+    var image_parent_box = document.getElementById(image_parent);
+    if (image_parent_box == null) {
+        return;
+    }
+
+    var canvas_list = image_box.getElementsByTagName("canvas");
+    if (canvas_list.length == 0) {
+        return;
+    }
+    change_flag = change_flag ? false : true;
+
+    var image_canvas = canvas_list[0]; 
+
+    var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    if (change_flag) {
+        ct_box.style["width"] = (width / 2) + "px";
+        ct_box.style["height"] = (height - 32) + "px";
+        
+        var half_width = (width / 2) + "px";
+        var half_height = (height - 32) + "px";
+
+        image_parent_box.style["top"] = "0px";
+        image_parent_box.style["left"] = "0px";
+        image_parent_box.style["width"] = half_width;
+        image_parent_box.style["height"] = half_height;
+        image_parent_box.style["position"] = "absolute";
+        image_parent_box.style["z-index"] = 90;
+
+        image_box.style["top"] = "0px";
+        image_box.style["width"] = half_width;
+        image_box.style["height"] = half_height;
+        image_box.style["left"] = "0px";
+        image_box.style["position"] = "absolute";
+        image_box.style["z-index"] = 90;
+
+        image_canvas.width = (width / 2);
+        image_canvas.height = height - 32;
+        image_canvas.style["width"] = half_width;
+        image_canvas.style["height"] = half_height;
+        image_canvas.style["z-index"] = 90;
+
+        event.target.style["z-index"] = 90;
+        event.target.classList.remove("mr-half-fullscreen");
+        event.target.classList.add("mr-half-close");
+    }
+    else {
+        ct_box.style["width"] = "280px";
+        ct_box.style["height"] = "840px";
+        
+        image_parent_box.style["top"] = "0px";
+        image_parent_box.style["left"] = "0px";
+        image_parent_box.style["width"] = "260px";
+        image_parent_box.style["height"] = "280px";
+        image_parent_box.style["position"] = "relative";
+        image_parent_box.style["z-index"] = 10;
+
+        image_box.style["top"] = "0px";
+        image_box.style["width"] = "256px";
+        image_box.style["height"] = "256px";
+        image_box.style["left"] = "0px";
+        image_box.style["position"] = "absolute";
+        image_box.style["z-index"] = 10;
+
+        image_canvas.width = 256;
+        image_canvas.height = 256;
+        image_canvas.style["width"] = "256px";
+        image_canvas.style["height"] = "256px";
+        image_canvas.style["z-index"] = 10;
+
+        event.target.style["z-index"] = 10;
+        event.target.classList.remove("mr-half-close");
+        event.target.classList.add("mr-half-fullscreen");
+    }
+    
+
+    cornerstone.draw(image_box);
+}

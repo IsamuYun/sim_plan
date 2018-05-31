@@ -249,6 +249,7 @@
 
 		<script src="static/editor/editor-js/libs/html2canvas.js"></script>
 		<script src="static/editor/editor-js/libs/three.html.js"></script>
+		<script type="text/javascript" src="static/js/screenfull.js"></script>
 
 		<script>
 
@@ -542,34 +543,31 @@
 		<div id="sidebar-ct-box">
 			<div id="zs-image-box-x" class="zs-image-box"> 
 			<div id="dicom-image-x" class="cornerstone-enabled-image" style="width: 256px; height: 256px; position: absolute;"></div>
-			<div class="mr-bottom-right">
-				<div id="slice-text-x">Image:</div>
-			</div>
+			<div class="mr-half-fullscreen" onclick="change_size('dicom-image-x', 'zs-image-box-x')"></div>
 			<p class="slider-bar">
-				<label>R</label>
+				<label class="title">R</label>
 				<input type="range" id="slice-range-x"  value="0" step="1" min="1" max="100" />
+				<div class="slider-text" id="slice-text-x"></div>
 			</p>
 		</div>
 
 		<div id="zs-image-box-y" class="zs-image-box" > 
 			<div id="dicom-image-y" class="cornerstone-enabled-image" style="width: 256px; height: 256px; position: absolute;"></div>
-			<div class="mr-bottom-right">
-				<div id="slice-text-y">Image:</div>
-			</div>
+			<div class="mr-half-fullscreen" onclick="change_size('dicom-image-y', 'zs-image-box-y')"></div>
 			<p class="slider-bar">
-				<label>A</label>
+				<label class="title">A</label>
 				<input type="range" id="slice-range-y"  value="0" step="1" min="1" max="100" />
+				<div class="slider-text" id="slice-text-y"></div>
 			</p>
 		</div>
 
 		<div id="zs-image-box-z" class="zs-image-box"> 
 			<div id="dicom-image-z" class="cornerstone-enabled-image" style="width: 256px; height: 256px; position: absolute;"></div>
-			<div class="mr-bottom-right">
-				<div id="slice-text-z">Image:</div>
-			</div>
+			<div class="mr-half-fullscreen" onclick="change_size('dicom-image-z', 'zs-image-box-z')"></div>
 			<p class="slider-bar">
-				<label>S</label>
+				<label class="title">S</label>
 				<input type="range" id="slice-range-z"  value="0" step="1" min="1" max="100" />
+				<div class="slider-text" id="slice-text-z"></div>
 			</p>
 		</div>
 	</div>
