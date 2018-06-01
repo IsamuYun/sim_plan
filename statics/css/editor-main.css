@@ -209,42 +209,36 @@ textarea, input { outline: none; } /* osx */
 @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);
 */
 
-
-
-
 progress {
 	background-color: #E6E6E6;
 	color: #00BFFF;
 	border: 0;
 	height: 10px;
-	width: 72px;
+	width: 60px;
 	border-radius: 5px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 progress::-webkit-progress-bar {
 	border: 0;
 	height: 10px;
-	width: 72px;
+	width: 60px;
 	border-radius: 5px;
     background: #E6E6E6;
-    /*margin-left: 4px;
-    margin-right: 4px;*/
+    /*margin-left: 2px;
+    margin-right: 2px; 有margin会错层*/
 }
 
 progress::-webkit-progress-value {
 	border-radius: 5px;
     background: #B5B5B5;
-   
 }
 
 progress::-webkit-progress-inner-element {
 	border-radius: 5px;
     background: #B5B5B5;
-    
 }
-
 
 #preloader {
     position: fixed;

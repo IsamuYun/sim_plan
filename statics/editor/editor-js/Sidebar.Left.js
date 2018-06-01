@@ -107,11 +107,17 @@ var SidebarLeft = function ( editor ) {
     var explod_tips = "展开假体组织";
 
     function display_tips(tips) {
+        var information_bar = document.getElementById("toolbar-information");
+        if (information_bar == null) {
+            return;
+        }
+        information_bar.style["display"] = "inline-block";
+        
         var tip = document.getElementById("tip-message");
         if (tip == null) {
             return;
         } 
-        tip.style["display"] = "inline-block";
+        //tip.style["display"] = "inline-block";
         tip.innerHTML = tips;
     }
     left_cut = function() {

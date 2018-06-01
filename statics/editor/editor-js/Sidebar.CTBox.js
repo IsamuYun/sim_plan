@@ -503,7 +503,7 @@ function change_size(image, image_parent, box) {
     }
     else {
         ct_box.style["width"] = "280px";
-        ct_box.style["height"] = (height - 32) + "px";
+        ct_box.style["height"] = "calc(100% - 32px)";
         
         image_parent_box.style["top"] = "0px";
         image_parent_box.style["left"] = "0px";

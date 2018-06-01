@@ -3,7 +3,6 @@
 	right: 0;
 	top: 32px;
 	width: 280px;
-	/*height: 840px;*/
 	height: calc(100% - 32px);
 	max-height: 840px;
 
@@ -59,7 +58,6 @@
 	margin: 0;
 	padding: 0;
 }
-
 
 #sidebar-ct-box .mr-bottom-right {
 	position: absolute; 
@@ -437,19 +435,17 @@
 
 #tip-message {
 	position: absolute;
-	top: 90%;
-	left: 60px;
-	height: 22px;
+	top: 0;
+	left: 24px;
+	height: 20px;
 	font-size: 12px;
-	display: inline-block;
 	color: #000000;
-	background-color: #D0D0D0;
-	border: 1px solid #000000;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 3px;
-	padding-right: 3px;
-	display: none;
+	background: #eee;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	margin-left: 2px;
+	margin-right: 2px;
+	display: inline-block;
 }
 
 
