@@ -503,7 +503,7 @@ function change_size(image, image_parent, box) {
     }
     else {
         ct_box.style["width"] = "280px";
-        ct_box.style["height"] = "840px";
+        ct_box.style["height"] = (height - 32) + "px";
         
         image_parent_box.style["top"] = "0px";
         image_parent_box.style["left"] = "0px";
@@ -529,7 +529,6 @@ function change_size(image, image_parent, box) {
         event.target.classList.remove("mr-half-close");
         event.target.classList.add("mr-half-fullscreen");
     }
-    
 
-    cornerstone.draw(image_box);
+    cornerstone.resize(image_box, true);
 }

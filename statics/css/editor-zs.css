@@ -3,12 +3,14 @@
 	right: 0;
 	top: 32px;
 	width: 280px;
-	height: 840px;
+	/*height: 840px;*/
+	height: calc(100% - 32px);
+	max-height: 840px;
 
 	background: #FCFCFC;
 	color: #000000;
 	border: 0;
-	overflow: auto;
+	overflow: scroll;
 }
 
 #sidebar-ct-box * {
