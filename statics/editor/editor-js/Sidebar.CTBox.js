@@ -471,11 +471,11 @@ function change_size(image, image_parent, box) {
     var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     if (change_flag) {
-        ct_box.style["width"] = (width / 2) + "px";
-        ct_box.style["height"] = (height - 32) + "px";
+        ct_box.style["width"] = (width / 2 + 20) + "px";
+        ct_box.style["height"] = (height - 40) + "px";
         
         var half_width = (width / 2) + "px";
-        var half_height = (height - 32) + "px";
+        var half_height = (height - 60) + "px";
 
         image_parent_box.style["top"] = "0px";
         image_parent_box.style["left"] = "0px";
@@ -484,10 +484,10 @@ function change_size(image, image_parent, box) {
         image_parent_box.style["position"] = "absolute";
         image_parent_box.style["z-index"] = 90;
 
-        image_box.style["top"] = "0px";
+        image_box.style["top"] = "0";
         image_box.style["width"] = half_width;
         image_box.style["height"] = half_height;
-        image_box.style["left"] = "0px";
+        image_box.style["left"] = "0";
         image_box.style["position"] = "absolute";
         image_box.style["z-index"] = 90;
 
@@ -500,34 +500,37 @@ function change_size(image, image_parent, box) {
         event.target.style["z-index"] = 90;
         event.target.classList.remove("mr-half-fullscreen");
         event.target.classList.add("mr-half-close");
+        event.target.style["left"] = (width / 2 - 32) + "px";
     }
     else {
-        ct_box.style["width"] = "280px";
-        ct_box.style["height"] = "calc(100% - 32px)";
+        ct_box.style["width"] = "196px";
+        ct_box.style["height"] = "660px";
         
         image_parent_box.style["top"] = "0px";
         image_parent_box.style["left"] = "0px";
-        image_parent_box.style["width"] = "260px";
-        image_parent_box.style["height"] = "280px";
+        image_parent_box.style["width"] = "180px";
+        image_parent_box.style["height"] = "200px";
         image_parent_box.style["position"] = "relative";
         image_parent_box.style["z-index"] = 10;
 
         image_box.style["top"] = "0px";
-        image_box.style["width"] = "256px";
-        image_box.style["height"] = "256px";
+        image_box.style["width"] = "180px";
+        image_box.style["height"] = "180px";
         image_box.style["left"] = "0px";
         image_box.style["position"] = "absolute";
         image_box.style["z-index"] = 10;
 
-        image_canvas.width = 256;
-        image_canvas.height = 256;
-        image_canvas.style["width"] = "256px";
-        image_canvas.style["height"] = "256px";
+        image_canvas.width = 180;
+        image_canvas.height = 180;
+        image_canvas.style["width"] = "180px";
+        image_canvas.style["height"] = "180px";
         image_canvas.style["z-index"] = 10;
 
         event.target.style["z-index"] = 10;
         event.target.classList.remove("mr-half-close");
         event.target.classList.add("mr-half-fullscreen");
+        event.target.style["left"] = "";
+        event.target.style["right"] = "4px";
     }
 
     cornerstone.resize(image_box, true);
