@@ -4,10 +4,15 @@
 
 var Editor = function () {
 
-	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
+	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 1000 );
 	this.DEFAULT_CAMERA.name = 'Camera';
 	this.DEFAULT_CAMERA.position.set( 0, 0, 30 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
+
+	this.GIZMO_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 200 );
+	this.GIZMO_CAMERA.name = "Gizmo Camera";
+	this.GIZMO_CAMERA.position.set(0, 0, 1030);
+	this.GIZMO_CAMERA.lookAt( new THREE.Vector3() );
 	
 
 	var Signal = signals.Signal;
@@ -82,6 +87,7 @@ var Editor = function () {
 	this.loader = new Loader( this );
 
 	this.camera = this.DEFAULT_CAMERA.clone();
+	this.gizmo_camera = this.GIZMO_CAMERA.clone();
 
 	this.scene = new THREE.Scene();
 	this.scene.name = 'Scene';
@@ -564,14 +570,15 @@ Editor.prototype = {
 		this.clearMeasureInfo();
 		this.clearExtraSetting();
 		this.clearTopBannerSetting();
-
-		var light = new THREE.AmbientLight( 0xFFFFFF, 0.38 ); // soft white light
+		
+		
+		var light = new THREE.AmbientLight( 0xFFFFFF, 0.30 ); // soft white light
 		light.name = "环境光";
 		light.position.set( 20.0, 20.0, 7.5 );
 		
 		this.scene.add( light );
 
-		var spotLight = new THREE.SpotLight( 0xFFFFFF, 0.3 );
+		var spotLight = new THREE.SpotLight( 0xFFFFFF, 0.24 );
 		spotLight.position.set( 0, 12.0, 12.0 );
 		spotLight.castShadow = true;
 		spotLight.shadow.mapSize.width = 1024;
@@ -580,18 +587,18 @@ Editor.prototype = {
 		
 		this.scene.add( spotLight );
 		
-		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.24 );
 		spotLight.position.set( 0, 12.0, -12.0 );
 		spotLight.name = "聚光灯";
 		
 		this.scene.add( spotLight );
 		
-		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.24 );
 		spotLight.position.set( 12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
 		this.scene.add( spotLight );
 		
-		var spotLight = new THREE.SpotLight( 0xffffff, 0.3 );
+		var spotLight = new THREE.SpotLight( 0xffffff, 0.24 );
 		spotLight.position.set( -12.0, 12.0, 0.0 );
 		spotLight.name = "聚光灯";
 		this.scene.add( spotLight );
@@ -601,15 +608,37 @@ Editor.prototype = {
 		const host_name = window.location.origin;
 		const folder_name = "/static/models/";
 
+		THREE.ShaderLib[ 'phong' ].fragmentShader = THREE.ShaderLib[ 'phong' ].fragmentShader.replace(
+			"gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
+		
+			"gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : diffuseColor;"
+			
+		);
+
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xFFFFFF,
+			//vertexColors: THREE.FaceColors,
+			depthWrite: true,
+			depthTest: true, 
 			shininess: 80,
 			side: THREE.DoubleSide,
 			specular: 0xB9B9B9,
 			// ***** Clipping setup (material): *****
 			// clippingPlanes: [ localPlane ],
 			clipShadows: true,
+			clipIntersection: true,
+			transparent: false,
 		});
+		/*
+		THREE.ShaderLib[ 'phong' ].fragmentShader = THREE.ShaderLib[ 'phong' ].fragmentShader.replace(
+			"gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
+		
+			"gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : diffuseColor;"
+			
+		);
+		*/
+		//material.defines = material.defines || {};
+		//material.defines.CUSTOM = "";
 
 		var faker_material =  new THREE.MeshPhongMaterial( {
 			color: 0xF73711,
@@ -618,8 +647,28 @@ Editor.prototype = {
 			// ***** Clipping setup (material): *****
 			// clippingPlanes: [ another_plane ],
 			clipShadows: true,
+			clipIntersection: true
+		});
+
+		
+		
+
+		var femur_material = new THREE.MeshLambertMaterial({
+			color: 0xFFFFFF,
+			//vertexColors: THREE.FaceColors,
+			depthWrite: true,
+			depthTest: true, 
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0xB9B9B9,
+			// ***** Clipping setup (material): *****
+			// clippingPlanes: [ localPlane ],
+			clipShadows: true,
+			clipIntersection: true
 		});
 		
+		
+
 		// 添加股骨
 		// var url = host_name + folder_name + "femur.stl";
 		var url = "../../static/models/femur.stl"; 
@@ -917,6 +966,9 @@ Editor.prototype = {
 		editor.execute( new AddObjectCommand( cone ) );
 
 		this.signals.editorCleared.dispatch();
+
+		var gizmo = new Gizmo(this);
+		gizmo.init();
 
 	},
 

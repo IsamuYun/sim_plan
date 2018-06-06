@@ -30,7 +30,7 @@ var BannerTop = function ( editor ) {
         }
 
         if ( editor.ct_box == true ) {
-            scene_box.style["right"] = "210px";
+            scene_box.style["right"] = "215px";
             sidebar.style["display"] = "";
         }
         else {

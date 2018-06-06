@@ -13,10 +13,13 @@ var Viewport = function ( editor ) {
 	// container.add( new Viewport.Info( editor ) );
 	
 	var renderer = null;
+	var gizmo_renderer = null;
 
 	var camera = editor.camera;
 	var scene = editor.scene;
 	var sceneHelpers = editor.sceneHelpers;
+
+	var gizmo_camera = editor.gizmo_camera;
 
 	var objects = [];
 	var measure_position = null;
@@ -45,6 +48,9 @@ var Viewport = function ( editor ) {
 	var measure_line_begin_1 = null;
 	var measure_line_begin_2 = null;
 	var measure_behind_object = null;
+
+	var inset_width = 100;
+	var inset_height = 100;
 
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
@@ -128,6 +134,9 @@ var Viewport = function ( editor ) {
 	var onDownPosition = new THREE.Vector2();
 	var onUpPosition = new THREE.Vector2();
 	var onDoubleClickPosition = new THREE.Vector2();
+
+	//var gizmo = new Gizmo(editor);
+	//gizmo.init();
 
 	// 鼠标移动后的坐标点
 	var onMovePosition = new THREE.Vector2();
@@ -495,6 +504,8 @@ var Viewport = function ( editor ) {
 
 	function handleClick() {
 		closeViewIconTab();
+
+		
 		if ( onDownPosition.distanceTo( onUpPosition ) === 0 ) {
 			var intersects = getIntersects( onUpPosition, objects );
 
@@ -592,7 +603,6 @@ var Viewport = function ( editor ) {
 				if ( editor.femur_helper != null ) {
 					editor.femur_helper.visible = true;
 				}
-				
 			}
 			else if ( select_object.name === "股骨外框" ) {
 				if ( editor.femur_helper != null ) {
@@ -604,9 +614,7 @@ var Viewport = function ( editor ) {
 					editor.femur_helper.visible = false;
 				}
 			}
-
 			signals.objectFocused.dispatch( intersect.object );
-
 		}
 
 	}
@@ -681,9 +689,10 @@ var Viewport = function ( editor ) {
 	signals.rendererChanged.add( function ( newRenderer ) {
 
 		if ( renderer !== null ) {
-
 			container.dom.removeChild( renderer.domElement );
-
+		}
+		if ( gizmo_renderer !== null ) {
+			container.dom.removeChild( gizmo_renderer.domElement );
 		}
 
 		renderer = newRenderer;
@@ -817,8 +826,7 @@ var Viewport = function ( editor ) {
 					position.x -= 6.0;
 				}
 				*/
-				console.log("camera position");
-				console.log(camera.position);
+				
 				position.x = position.x + camera.position.x;
 				position.y = position.y + camera.position.y;
 				position.z = position.z + camera.position.z;
@@ -1037,9 +1045,15 @@ var Viewport = function ( editor ) {
 		camera.aspect = container.dom.offsetWidth / container.dom.offsetHeight;
 		camera.updateProjectionMatrix();
 
+		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
 		
+		inset_width = container.dom.offsetWidth / 10;
+		inset_height = container.dom.offsetHeight / 10;
 		
+		//20180606 添加
+		gizmo_camera.aspect = inset_width / inset_height; 
+		gizmo_camera.updateProjectionMatrix();
 
 		render();
 
@@ -1061,15 +1075,41 @@ var Viewport = function ( editor ) {
 
 		// 使渲染器支持平面截取
 		renderer.localClippingEnabled = true;
+		renderer.clipIntersection = true;
 		
+		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
+		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
 		renderer.render( scene, camera );
+		
+		window_width = container.dom.offsetWidth;
+		window_height = container.dom.offsetHeight;
 
+		
+		renderer.setClearColor( 0xFFFFFF, 1 );
+		renderer.clearDepth(); // important!
+		renderer.setScissorTest( true );
+		renderer.setScissor( 20, window_height - inset_height - 20, inset_width, inset_height );
+
+		renderer.setViewport( 20, window_height - inset_height - 20, inset_width, inset_height );
+		//gizmo_camera.position.copy( camera.position );
+		//gizmo_camera.quaternion.copy( camera.quaternion );
+		//gizmo_camera.rotation.x = camera.rotation.x;
+		//gizmo_camera.rotation.y = camera.rotation.y;
+		//gizmo_camera.rotation.z = camera.rotation.z;
+		renderer.render( scene, gizmo_camera );
+		renderer.setScissorTest( false );
+		
+		
 		if ( renderer instanceof THREE.RaytracingRenderer === false ) {
-			renderer.render( sceneHelpers, camera );
+			//renderer.render( sceneHelpers, camera );
 		}
 
 		updateAnnotationOpacity();
 		updateScreenPosition();
+
+		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
+		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
+		
 	}
 
 	// 更新三个标签框的位置

@@ -24,7 +24,7 @@
 
 			if ( highlighted ) {
 
-				this.color.setRGB( 1, 1, 1 );	// 高亮时不再是黄色
+				this.color.setRGB( 1, 1, 1 );
 				this.opacity = 0.5;
 
 			} else {
