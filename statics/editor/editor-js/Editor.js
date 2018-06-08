@@ -943,10 +943,10 @@ Editor.prototype = {
 
 		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
 		var p2_material = new THREE.MeshPhongMaterial( {
-			color: 0x3498DB,
+			color: 0x58D68D,
 			shininess: 80,
 			side: THREE.DoubleSide,
-			specular: 0x3498DB
+			specular: 0x58D68D
 		});
 		var cone = new THREE.Mesh( geometry, p2_material );
 		cone.name = "第2点";
@@ -955,10 +955,10 @@ Editor.prototype = {
 
 		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
 		var p3_material = new THREE.MeshPhongMaterial( {
-			color: 0xAF7AC5,
+			color: 0x58D68D,
 			shininess: 80,
 			side: THREE.DoubleSide,
-			specular: 0xAF7AC5
+			specular: 0x58D68D
 		});
 		var cone = new THREE.Mesh( geometry, p3_material );
 		cone.name = "第3点";

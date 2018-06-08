@@ -207,10 +207,10 @@ var Viewport = function ( editor ) {
 			// 创建一个点
 			var geometry = new THREE.SphereGeometry( 0.25, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0xF7FE2E,
+				color: 0xDA81F5,
 				shininess: 80,
 				side: THREE.DoubleSide,
-				specular: 0xF2F2F2,
+				specular: 0xDA81F5,
 			});
 			var point = new THREE.Mesh( geometry, material );
 			point.name = "measure-1-1";
@@ -235,10 +235,10 @@ var Viewport = function ( editor ) {
 			// 创建一个点
 			var geometry = new THREE.SphereGeometry( 0.25, 64, 64 );;
 			var material = new THREE.MeshPhongMaterial( {
-				color: 0xFE642E,
+				color: 0xDA81F5,
 				shininess: 80,
 				side: THREE.DoubleSide,
-				specular: 0xF2F2F2,
+				specular: 0xDA81F5,
 			});
 			var point = new THREE.Mesh( geometry, material );
 			point.name = "measure-1-2";
