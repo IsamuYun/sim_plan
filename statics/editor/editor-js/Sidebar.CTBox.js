@@ -440,7 +440,6 @@ cornerstone.loadImage(image_url_z[stack_z.currentImageIdIndex]).then(function(im
 
 var change_flag = false;
 function change_size(image, image_parent, box) {
-    console.log(event);
     if (image == null) {
         return;
     }
@@ -450,7 +449,6 @@ function change_size(image, image_parent, box) {
     }
     var image_box = document.getElementById(image);
     if (image_box == null) {
-        console.log("can not get image.");
         return;
     }
 
@@ -471,17 +469,15 @@ function change_size(image, image_parent, box) {
     var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     if (change_flag) {
-        ct_box.style["width"] = (width / 2 + 20) + "px";
-        ct_box.style["height"] = (height - 40) + "px";
+        ct_box.style["width"] = (width / 2 + 10) + "px";
+        ct_box.style["height"] = (height - 36 - 40) + "px";
         
-        var half_width = (width / 2) + "px";
-        var half_height = (height - 60) + "px";
+        var half_width = (width / 2 - 8) + "px";
+        var half_height = (height - 36 - 40) + "px";
 
-        image_parent_box.style["top"] = "0px";
-        image_parent_box.style["left"] = "0px";
+        image_parent_box.style["top"] = "0";
         image_parent_box.style["width"] = half_width;
         image_parent_box.style["height"] = half_height;
-        image_parent_box.style["position"] = "absolute";
         image_parent_box.style["z-index"] = 90;
 
         image_box.style["top"] = "0";
@@ -491,11 +487,13 @@ function change_size(image, image_parent, box) {
         image_box.style["position"] = "absolute";
         image_box.style["z-index"] = 90;
 
+        /*
         image_canvas.width = (width / 2);
         image_canvas.height = height - 32;
         image_canvas.style["width"] = half_width;
         image_canvas.style["height"] = half_height;
         image_canvas.style["z-index"] = 90;
+        */
 
         event.target.style["z-index"] = 90;
         event.target.classList.remove("mr-half-fullscreen");
@@ -503,28 +501,35 @@ function change_size(image, image_parent, box) {
         event.target.style["left"] = (width / 2 - 32) + "px";
     }
     else {
-        ct_box.style["width"] = "196px";
-        ct_box.style["height"] = "660px";
+        ct_box.style["width"] = "calc(18%)";
+        ct_box.style["height"] = "calc(100% - 32px - 36px)";
         
-        image_parent_box.style["top"] = "0px";
-        image_parent_box.style["left"] = "0px";
-        image_parent_box.style["width"] = "180px";
-        image_parent_box.style["height"] = "200px";
-        image_parent_box.style["position"] = "relative";
+        var top_value = "0";
+        if (image_parent === "zs-image-box-y") {
+            top_value = "calc(33.33%)";
+        }
+        else if (image_parent === "zs-image-box-z") {
+            top_value = "calc(66.66%)";
+        }
+
+        image_parent_box.style["top"] = top_value;
+        image_parent_box.style["width"] = "calc(100% - 8px)";
+        image_parent_box.style["height"] = "calc(33.33%)";
         image_parent_box.style["z-index"] = 10;
 
-        image_box.style["top"] = "0px";
-        image_box.style["width"] = "180px";
-        image_box.style["height"] = "180px";
-        image_box.style["left"] = "0px";
-        image_box.style["position"] = "absolute";
+        image_box.style["top"] = "";
+        image_box.style["width"] = "calc(100%)";
+        image_box.style["height"] = "calc(100% - 30px)";
+        image_box.style["left"] = "";
         image_box.style["z-index"] = 10;
 
+        /*
         image_canvas.width = 180;
         image_canvas.height = 180;
         image_canvas.style["width"] = "180px";
         image_canvas.style["height"] = "180px";
         image_canvas.style["z-index"] = 10;
+        */
 
         event.target.style["z-index"] = 10;
         event.target.classList.remove("mr-half-close");
