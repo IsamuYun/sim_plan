@@ -169,12 +169,14 @@ var BannerTop = function ( editor ) {
         banner_ct();
     } );
 
-    var transparency_button = new UI.Button( "半透明" ).setClass("ripple-effect transparency-blue");
+    var transparency_button = new UI.Button( "半透明" );
+    transparency_button.setClass("ripple-effect transparency-blue");
     transparency_button.onClick( function() {
         banner_transparency();
     } );
 
-    var view_mode_button = new UI.Button("").setClass("ripple-effect view-default");
+    var view_mode_button = new UI.Button("");
+    view_mode_button.setClass("view-default");
     view_mode_button.onClick(function() {
         editor.view_mode_change = editor.view_mode_change ? false : true;
         if (editor.view_mode_change) {

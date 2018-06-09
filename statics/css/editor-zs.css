@@ -295,16 +295,12 @@
 }
 	
 #banner-top button {
-	color: #FFFFFF;
-	background: #4FC3F7;
 	padding: 0px;
 	margin: 0px;
 	margin-left: 10px;
 	width: 55px;
 	height: 40px;
-	text-transform: uppercase;
 	cursor: pointer;
-	outline: none;
 	font-size: 14px;
 	text-shadow: 0 0 3px #ffffff55;
 	transition: 0.2s;
@@ -351,13 +347,13 @@
     color: #4FC3F7;
 }
 
-#banner-top button.view-default {
+#banner-top .view-default {
 	background: url("../img/icons/banner/view.png") no-repeat;
-	background-color: #4FC3F7;
+	background-color: #FFFFFFFF;
 	background-position: top 0px left 0px;
 	background-size: 55px 40px;
-	color: #FFFFFF;
-	font-size: 8px !important; 
+	
+	
 }
 
 #banner-top button.front-view-blue {
