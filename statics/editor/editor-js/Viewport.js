@@ -52,6 +52,8 @@ var Viewport = function ( editor ) {
 	var inset_width = 100;
 	var inset_height = 100;
 
+	var annotation_point_list = [];
+
 	var transformControls = new THREE.TransformControls( camera, container.dom );
 	transformControls.addEventListener( 'change', function () {
 
@@ -259,29 +261,6 @@ var Viewport = function ( editor ) {
 			vector.x = Math.round( (0.5 + vector.x / 2) * ((container.dom.offsetWidth - 300) / window.devicePixelRatio) );
 			vector.y = Math.round( (0.5 - vector.y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) );
 
-			/*
-			var vector_1 = intersect_point.clone();
-			vector_1.project( camera );
-			var vector_2 = measure_line_begin_1.clone();
-			vector_2.project( camera );
-
-			var pos_x = vector_1.x - ((vector_1.x - vector_2.x) / 2);
-			var pos_y = vector_1.y - ((vector_1.y - vector_2.y) / 2);
-
-			console.log("pos_x: " + pos_x + ", pos_y: " + pos_y);
-			
-
-
-			pos_x = Math.round( (pos_x / 2) * (container.dom.offsetWidth / window.devicePixelRatio) + (container.dom.offsetWidth - 180) / 2 );
-			if (pos_y > 0) {
-				pos_y = Math.round( (0.08 + pos_y / 2) * (container.dom.offsetHeight / window.devicePixelRatio) + (container.dom.offsetHeight - 100) / 2 );
-			}
-			else {
-				pos_y = Math.round( (0.05 + pos_y / 2 ) * (container.dom.offsetHeight / window.devicePixelRatio) + (container.dom.offsetHeight) / 2 );
-
-			}
-			
-			*/
 			measure_annotation.style.top = vector.y + "px";
 			measure_annotation.style.left = vector.x + "px";
 			document.body.appendChild(measure_annotation);
@@ -472,6 +451,11 @@ var Viewport = function ( editor ) {
 			}
 		}
 
+		vector.y = top.pos;
+		vector.x = left_pos;
+
+		annotation_point_list.push(intersect_point.clone());
+
 		annotation_dialog.dom.style.top = top_pos + "px";
 		annotation_dialog.dom.style.left = left_pos + "px";
 
@@ -549,13 +533,9 @@ var Viewport = function ( editor ) {
 
 		var array = getMousePosition( container.dom, event.clientX, event.clientY );
 
-		//var another_array = getAnotherMousePosition(container.dom, event.clientX, event.clientY);
 		onUpPosition.fromArray( array );
-		//console.log("mouse up position");
-		//console.log(onUpPosition);
 		onMovePosition.fromArray( array );
-		//console.log("mouse move position");
-		//console.log(onMovePosition);
+		
 		handleClick();
 
 		document.removeEventListener( 'mouseup', onMouseUp, false );
@@ -623,9 +603,6 @@ var Viewport = function ( editor ) {
 	container.dom.addEventListener( 'touchstart', onTouchStart, false );
 	container.dom.addEventListener( 'dblclick', onDoubleClick, false );
 	
-	
-
-
 	// controls need to be added *after* main logic,
 	// otherwise controls.enabled doesn't work.
 
@@ -792,40 +769,7 @@ var Viewport = function ( editor ) {
 				object.visible = false;
 				var point_raycaster = new THREE.Raycaster();
 				var origin_point = new THREE.Vector3(0, 0, 0);
-				console.log("camera");
-				console.log(camera);
 				camera.getWorldDirection( origin_point );
-				console.log("world direction");
-				console.log(origin_point);
-				/*
-				if ( origin_point.x <= 0.0 ) {
-					position.z +=  0.6;
-				}
-				else {
-					position.z -=  0.6;
-				}
-				*/
-				/*
-				if ( origin_point.y <= 0.0 ) {
-					position.y +=  0.3;
-				}
-				else {
-					position.y -=  0.3;
-				}
-				*/
-				/*
-				if ( origin_point.z <= 0.0 ) {
-					if (origin_point.z < 0.1) {
-						position.x += 3.0;
-					}
-					else {
-						position.x += 3.0;
-					}
-				}
-				else {
-					position.x -= 6.0;
-				}
-				*/
 				
 				position.x = position.x + camera.position.x;
 				position.y = position.y + camera.position.y;
@@ -833,12 +777,7 @@ var Viewport = function ( editor ) {
 				point_raycaster.set( position, origin_point );
 
 				var intersects = point_raycaster.intersectObjects( objects );
-				console.log(intersects);
-
-				//intersects = getIntersects( onMovePosition, objects );
-				//console.log("intersect target list");
-				//console.log(intersects);
-
+				
 				if (intersects.length > 0) {
 					if (intersects[0].object.name === "股骨" || intersects[0].object.name === "切割预览") {
 						intersect_point = intersects[0].point.clone();
@@ -856,20 +795,7 @@ var Viewport = function ( editor ) {
 				}
 				
 				if (intersect_point != null) {
-					/*
-					if (origin_point.x <= 0.0) {
-						intersect_point.x -= 0.3;
-					}
-					else {
-						intersect_point.x += 0.3;
-					}
-					if (origin_point.y <= 0.0) {	
-						intersect_point.y -= 0.3;
-					}
-					else {
-						intersect_point.y += 0.3;
-					}
-					*/
+					
 					if ( object.name === "第1点" ) {
 						G_point_list[0] = intersect_point;
 					}
@@ -881,7 +807,6 @@ var Viewport = function ( editor ) {
 					}
 					object.position.set(intersect_point.x, intersect_point.y, intersect_point.z);
 					
-					//transformControls.update();
 					console.log("change position, object position");
 					console.log(object.position);
 					
@@ -1091,11 +1016,6 @@ var Viewport = function ( editor ) {
 		renderer.setScissor( 20, window_height - inset_height - 20, inset_width, inset_height );
 
 		renderer.setViewport( 20, window_height - inset_height - 20, inset_width, inset_height );
-		//gizmo_camera.position.copy( camera.position );
-		//gizmo_camera.quaternion.copy( camera.quaternion );
-		//gizmo_camera.rotation.x = camera.rotation.x;
-		//gizmo_camera.rotation.y = camera.rotation.y;
-		//gizmo_camera.rotation.z = camera.rotation.z;
 		renderer.render( scene, gizmo_camera );
 		renderer.setScissorTest( false );
 		
@@ -1106,6 +1026,8 @@ var Viewport = function ( editor ) {
 
 		updateAnnotationOpacity();
 		updateScreenPosition();
+
+		updateAnnotationPosition();
 
 		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
@@ -1141,6 +1063,66 @@ var Viewport = function ( editor ) {
 		annotation.style.top = vector.y + "px";
 		annotation.style.left = vector.x + "px";
 		annotation.style.opacity = measure_behind_object ? 1 : 0.35;
+	}
+
+	function updateAnnotationPosition() {
+		var annotation_count = editor.annotation_count;
+		for (var i = 1; i <= annotation_point_list.length; i++) {
+			var annotation_id = "annotation-dialog-" + i;
+			var annotation = document.getElementById(annotation_id);
+			if (annotation != null) {
+				var vector = annotation_point_list[i - 1];
+				if (vector != null) {
+					vector = vector.clone();
+					vector.project(camera);
+					vector.x = Math.round( ( 0.5 + vector.x / 2 ) * (container.dom.offsetWidth / window.devicePixelRatio) );
+					vector.y = Math.round( ( 0.5 - vector.y / 2 ) * (container.dom.offsetHeight / window.devicePixelRatio) );
+		
+					var num = i %  2;
+
+					var top_pos = 0;
+					var left_pos = 0;
+					// 奇数，左边
+					if (num == 0) {
+						top_pos = vector.y - 30;
+						if (top_pos <= 20) {
+							top_pos = 20;
+						}
+						else if (top_pos >= (container.dom.offsetHeight - 120)  / window.devicePixelRatio) {
+							top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
+						}
+
+						left_pos = vector.x + 15;
+						if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
+							left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
+						}
+						else if (left_pos <= 0) {
+							left_pos = 0;
+						}
+					}
+					else {
+						top_pos = vector.y - 30;
+						if (top_pos <= 20) {
+							top_pos = 20;
+						}
+						else if (top_pos >= (container.dom.offsetHeight - 120)  / window.devicePixelRatio) {
+							top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
+						}
+
+						left_pos = vector.x - 135;
+						if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
+							left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
+						}
+						else if (left_pos <= 0) {
+							left_pos = 0;
+						}
+					}
+
+					annotation.style["top"] = top_pos + "px";
+					annotation.style["left"] = left_pos + "px";
+				}
+			}
+		}
 	}
 
 	return container;

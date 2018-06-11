@@ -490,6 +490,11 @@ Editor.prototype = {
 			{
 				return;
 			}
+			else {
+				if (G_clip_point_1 === true || G_clip_point_2 === true || G_clip_point_3 === true) {
+					return;
+				}
+			}
 		}
 
 		this.selected = object;
