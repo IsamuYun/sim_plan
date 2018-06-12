@@ -405,6 +405,8 @@ var Viewport = function ( editor ) {
 		// 创建对话框
 		var annotation_dialog = new AnnotationDialog(editor);
 
+		
+
 		var vector = intersect_point.clone();
 		vector.project( camera );
 		
@@ -425,7 +427,7 @@ var Viewport = function ( editor ) {
 				top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
 			}
 
-			left_pos = vector.x + 15;
+			left_pos = vector.x + 20;
 			if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
 				left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
 			}
@@ -442,7 +444,7 @@ var Viewport = function ( editor ) {
 				top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
 			}
 
-			left_pos = vector.x - 135;
+			left_pos = vector.x - 180;
 			if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
 				left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
 			}
@@ -1092,7 +1094,7 @@ var Viewport = function ( editor ) {
 							top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
 						}
 
-						left_pos = vector.x + 15;
+						left_pos = vector.x + 20;
 						if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
 							left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
 						}
@@ -1109,7 +1111,7 @@ var Viewport = function ( editor ) {
 							top_pos = (container.dom.offsetHeight - 120)  / window.devicePixelRatio;
 						}
 
-						left_pos = vector.x - 135;
+						left_pos = vector.x - 180;
 						if (left_pos >= ((container.dom.offsetWidth - 120) / window.devicePixelRatio)) {
 							left_pos = ((container.dom.offsetWidth - 120) / window.devicePixelRatio);
 						}

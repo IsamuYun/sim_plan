@@ -443,3 +443,53 @@ progress::-webkit-progress-inner-element {
     left: 55px;
 }
 
+.zs-annotation-box {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 120px;
+    /*height: calc(5%);*/
+    opacity: 0.8;
+    z-index: 1;
+    display: inline-block;
+    background: #00000000;
+}
+
+.zs-annotation-box .inner-box {
+    padding: 0;
+    margin: 0;
+}
+
+.zs-annotation-box .title-bar {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0;
+    width: calc(100%);
+    border-bottom: 1px #000000 solid;
+}
+
+.zs-annotation-box .text-box {
+    padding: 0;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: calc(100% - 6px);
+    height: calc(100% - 4px);
+    border: 0;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+
+.zs-annotation-box :focus{
+  outline:none;
+}
+
+.zs-annotation-box span {
+  float:right;
+}
+
+
