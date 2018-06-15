@@ -9,9 +9,9 @@ var Editor = function () {
 	this.DEFAULT_CAMERA.position.set( 0, 0, 30 );
 	this.DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
-	this.GIZMO_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 200 );
+	this.GIZMO_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 1000 );
 	this.GIZMO_CAMERA.name = "Gizmo Camera";
-	this.GIZMO_CAMERA.position.set(0, 0, 1030);
+	this.GIZMO_CAMERA.position.set(0, 0, 10030);
 	this.GIZMO_CAMERA.lookAt( new THREE.Vector3() );
 	
 
@@ -129,6 +129,7 @@ var Editor = function () {
 	// 试图模式
 	this.view_mode_change = false;
 	this.view_mode_type = 1;	// 具有1 - 6
+	this.gizmo = new Gizmo(this);
 };
 
 Editor.prototype = {
@@ -223,13 +224,8 @@ Editor.prototype = {
 
 		}
 
-		
-
 		this.signals.sceneGraphChanged.active = true;
 		this.signals.sceneGraphChanged.dispatch();
-
-		
-
 
 	},
 
@@ -972,9 +968,10 @@ Editor.prototype = {
 
 		this.signals.editorCleared.dispatch();
 
-		var gizmo = new Gizmo(this);
-		gizmo.init();
+		this.gizmo = new Gizmo(this);
+		this.gizmo.init();
 
+		
 	},
 
 	//

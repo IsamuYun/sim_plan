@@ -116,6 +116,8 @@ var Viewport = function ( editor ) {
 
 	sceneHelpers.add( transformControls );
 
+	
+
 	// object picking
 
 	var raycaster = new THREE.Raycaster();
@@ -994,6 +996,18 @@ var Viewport = function ( editor ) {
 	} );
 
 	//
+	function gizmo_update(rotation, eye) {
+		var tempMatrix = new THREE.Matrix4();
+		var worldRotation = new THREE.Euler( 0, 0, 1 );
+		var tempQuaternion = new THREE.Quaternion();
+		var unitX = new THREE.Vector3( 1, 0, 0 );
+		var unitY = new THREE.Vector3( 0, 1, 0 );
+		var unitZ = new THREE.Vector3( 0, 0, 1 );
+		var quaternionX = new THREE.Quaternion();
+		var quaternionY = new THREE.Quaternion();
+		var quaternionZ = new THREE.Quaternion();
+		var eye = eye2.clone();
+	}
 
 	function render() {
 
@@ -1011,13 +1025,19 @@ var Viewport = function ( editor ) {
 		window_width = container.dom.offsetWidth;
 		window_height = container.dom.offsetHeight;
 
-		
 		renderer.setClearColor( 0xFFFFFF, 1 );
 		renderer.clearDepth(); // important!
 		renderer.setScissorTest( true );
 		renderer.setScissor( 20, window_height - inset_height - 20, inset_width, inset_height );
 
 		renderer.setViewport( 20, window_height - inset_height - 20, inset_width, inset_height );
+		
+		var tempMatrix = new THREE.Matrix4();
+		var eye = new THREE.Vector3();
+		eye.applyMatrix4( tempMatrix.extractRotation( camera.matrixWorld ) );
+		
+		editor.gizmo.update();
+		
 		renderer.render( scene, gizmo_camera );
 		renderer.setScissorTest( false );
 		

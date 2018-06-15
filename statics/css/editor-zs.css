@@ -1,5 +1,5 @@
 /*@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css);*/
-@import url(https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/0.5.2/tailwind.css);
+/*@import url(https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/0.5.2/tailwind.css);*/
 
 
 #sidebar-ct-box {
@@ -493,6 +493,39 @@
 	margin-left: 2px;
 	margin-right: 2px;
 	display: inline-block;
+}
+
+#zs-help-panel {
+	position: absolute;
+	top: 12%;
+	left: 12%;
+	width: 68%;
+	z-index: 100;
+	display: none;
+}
+
+#zs-help-panel .close-btn {
+	position: absolute;
+	top: 2%;
+	right: 2%;
+	margin: 0;
+	padding: 0;
+}
+
+#zs-help-panel .panel-img {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#zs-help-panel .img-row {
+	height: 36%;
+}
+
+#zs-help-panel .info-row {
+	height: 14%;
+	font-size: 12px;
 }
 
 

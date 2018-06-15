@@ -2,6 +2,14 @@
  * @author Isamu 20180528
  */
 
+ function onCloseHelpPanel() {
+	 var panel = document.getElementById("zs-help-panel");
+	 if (panel !== null) {
+		 panel.style["display"] = "none";
+	 }
+ }
+
+
 Menubar.Help = function ( editor ) {
 
 	var container = new UI.Panel();
@@ -20,21 +28,16 @@ Menubar.Help = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( '帮助' );
+	option.setTextContent( '使用说明' );
 	option.onClick( function () {
-
+		var panel = document.getElementById("zs-help-panel");
+		if (panel !== null) {
+			panel.style["display"] = "inline-block";
+		}
 	} );
 	options.add( option );
 
-	// 关于
-
-	var option = new UI.Row();
-	option.setClass( 'option' );
-	option.setTextContent( '关于' );
-	option.onClick( function () {
-
-	} );
-	options.add( option );
+	
 
 	return container;
 
