@@ -317,8 +317,6 @@ var Viewport = function ( editor ) {
 				if (child.name === "第1点") {
 					child.position.set( G_point_list[0].x, G_point_list[0].y, G_point_list[0].z );
 					child.visible = true;
-					console.log("point 1");
-					console.log(child.position);
 				}
 			});
 		}
@@ -330,15 +328,13 @@ var Viewport = function ( editor ) {
 				if (child.name === "第2点") {
 					child.position.set( G_point_list[1].x, G_point_list[1].y, G_point_list[1].z );
 					child.visible = true;
-					console.log("point 2");
-					console.log(child.position);
 				}
 			});
 		}
 		else if ( G_clip_point_3 == true ) {
 			G_clip_point_3 = false;
 			G_point_list[ 2 ] = intersect_target.point;
-			
+			//object.material.color = 0xCAA511;
 			// 构造一个截面
 			var plane = new THREE.Plane( new THREE.Vector3( 0, 0, 0 ), 0.0 );
 			plane.setFromCoplanarPoints( G_point_list[0], G_point_list[1], G_point_list[2] );
@@ -365,15 +361,20 @@ var Viewport = function ( editor ) {
 					else {
 						child.material.clippingPlanes = [another_plane];
 					}
-					
 				}
 				if ( child.name === "第3点" ) {
 					child.visible = true;
 					child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
-					console.log("point 3");
-					console.log(child.position);
 				}
 			});
+
+			// 修改股骨的颜色
+			object.material.color.setHex(0xCAA511);
+			object.material.shininess = 40;
+			object.material.specular.setHex(0xFFFFFF);
+			object.material.renderOrder = 0;
+
+			console.log(object);
 		}
 	}
 
@@ -1017,6 +1018,8 @@ var Viewport = function ( editor ) {
 		// 使渲染器支持平面截取
 		renderer.localClippingEnabled = true;
 		renderer.clipIntersection = true;
+		renderer.clipShadows = true;
+		renderer.sortObjects = true;
 		
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
 		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
@@ -1031,10 +1034,6 @@ var Viewport = function ( editor ) {
 		renderer.setScissor( 20, window_height - inset_height - 20, inset_width, inset_height );
 
 		renderer.setViewport( 20, window_height - inset_height - 20, inset_width, inset_height );
-		
-		var tempMatrix = new THREE.Matrix4();
-		var eye = new THREE.Vector3();
-		eye.applyMatrix4( tempMatrix.extractRotation( camera.matrixWorld ) );
 		
 		editor.gizmo.update();
 		

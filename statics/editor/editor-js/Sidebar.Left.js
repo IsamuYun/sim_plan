@@ -53,6 +53,11 @@ var SidebarLeft = function ( editor ) {
                         another_object.material.clippingPlanes = [];
                     }
                 } );
+
+                femur.material.color.setHex(0xFFFFFF);
+                femur.material.shininess = 80;
+                femur.material.renderOrder = 0;
+                femur.material.specular.setHex(0xB9B9B9);
             }
             if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
                 object.visible = false;

@@ -572,7 +572,6 @@ Editor.prototype = {
 		this.clearExtraSetting();
 		this.clearTopBannerSetting();
 		
-		
 		var light = new THREE.AmbientLight( 0xFFFFFF, 0.30 ); // soft white light
 		light.name = "环境光";
 		light.position.set( 20.0, 20.0, 7.5 );
@@ -604,8 +603,6 @@ Editor.prototype = {
 		spotLight.name = "聚光灯";
 		this.scene.add( spotLight );
 		
-		
-		
 		const host_name = window.location.origin;
 		const folder_name = "/static/models/";
 
@@ -618,7 +615,6 @@ Editor.prototype = {
 
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xFFFFFF,
-			//vertexColors: THREE.FaceColors,
 			depthWrite: true,
 			depthTest: true, 
 			shininess: 80,
@@ -626,20 +622,25 @@ Editor.prototype = {
 			specular: 0xB9B9B9,
 			// ***** Clipping setup (material): *****
 			// clippingPlanes: [ localPlane ],
+			clipShadows: false,
+			clipIntersection: true,
+			transparent: false,
+		});
+
+		var femur_material = new THREE.MeshPhongMaterial( {
+			color: 0xFFFFFF,
+			specular: 0xB9B9B9,
+			depthWrite: true,
+			depthTest: true, 
+			shininess: 80,
+			side: THREE.DoubleSide,
+			// ***** Clipping setup (material): *****
+			// clippingPlanes: [ localPlane ],
 			clipShadows: true,
 			clipIntersection: true,
 			transparent: false,
 		});
-		/*
-		THREE.ShaderLib[ 'phong' ].fragmentShader = THREE.ShaderLib[ 'phong' ].fragmentShader.replace(
-			"gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
 		
-			"gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : diffuseColor;"
-			
-		);
-		*/
-		//material.defines = material.defines || {};
-		//material.defines.CUSTOM = "";
 
 		var faker_material =  new THREE.MeshPhongMaterial( {
 			color: 0xF73711,
@@ -651,24 +652,6 @@ Editor.prototype = {
 			clipIntersection: true
 		});
 
-		
-		
-
-		var femur_material = new THREE.MeshLambertMaterial({
-			color: 0xFFFFFF,
-			//vertexColors: THREE.FaceColors,
-			depthWrite: true,
-			depthTest: true, 
-			shininess: 80,
-			side: THREE.DoubleSide,
-			specular: 0xB9B9B9,
-			// ***** Clipping setup (material): *****
-			// clippingPlanes: [ localPlane ],
-			clipShadows: true,
-			clipIntersection: true
-		});
-		
-		
 
 		// 添加股骨
 		// var url = host_name + folder_name + "femur.stl";
@@ -684,7 +667,7 @@ Editor.prototype = {
 
 		loader.load( url, function ( geometry ) {
 			
-			var mesh = new THREE.Mesh( geometry, material.clone() );
+			var mesh = new THREE.Mesh( geometry, femur_material );
 			mesh.name = "股骨";
 			
 			geometry.computeBoundingBox();
@@ -708,6 +691,7 @@ Editor.prototype = {
 			mesh.rotation.x = -Math.PI / 180 * 90;
 			mesh.rotation.y = 0;
 			mesh.rotation.z = 0;
+			mesh.frustumCulled = true;
 
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			editor.femur_helper = new THREE.EdgesHelper( mesh, 0x5FCAA7 );
@@ -728,8 +712,6 @@ Editor.prototype = {
 
 			var faker_helper = new THREE.WireframeHelper( faker_object, 0xFF0000 );
 			
-			
-
 			this.editor.execute( new AddObjectCommand( faker_object ) );
 			//this.editor.execute( new AddObjectCommand( faker_helper ) );
 			
