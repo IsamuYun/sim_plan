@@ -350,7 +350,11 @@ var Viewport = function ( editor ) {
 			else {
 				object.material.clippingPlanes = [plane];
 			}
-
+			// 20180624添加
+			var hip_component = null;
+			var cup = null;
+			var inner_cup = null;
+			var inner_header = null;
 			editor.scene.traverse(function( child ) {
 				if ( child.name === "切割预览" ) {
 					child.visible = true;
@@ -361,20 +365,39 @@ var Viewport = function ( editor ) {
 					else {
 						child.material.clippingPlanes = [another_plane];
 					}
+					child.material.renderOrder = 2;
 				}
 				if ( child.name === "第3点" ) {
 					child.visible = true;
 					child.position.set( G_point_list[2].x, G_point_list[2].y, G_point_list[2].z );
 				}
+				if (child.name === "股骨柄假体") {
+					hip_component = child;
+				}
+				if (child.name === "新髋臼杯") {
+					cup = child;
+				}
+				if (child.name === "髋臼内衬") {
+					inner_cup = child;
+				}
+				if (child.name === "股骨头假体") {
+					inner_header = child;
+				}
 			});
-
-			// 修改股骨的颜色
-			object.material.color.setHex(0xCAA511);
-			object.material.shininess = 40;
-			object.material.specular.setHex(0xFFFFFF);
-			object.material.renderOrder = 0;
-
-			console.log(object);
+			
+		}
+		if (hip_component != null && cup != null && inner_cup != null && inner_header != null)
+		if ( another_plane.normal.y <= 0.0 ) {
+			cup.material.clippingPlanes = [plane];
+			inner_cup.material.clippingPlanes = [plane];
+			inner_header.material.clippingPlanes = [plane];
+			hip_component.material.clippingPlanes = [plane];
+		}
+		else {
+			cup.material.clippingPlanes = [another_plane];
+			inner_cup.material.clippingPlanes = [another_plane];
+			inner_header.material.clippingPlanes = [another_plane];
+			hip_component.material.clippingPlanes = [another_plane];
 		}
 	}
 
@@ -407,8 +430,6 @@ var Viewport = function ( editor ) {
 
 		// 创建对话框
 		var annotation_dialog = new AnnotationDialog(editor);
-
-		
 
 		var vector = intersect_point.clone();
 		vector.project( camera );
@@ -863,6 +884,8 @@ var Viewport = function ( editor ) {
 				} );
 			}
 			
+			
+
 			selectionBox.setFromObject( object );
 			transformControls.update();
 			
@@ -996,20 +1019,6 @@ var Viewport = function ( editor ) {
 
 	} );
 
-	//
-	function gizmo_update(rotation, eye) {
-		var tempMatrix = new THREE.Matrix4();
-		var worldRotation = new THREE.Euler( 0, 0, 1 );
-		var tempQuaternion = new THREE.Quaternion();
-		var unitX = new THREE.Vector3( 1, 0, 0 );
-		var unitY = new THREE.Vector3( 0, 1, 0 );
-		var unitZ = new THREE.Vector3( 0, 0, 1 );
-		var quaternionX = new THREE.Quaternion();
-		var quaternionY = new THREE.Quaternion();
-		var quaternionZ = new THREE.Quaternion();
-		var eye = eye2.clone();
-	}
-
 	function render() {
 
 		sceneHelpers.updateMatrixWorld();
@@ -1020,11 +1029,39 @@ var Viewport = function ( editor ) {
 		renderer.clipIntersection = true;
 		renderer.clipShadows = true;
 		renderer.sortObjects = true;
+		renderer.autoClear = false;
+		
 		
 		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
 		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
+
+		/*
+		var gl = renderer.context;
+
+		if ( renderer.localClippingEnabled  ) {
+
+			gl.enable( gl.STENCIL_TEST );
+			
+			gl.stencilFunc( gl.ALWAYS, 1, 0xff );
+			gl.stencilOp( gl.KEEP, gl.KEEP, gl.INCR );
+			renderer.render( editor.backStencil, camera );
+
+			gl.stencilFunc( gl.ALWAYS, 1, 0xff );
+			gl.stencilOp( gl.KEEP, gl.KEEP, gl.DECR );
+			renderer.render( editor.frontStencil, camera );
+
+			//this.renderer.state.setStencilFunc( gl.EQUAL, 1, 0xff );
+			//this.renderer.state.setStencilOp( gl.KEEP, gl.KEEP, gl.KEEP );
+			//this.renderer.render( this.capsScene, this.camera );
+
+			gl.disable( gl.STENCIL_TEST );
+
+		}
+		*/
+
+
 		renderer.render( scene, camera );
-		
+
 		window_width = container.dom.offsetWidth;
 		window_height = container.dom.offsetHeight;
 
@@ -1040,19 +1077,16 @@ var Viewport = function ( editor ) {
 		renderer.render( scene, gizmo_camera );
 		renderer.setScissorTest( false );
 		
-		
 		if ( renderer instanceof THREE.RaytracingRenderer === false ) {
 			//renderer.render( sceneHelpers, camera );
 		}
 
 		updateAnnotationOpacity();
 		updateScreenPosition();
-
 		updateAnnotationPosition();
 
 		renderer.setViewport( 0, 0, container.dom.offsetWidth, container.dom.offsetHeight );
-		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );
-		
+		renderer.setSize( container.dom.offsetWidth, container.dom.offsetHeight );		
 	}
 
 	// 更新三个标签框的位置
@@ -1147,5 +1181,4 @@ var Viewport = function ( editor ) {
 	}
 
 	return container;
-
 };

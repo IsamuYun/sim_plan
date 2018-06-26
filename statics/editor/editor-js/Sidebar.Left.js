@@ -54,10 +54,13 @@ var SidebarLeft = function ( editor ) {
                     }
                 } );
 
-                femur.material.color.setHex(0xFFFFFF);
-                femur.material.shininess = 80;
+                femur.material.depthTest = true;
+                femur.material.depthWrite = true;
+                femur.material.transparent = false;
+                femur.material.opacity = 1.0;
+                femur.material.alphaTest = 0.0;
                 femur.material.renderOrder = 0;
-                femur.material.specular.setHex(0xB9B9B9);
+                femur.layers.set(0);
             }
             if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
                 object.visible = false;
@@ -65,7 +68,6 @@ var SidebarLeft = function ( editor ) {
         
         } );
         editor.select(null);
-
         editor.signals.sceneGraphChanged.dispatch();
     };
 
@@ -149,6 +151,13 @@ var SidebarLeft = function ( editor ) {
     left_preview = function() {
         updateSelectedButton( "preview" );
 
+        var femur = null;
+        var item = null;
+        var cup = null;
+        var inner_cup = null;
+        var inner_header = null;
+        
+
         editor.scene.traverse( function ( child ) {
             if ( child.name == "切割预览" ) {
                 if ( editor.is_preview ) {
@@ -167,9 +176,45 @@ var SidebarLeft = function ( editor ) {
                         child.visible = true;
                     }
                 }
-                editor.signals.sceneGraphChanged.dispatch();
+            }
+
+            if ( child.name === "股骨" ) {
+                femur = child;
+            }
+            if ( child.name === "股骨柄假体" ) {
+                item = child;
+            }
+            if (child.name === "新髋臼杯") {
+                cup = child;
+            }
+            if (child.name === "髋臼内衬") {
+                inner_cup = child;
+            }
+            if (child.name === "股骨头假体") {
+                inner_header = child;
             }
         } );
+
+        if (femur != null) {
+            femur.material.depthTest = true;
+            femur.material.depthWrite = true;
+            femur.material.renderOrder = 8;
+        }
+        if (item != null) {
+            item.material.renderOrder = 7;
+            //item.material.depthWrite = false;
+        }
+        if (cup != null) {
+            cup.material.renderOrder = 6;
+        }
+        if (inner_cup != null) {
+            inner_cup.material.renderOrder = 5;
+        }
+        if (inner_header != null) {
+            inner_header.material.renderOrder = 4;
+        }
+
+        editor.signals.sceneGraphChanged.dispatch();
 
         display_tips(preview_tips);
     };

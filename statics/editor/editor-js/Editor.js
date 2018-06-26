@@ -2,6 +2,48 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
+function createLabel(text, x, y, z, size, color, backgroundColor, backgroundMargin) {
+	if (!backgroundMargin) {
+		backgroundMargin = 50;
+	}
+	var canvas = document.createElement("canvas");
+	var context = canvas.getContext("2d");
+	context.font = size + "pt Arial";
+
+	var textWidth = context.measureText(text).width;
+	canvas.width = textWidth + backgroundMargin;
+	canvas.height = size + backgroundMargin;
+	context = canvas.getContext("2d");
+	context.font = size + "pt Arial";
+
+	if (backgroundColor) {
+		context.fillStyle = backgroundColor;
+		context.fillRect(canvas.width / 2 - textWidth / 2 - backgroundMargin / 2, 
+								  canvas.height / 2 - size / 2 - backgroundMargin / 2,
+								  textWidth + backgroundMargin, size + backgroundMargin);
+	}
+	context.textAlign = "center";
+	context.textBaseline = "middle";
+	context.fillStyle = color;
+	context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+	// context.strokeStyle = "black";
+	// context.strokeRect(0, 0, canvas.width, canvas.height);
+
+	var texture = new THREE.Texture(canvas);
+	texture.needsUpdate = true;
+
+	var material = new THREE.MeshBasicMaterial({map: texture});
+	var mesh = new THREE.Mesh(new THREE.PlaneGeometry(canvas.width, canvas.height), material);
+	// mesh.overdraw = true;
+	mesh.doubleSided = true;
+	mesh.position.x = x - canvas.width;
+	mesh.position.y = y - canvas.height;
+	mesh.position.z = z;
+
+	return mesh;
+}
+
 var Editor = function () {
 
 	this.DEFAULT_CAMERA = new THREE.PerspectiveCamera( 50, 1, 0.1, 1000 );
@@ -130,6 +172,11 @@ var Editor = function () {
 	this.view_mode_change = false;
 	this.view_mode_type = 1;	// 具有1 - 6
 	this.gizmo = new Gizmo(this);
+
+	// 新增加三个场景
+	this.capsScene = new THREE.Scene();
+	this.backStencil = new THREE.Scene();
+	this.frontStencil = new THREE.Scene();
 };
 
 Editor.prototype = {
@@ -609,8 +656,7 @@ Editor.prototype = {
 		THREE.ShaderLib[ 'phong' ].fragmentShader = THREE.ShaderLib[ 'phong' ].fragmentShader.replace(
 			"gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
 		
-			"gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : diffuseColor;"
-			
+			"vec4 fragColor = vec4(1, 1, 1, 0.9);gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : fragColor;"
 		);
 
 		var material = new THREE.MeshPhongMaterial( {
@@ -621,26 +667,12 @@ Editor.prototype = {
 			side: THREE.DoubleSide,
 			specular: 0xB9B9B9,
 			// ***** Clipping setup (material): *****
-			// clippingPlanes: [ localPlane ],
-			clipShadows: false,
-			clipIntersection: true,
-			transparent: false,
-		});
-
-		var femur_material = new THREE.MeshPhongMaterial( {
-			color: 0xFFFFFF,
-			specular: 0xB9B9B9,
-			depthWrite: true,
-			depthTest: true, 
-			shininess: 80,
-			side: THREE.DoubleSide,
-			// ***** Clipping setup (material): *****
-			// clippingPlanes: [ localPlane ],
+			clippingPlanes: [],
 			clipShadows: true,
 			clipIntersection: true,
 			transparent: false,
+			renderOrder: 0,
 		});
-		
 
 		var faker_material =  new THREE.MeshPhongMaterial( {
 			color: 0xF73711,
@@ -652,6 +684,38 @@ Editor.prototype = {
 			clipIntersection: true
 		});
 
+		var femur_material = new THREE.MeshPhongMaterial( {
+			color: 0xFFFFFF,
+			depthWrite: true,
+			depthTest: true, 
+			shininess: 80,
+			side: THREE.DoubleSide,
+			specular: 0xB9B9B9,
+			// ***** Clipping setup (material): *****
+			clippingPlanes: [],
+			clipShadows: true,
+			clipIntersection: true,
+			transparent: false,
+			renderOrder: 1,
+		});
+
+		/*
+		var femur_material = new THREE.ShaderMaterial({
+			uniforms: {
+				p: {type: "f", value: 2},
+				glowColor: {type: "c", value: new THREE.Color(0x84CCFF)},
+			},
+			vertexShader: document.getElementById('XrayVertexShader').textContent,
+			fragmentShader: document.getElementById('XrayFragmentShader').textContent,
+			side: THREE.DoubleSide,
+			//blending: THREE.AdditiveBlending,
+			transparent: false,
+			depthTest: false,
+			depthWrite: true,
+			clipping: true,
+			clippingPlanes : []
+		});
+		*/
 
 		// 添加股骨
 		// var url = host_name + folder_name + "femur.stl";
@@ -667,7 +731,7 @@ Editor.prototype = {
 
 		loader.load( url, function ( geometry ) {
 			
-			var mesh = new THREE.Mesh( geometry, femur_material );
+			var mesh = new THREE.Mesh( geometry,  femur_material );
 			mesh.name = "股骨";
 			
 			geometry.computeBoundingBox();
@@ -691,9 +755,10 @@ Editor.prototype = {
 			mesh.rotation.x = -Math.PI / 180 * 90;
 			mesh.rotation.y = 0;
 			mesh.rotation.z = 0;
-			mesh.frustumCulled = true;
-
+			
 			this.editor.execute( new AddObjectCommand( mesh ) );
+			
+			/*
 			editor.femur_helper = new THREE.EdgesHelper( mesh, 0x5FCAA7 );
 			editor.femur_helper.scale.set( mesh.scale.x, mesh.scale.y, mesh.scale.z );
 			editor.femur_helper.position.set( mesh.position.x, mesh.position.y, mesh.position.z );
@@ -701,7 +766,8 @@ Editor.prototype = {
 			editor.femur_helper.name = "股骨外框";
 			editor.femur_helper.visible = false;
 			this.editor.execute( new AddObjectCommand( editor.femur_helper ) );
-			
+			*/
+
 			var faker_object = new THREE.Mesh( geometry, faker_material );
             faker_object.name = "切割预览";
             faker_object.scale.set( mesh.scale.x, mesh.scale.y, mesh.scale.z);
@@ -709,13 +775,17 @@ Editor.prototype = {
             faker_object.rotation.set( mesh.rotation.x, mesh.rotation.y, mesh.rotation.z );
 			faker_object.parent = mesh;
 			faker_object.visible = false;
-
-			var faker_helper = new THREE.WireframeHelper( faker_object, 0xFF0000 );
-			
 			this.editor.execute( new AddObjectCommand( faker_object ) );
-			//this.editor.execute( new AddObjectCommand( faker_helper ) );
+
+			
 			
 		}, onFemurLoadProgress);
+
+
+
+		
+
+		
 		
 		// 载入盆骨
 		//var url = host_name + folder_name + "pelvis.stl";
@@ -910,6 +980,8 @@ Editor.prototype = {
 			this.editor.execute( new AddObjectCommand( mesh ) );
 			
 		}, onFemurHipLoadProgress);
+
+		
 		
 		// 增加第一点和第二点，将它们设为隐身
 		var geometry = new THREE.SphereGeometry( 0.45, 64, 64 );;
@@ -948,10 +1020,17 @@ Editor.prototype = {
 		cone.visible = false;
 		editor.execute( new AddObjectCommand( cone ) );
 
+
+		
+
+
+
 		this.signals.editorCleared.dispatch();
 
 		this.gizmo = new Gizmo(this);
 		this.gizmo.init();
+
+		
 
 		
 	},
@@ -963,7 +1042,6 @@ Editor.prototype = {
 		var loader = new THREE.ObjectLoader();
 
 		// backwards
-
 		if ( json.scene === undefined ) {
 
 			this.setScene( loader.parse( json ) );
@@ -1045,6 +1123,8 @@ Editor.prototype = {
 
 		this.history.redo();
 
-	}
+	},
+
+	
 
 };

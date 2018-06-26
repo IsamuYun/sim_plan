@@ -85,7 +85,6 @@
 				var sidebar = document.getElementById( "sidebar-ct-box" );
 				sidebar.style["display"] = "none";
 				
-				
 				var information_bar = document.getElementById("toolbar-information");
 				var fadeInformation = setInterval(function () {
         			if (information_bar != null) {
@@ -211,7 +210,7 @@
 		<script src="static/editor/editor-js/Sidebar.Geometry.PlaneGeometry.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Geometry.SphereGeometry.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Geometry.TorusGeometry.js"></script>
-		<script src="static/editor/editor-js/Sidebar.Geometry.TorusKnotGeometry.js"></script>
+		<!--<script src="static/editor/editor-js/Sidebar.Geometry.TorusKnotGeometry.js"></script>-->
 		
 		<script src="static/editor/editor-js/Sidebar.Material.js"></script>
 		<script src="static/editor/editor-js/Sidebar.Animation.js"></script>
@@ -226,7 +225,6 @@
 		<script src="static/editor/editor-js/Viewport.js"></script>
 		<script src="static/editor/editor-js/Viewport.Info.js"></script>
 		
-
 		<script src="static/editor/editor-js/Command.js"></script>
 		<script src="static/editor/editor-js/commands/AddObjectCommand.js"></script>
 		<script src="static/editor/editor-js/commands/RemoveObjectCommand.js"></script>
@@ -272,7 +270,6 @@
 			var G_clip_point_3 = false;
 			// 记录的切割点
 			var G_point_list = new Array();
-			
 
 			var editor = new Editor();
 
@@ -624,9 +621,16 @@
 			</div>
 			<div class="col ml-2">
 				<div class="card p-3 mb-4 bg-light">
-					<div class="row">
-			  			<div class="col"></div>
-						<div class="col"></div>
+					<div class="row align-items-center img-row">
+						<div class="col p-3">
+							<img src="static/img/icons/banner/CT_blue.png" alt="CT">
+						</div>
+						<div class="col p-3">
+							<img src="static/img/icons/banner/transparency_blue.png" alt="Transparency">
+						</div>
+						<div class="col p-3">
+							<img src="static/img/icons/banner/view.png" alt="View Mode">
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -638,12 +642,53 @@
 		</div>
 	</div>
 
+	
 	<script type="text/javascript" src="static/js/cornerstone.min.js" ></script>
 	<script type="text/javascript" src="static/js/cornerstoneMath.js"></script>
 	<script type="text/javascript" src="static/js/cornerstoneTools.js"></script>
 	<script type="text/javascript" src="static/js/cornerstoneWebImageLoader.js"></script>
 
 	<script src="static/editor/editor-js/Sidebar.CTBox.js"></script>
+
+	<script id="XrayVertexShader" type="x-shader/x-vertex">
+        uniform float p;
+        varying float intensity;
+        
+        #include <clipping_planes_pars_vertex>
+        
+        void main()
+        {
+        	#include <begin_vertex>
+            
+            vec3 vNormal = normalize( normalMatrix * normal );
+            intensity = pow(abs(1.0 - abs(dot(vNormal, vec3(0, 0, 1)))), p);
+            
+            #include <project_vertex>
+            #include <clipping_planes_vertex>
+        }
+	</script>
+	<script id="XrayFragmentShader" type="x-shader/x-vertex">
+        uniform vec3 glowColor;
+        varying float intensity;
+        
+        #include <clipping_planes_pars_fragment>
+        
+        void main()
+        {
+        	#include <clipping_planes_fragment>
+            
+			vec3 glow = glowColor * intensity;
+			if (gl_FrontFacing) 
+    		{
+				gl_FragColor = vec4( glow, 1.0 );
+    		}
+  			else // fragment is part of a back face
+    		{
+      			gl_FragColor = vec4(1, 1, 1, 1);
+    		}
+			
+        }
+	</script>
 
 	</body>
 </html>
