@@ -49,7 +49,7 @@ var BannerTop = function ( editor ) {
                     child.material.transparent = false;
                 }
                 else {
-                    child.material.opacity = 0.4;
+                    child.material.opacity = 0.6;
                     child.material.transparent = true;
                 }
             }

@@ -863,7 +863,8 @@ var Viewport = function ( editor ) {
 				another_plane.normal.z = -plane.normal.z;
 				another_plane.constant = -plane.constant;
 				editor.scene.traverse( function( child ) {
-					if ( child.name === "切割预览" ) {
+					if ( child.name === "切割预览" || child.name === "股骨柄假体" || child.name === "新髋臼杯" || 
+						child.name === "髋臼内衬" || child.name === "股骨头假体" ) {
 						child.visible = true;
 						if ( another_plane.normal.y <= 0.0 ) {
 							child.material.clippingPlanes = [plane];
