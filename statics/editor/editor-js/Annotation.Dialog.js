@@ -50,9 +50,11 @@ var AnnotationDialog = function ( editor ) {
     
     confirm_btn.onClick(function() {
         var text_area = document.getElementById("annotation-text-" + annotation_count);
+        /*
         if (text_area != null) {
             text_area.value = "The Annotation - " + annotation_count + "\n is pressed.";
         }
+        */
     });
     confirm_btn.dom.innerHTML = "<i class=\'fa fa-check px-2\'></i>";
     title.add(confirm_btn);

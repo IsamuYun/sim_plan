@@ -39,6 +39,9 @@ var SidebarLeft = function ( editor ) {
         G_clip_point_2 = false;
         G_clip_point_3 = false;
 
+        var cup = null;
+
+
         editor.scene.traverse( function ( object ) {
             if ( object.name === "股骨" ) {
                 var femur = object;
@@ -60,10 +63,14 @@ var SidebarLeft = function ( editor ) {
                 femur.material.opacity = 1.0;
                 femur.material.alphaTest = 0.0;
                 femur.material.renderOrder = 0;
-                femur.layers.set(0);
             }
             if ( object.name === "第1点" || object.name === "第2点" || object.name === "第3点") {
                 object.visible = false;
+            }
+            if ( object.name === "股骨柄假体" || object.name === "新髋臼杯" 
+                || object.name === "髋臼内衬" || object.name === "股骨头假体") {
+                object.material.clippingPlanes = [],
+                object.material.renderOrder = 0;
             }
         
         } );

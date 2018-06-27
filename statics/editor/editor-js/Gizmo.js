@@ -63,9 +63,9 @@
       console.log(this.axesHelper);
       editor.scene.add( this.axesHelper );
 
-      editor.scene.add( this.gizmo_x );
-      editor.scene.add( this.gizmo_y );
-      editor.scene.add( this.gizmo_z );
+      //editor.scene.add( this.gizmo_x );
+      //editor.scene.add( this.gizmo_y );
+      //editor.scene.add( this.gizmo_z );
 
     };
 
