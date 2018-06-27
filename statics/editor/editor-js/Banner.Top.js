@@ -24,14 +24,24 @@ var BannerTop = function ( editor ) {
         
         var scene_box = document.getElementById( "sidebar-scene-box" );
         var sidebar = document.getElementById( "sidebar-ct-box" );
+        var dicom_image_x = document.getElementById("dicom-image-x");
+        var dicom_image_y = document.getElementById("dicom-image-y");
+        var dicom_image_z = document.getElementById("dicom-image-z");
 
-        if (scene_box == null || sidebar == null) {
+        if (scene_box == null || sidebar == null ) {
             return;
         }
 
         if ( editor.ct_box == true ) {
             scene_box.style["right"] = "calc(18% + 10px)";
             sidebar.style["display"] = "";
+
+            if (dicom_image_x != null && dicom_image_y != null && dicom_image_z != null) {
+                cornerstone.resize(dicom_image_x, true);
+                cornerstone.resize(dicom_image_y, true);
+                cornerstone.resize(dicom_image_z, true);
+            }
+
         }
         else {
             scene_box.style["right"] = "10px";

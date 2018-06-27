@@ -465,6 +465,16 @@
 
             function onWindowResize( event ) {
 				editor.signals.windowResize.dispatch();
+				// 在本处添加代码
+				var ct_box = document.getElementById("sidebar-ct-box");
+				if (ct_box != null) {
+					var canvas_list = ct_box.getElementsByTagName("canvas");
+					for (var i = 0; i < canvas_list.length; i++) {
+						var main_box = canvas_list[i].parentElement;
+						cornerstone.resize(main_box, true);
+					}
+				}
+				
 			}
 
 			window.addEventListener( 'resize', onWindowResize, false );

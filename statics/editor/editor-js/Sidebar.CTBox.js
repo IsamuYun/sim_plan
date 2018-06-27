@@ -439,7 +439,7 @@ cornerstone.loadImage(image_url_z[stack_z.currentImageIdIndex]).then(function(im
 });
 
 var change_flag = false;
-function change_size(image, image_parent, box) {
+function change_size(image, image_parent) {
     if (image == null) {
         return;
     }
