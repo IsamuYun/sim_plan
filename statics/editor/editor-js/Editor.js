@@ -656,7 +656,7 @@ Editor.prototype = {
 		THREE.ShaderLib[ 'phong' ].fragmentShader = THREE.ShaderLib[ 'phong' ].fragmentShader.replace(
 			"gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
 		
-			"vec4 fragColor = vec4(1, 1, 1, 0.9);gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : fragColor;"
+			"vec4 fragColor = vec4(0.09, 0.67, 0.92, 1.0);gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : fragColor;"
 		);
 
 		var material = new THREE.MeshPhongMaterial( {
@@ -685,7 +685,7 @@ Editor.prototype = {
 		});
 
 		var femur_material = new THREE.MeshPhongMaterial( {
-			color: 0xFFFFFF,
+			color: 0xF0F0F0,
 			depthWrite: true,
 			depthTest: true, 
 			shininess: 80,
@@ -780,12 +780,6 @@ Editor.prototype = {
 			
 			
 		}, onFemurLoadProgress);
-
-
-
-		
-
-		
 		
 		// 载入盆骨
 		//var url = host_name + folder_name + "pelvis.stl";

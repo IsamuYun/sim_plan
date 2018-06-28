@@ -386,18 +386,19 @@ var Viewport = function ( editor ) {
 			});
 			
 		}
-		if (hip_component != null && cup != null && inner_cup != null && inner_header != null)
-		if ( another_plane.normal.y <= 0.0 ) {
-			cup.material.clippingPlanes = [plane];
-			inner_cup.material.clippingPlanes = [plane];
-			inner_header.material.clippingPlanes = [plane];
-			hip_component.material.clippingPlanes = [plane];
-		}
-		else {
-			cup.material.clippingPlanes = [another_plane];
-			inner_cup.material.clippingPlanes = [another_plane];
-			inner_header.material.clippingPlanes = [another_plane];
-			hip_component.material.clippingPlanes = [another_plane];
+		if (hip_component != null && cup != null && inner_cup != null && inner_header != null) {
+			if ( another_plane.normal.y <= 0.0 ) {
+				cup.material.clippingPlanes = [plane];
+				inner_cup.material.clippingPlanes = [plane];
+				inner_header.material.clippingPlanes = [plane];
+				hip_component.material.clippingPlanes = [plane];
+			}
+			else {
+				cup.material.clippingPlanes = [another_plane];
+				inner_cup.material.clippingPlanes = [another_plane];
+				inner_header.material.clippingPlanes = [another_plane];
+				hip_component.material.clippingPlanes = [another_plane];
+			}
 		}
 	}
 
@@ -832,17 +833,8 @@ var Viewport = function ( editor ) {
 						G_point_list[2] = intersect_point;
 					}
 					object.position.set(intersect_point.x, intersect_point.y, intersect_point.z);
-					
-					console.log("change position, object position");
-					console.log(object.position);
-					
 				}
-				else {
-					
-					console.log("change position failed");
-					console.log("change failed up position");
-					console.log("no point to hook.");
-						
+				else {	
 					if ( object.name === "第1点" ) {
 						object.position.set(G_point_list[0].x, G_point_list[0].y, G_point_list[0].z);
 					}
@@ -863,7 +855,7 @@ var Viewport = function ( editor ) {
 				another_plane.normal.z = -plane.normal.z;
 				another_plane.constant = -plane.constant;
 				editor.scene.traverse( function( child ) {
-					if ( child.name === "切割预览" || child.name === "股骨柄假体" || child.name === "新髋臼杯" || 
+					if ( child.name === "切割预览" || child.name === "股骨柄假体" || child.name === "新髋臼杯" ||
 						child.name === "髋臼内衬" || child.name === "股骨头假体" ) {
 						child.visible = true;
 						if ( another_plane.normal.y <= 0.0 ) {
