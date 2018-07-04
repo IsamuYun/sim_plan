@@ -458,13 +458,14 @@ select {
 	position: absolute;
 	right: 10px;
 	top: 12%;
-	bottom: 50px;
 	width: 200px;
-	height: 540px;
+	min-height: 480px;
 	background: #FCFCFC;
 	color: #000000;
-	overflow: auto;
+	overflow: hidden;
 	border: 1px #BDBDBD solid;
+	padding: 0;
+	margin: 0;
 }
 
 #sidebar-scene-box .title {
@@ -491,7 +492,6 @@ select {
 }
 
 #sidebar-scene-box .content {
-	height: 120px;
 	font-size: 14px;
 	border-bottom: 1px #BDBDBD solid;
 }
@@ -604,6 +604,7 @@ select {
 	padding: 0;
 	margin-left: 5px;
 	margin-right: 5px;
+	margin-bottom: 5px;
 	width: 90px;
 	height: 20px;
 

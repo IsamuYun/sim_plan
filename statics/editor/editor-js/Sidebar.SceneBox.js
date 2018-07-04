@@ -423,8 +423,8 @@ var SidebarSceneBox = function ( editor ) {
 	var container = new UI.Panel();
 	container.setId( 'sidebar-scene-box' );
 	
-	var titleRow = new UI.Row().setClass();
-	titleRow.add( new UI.Text( "假体" ).setClass( "title" ) );
+	var titleRow = new UI.Row().setClass("title");
+	titleRow.add( new UI.Text( "假体" ) );
 	container.add( titleRow );
 	
 	// 
@@ -473,6 +473,8 @@ var SidebarSceneBox = function ( editor ) {
 
 
 	container.add( contentPanel );
+
+	var image_panel = new UI.Panel();
 	
 	
 	
@@ -486,7 +488,7 @@ var SidebarSceneBox = function ( editor ) {
 
 	image.dom.appendChild(image_dom);
 
-	container.add( image );
+	image_panel.add(image);
 
 	
 	var slider_row = new UI.Row();
@@ -518,7 +520,8 @@ var SidebarSceneBox = function ( editor ) {
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
 	slider_row.add(new UI.Text("mm").setClass("unit-text"));
-	container.add( slider_row );
+	image_panel.add(slider_row);
+	//container.add( slider_row );
 
 	var slider_row = new UI.Row();
 	slider_row.add( new UI.Text("B").setClass("row-title"));
@@ -548,7 +551,8 @@ var SidebarSceneBox = function ( editor ) {
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
 	slider_row.add(new UI.Text("mm").setClass("unit-text"));
-	container.add( slider_row );
+	//container.add( slider_row );
+	image_panel.add(slider_row);
 
 	var slider_row = new UI.Row();
 	slider_row.add( new UI.Text("C").setClass("row-title"));
@@ -578,8 +582,8 @@ var SidebarSceneBox = function ( editor ) {
 	number_box_area.dom.appendChild( number_box );
 	slider_row.add( number_box_area );
 	slider_row.add(new UI.Text("mm").setClass("unit-text"));
-	container.add( slider_row );
-
+	//container.add( slider_row );
+	image_panel.add(slider_row);
 	
 	var slider_row = new UI.Row();
 	slider_row.add( new UI.Text("D").setClass("row-title"));
@@ -610,7 +614,8 @@ var SidebarSceneBox = function ( editor ) {
 	slider_row.add( number_box_area );
 	slider_row.add(new UI.Text("mm").setClass("unit-text"));
 
-	container.add( slider_row );
+	//container.add( slider_row );
+	image_panel.add(slider_row);
 
 	var row = new UI.Row();
 	row.add( new UI.Text("Alpha").setClass("row-title"));
@@ -640,8 +645,8 @@ var SidebarSceneBox = function ( editor ) {
 	number_box_area.dom.appendChild( number_box );
 	row.add( number_box_area );
 	row.add(new UI.Text("°").setClass("unit-text"));
-	container.add( row );
-
+	//container.add( row );
+	image_panel.add(row);
 	var row = new UI.Row();
 	var reset_btn = new UI.Button("重置").setClass("Button ripple-effect");
 	reset_btn.onClick( function(event) {
@@ -791,7 +796,8 @@ var SidebarSceneBox = function ( editor ) {
 	});
 	row.add( confirm_btn );
 
-	container.add( row );
-
+	//container.add( row );
+	image_panel.add(row);
+	container.add(image_panel);
 	return container;
 };
