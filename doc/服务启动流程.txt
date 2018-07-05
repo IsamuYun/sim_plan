@@ -1,0 +1,7 @@
+服务启动步骤
+1. cd /home/python/ZS-Server
+2. sudo ./daemon.sh restart
+就能启动zs-server.py的守护进程
+
+通过ps aux|grep zs-server.py
+可以查看到 /bin/python3.4 /home/python/ZS-Server/zs-server.py被启动了起来
