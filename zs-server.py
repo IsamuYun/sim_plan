@@ -20,7 +20,10 @@ def main():
     print("Development server is running at http://127.0.0.1:%s" % options.port)
     print("Quit the server with Control-C")
 
-    tornado.ioloop.IOLoop.instance().start()
+    #tornado.ioloop.IOLoop.instance().start()
+
+    loop = tornado.ioloop.IOLoop()
+    loop.start()
 
 if __name__ == "__main__":
     main()
