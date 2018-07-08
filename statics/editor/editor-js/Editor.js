@@ -658,6 +658,7 @@ Editor.prototype = {
 		
 			"vec4 fragColor = vec4(0.09, 0.67, 0.92, 1.0);gl_FragColor = ( gl_FrontFacing ) ? vec4( outgoingLight, diffuseColor.a ) : fragColor;"
 		);
+		
 
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xFFFFFF,
